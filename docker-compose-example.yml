@@ -1,0 +1,20 @@
+version: "3.4"
+
+services:
+  main:
+    build: .
+    restart: always
+    ports:
+        - 127.0.0.1:8012:8080
+    environment:
+        - SERVERNAME=alles1
+        - DATASTORE=/data
+        - DATASTORETEMP=/data/tmp
+        - PORT=8080
+        - DOMAIN=allesfs.com
+        - DB_HOST=alles.cx
+        - DB_NAME=allesfs
+        - DB_USERNAME=allesfs
+        - DB_PASSWORD=password
+    volumes:
+        - /allesfs-data:/data

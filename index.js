@@ -1,5 +1,4 @@
-const credentials = require("./credentials");
-const {SERVERNAME, DATASTORE, DATASTORETEMP, PORT, DOMAIN, PRIMARYSERVER} = process.env;
+const {SERVERNAME, DATASTORE, DATASTORETEMP, PORT, DOMAIN, PRIMARYSERVER, DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD} = process.env;
 const fs = require("fs");
 const fileType = require("file-type");
 const randomString = require("randomstring").generate;
@@ -8,11 +7,11 @@ const axios = require("axios");
 // Sequelize
 const {Sequelize, DataTypes} = require("sequelize");
 const db = new Sequelize(
-	credentials.db.name,
-	credentials.db.username,
-	credentials.db.password,
+	DB_NAME,
+	DB_USERNAME,
+	DB_PASSWORD,
 	{
-		host: credentials.db.host,
+		host: DB_HOST,
 		dialect: "mariadb",
 		logging: false,
 		dialectOptions: {
