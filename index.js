@@ -142,8 +142,11 @@ app.get("/:id", async (req, res, next) => {
                 },
                 responseType: "arraybuffer"
             }).then(serverRequest => {
+                // Save locally and respond
                 res.type(serverRequest.headers["content-type"]).send(serverRequest.data);
+                fs.writeFileSync(`${DATASTORE}/${file.id}`, serverRequest.data);
             }).catch(() => {
+                // Failed to get from primary server
                 next();
             });
         }
