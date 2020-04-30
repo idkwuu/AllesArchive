@@ -1,0 +1,122 @@
+<html>
+    <head>
+        <title>AllesFS SERVERNAME</title>
+    </head>
+    <body>
+        <main>
+            <h1>AllesFS SERVERNAME</h1>
+            <p>
+                Hey there! Welcome to the <em>super secret storage server</em>.
+                This is a custom solution we built for storing files like avatars or podcast audio.
+            </p>
+
+            <form>
+                <input name="username" placeholder="Client ID" />
+                <input name="password" type="password" placeholder="Client Secret" />
+                <input type="file" />
+                <button type="submit">Upload</button>
+            </form>
+
+            <p class="error"></p>
+        </main>
+
+        <script>
+            const form = document.querySelector("form");
+            const username = document.querySelector("input[name='username']");
+            const password = document.querySelector("input[name='password']");
+            const fileUpload = document.querySelector("input[type='file']");
+            const showError = err => document.querySelector("p.error").innerText = err;
+            let disabled;
+            let file;
+
+            fileUpload.onchange = e => file = e.target.files[0];
+
+            form.onsubmit = e => {
+                e.preventDefault();
+                if (disabled) return;
+                if (!file) return showError("You must specify a file to upload.");
+                disabled = true;
+                showError("");
+
+                const formData = new FormData();
+                formData.append("file", file);
+                
+                fetch("/", {
+                    method: "POST",
+                    body: file,
+                    headers: {
+                        Authorization: `Basic ${btoa(`${username.value}:${password.value}`)}`
+                    }
+                }).then(async res => {
+                    if (res.status === 200) {
+                        console.log(await res.text());
+                    } else if (res.status === 401) {
+                        showError("Those credentials don't seem to be right.");
+                    } else {
+                        showError("Something went wrong!");
+                    }
+                    disabled = false;
+                }).catch(() => {
+                    showError("Something went wrong!");
+                    disabled = false;
+                });
+            };
+        </script>
+
+        <style>
+            body {
+                margin: 0;
+                background: #f0f0f0;
+                font-family: sans-serif;
+            }
+
+            main {
+                background: white;
+                border: solid 1px #80808040;
+                width: 600px;
+                max-width: 100%;
+                margin: 50px auto;
+                padding: 20px;
+                box-sizing: border-box;
+            }
+
+            h1 {
+                margin: 0;
+                margin-bottom: 10px;
+            }
+            
+            p {
+                margin: 0;
+            }
+
+            form {
+                border: solid 1px #80808040;
+                margin: 10px 0;
+            }
+
+            input, button {
+                display: block;
+                width: calc(100% - 20px);
+                margin: 10px;
+                box-sizing: border-box;
+                padding: 5px;
+                border-radius: 5px;
+            }
+
+            input:not([type="file"]) {
+                background: none;
+                border: solid 1px #80808040;
+            }
+
+            button {
+                border: solid 1px #80808040;
+                cursor: pointer;
+            }
+
+            p.error {
+                color: red;
+                font-size: 10px;
+            }
+        </style>
+    </body>
+</html>

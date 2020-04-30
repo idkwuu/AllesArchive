@@ -58,6 +58,7 @@ File.hasOne(Client);
 // Express
 const express = require("express");
 const app = express();
+const formidable = require("formidable");
 db.sync().then(() =>
     app.listen(8080, () =>
         console.log("Server is online.")
@@ -65,13 +66,14 @@ db.sync().then(() =>
 );
 
 // Base
-app.get("/", (req, res) => {
-    res.send(`AllesFS ${SERVERNAME}`);
-});
+const homepage = fs.readFileSync(`${__dirname}/index.html`, "utf8")
+    .replace(/SERVERNAME/g, SERVERNAME);
+app.get("/", (req, res) => res.send(homepage));
 
 // Client Authorization
 app.use(async (req, res, next) => {
     const header = req.headers.authorization;
+    console.log(header);
     if (typeof header !== "string") return next();
     if (header.split(" ").length !== 2 || !header.startsWith("Basic ")) return next();
 
@@ -108,5 +110,11 @@ app.get("/:filename", (req, res) => {
 // Upload File
 app.post("/", (req, res) => {
     if (!req.authClient) return res.status(401).send("Unauthorized");
-    res.json({});
+    const form = formidable();
+
+    form.parse(req, (err, fields, file) => {
+        if (err) return res.status(400).send("Failed to parse files");
+        console.log(file);
+        res.json({});
+    });
 });
