@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "axios": "^0.19.2",
     "express": "^4.17.1",
     "file-type": "^14.2.0",
     "formidable": "^1.2.2",

@@ -1,8 +1,9 @@
 const credentials = require("./credentials");
-const {SERVERNAME, DATASTORE, DATASTORETEMP} = process.env;
+const {SERVERNAME, DATASTORE, DATASTORETEMP, PORT, DOMAIN, PRIMARYSERVER} = process.env;
 const fs = require("fs");
 const fileType = require("file-type");
 const randomString = require("randomstring").generate;
+const axios = require("axios");
 
 // Sequelize
 const {Sequelize, DataTypes} = require("sequelize");
@@ -68,7 +69,7 @@ const express = require("express");
 const app = express();
 const formidable = require("formidable");
 db.sync().then(() =>
-    app.listen(8080, () =>
+    app.listen(PORT, () =>
         console.log("Server is online.")
     )
 );
@@ -133,7 +134,18 @@ app.get("/:id", async (req, res, next) => {
             await file.destroy();
             next();
         } else {
-            next();
+            // Get File from Primary Server
+            const url = `${PRIMARYSERVER ? PRIMARYSERVER : `https://${file.primaryServer}.${DOMAIN}`}/${file.id}`;
+            axios.get(url, {
+                headers: {
+                    authorization: req.headers.authorization ? req.headers.authorization : ""
+                },
+                responseType: "arraybuffer"
+            }).then(serverRequest => {
+                res.type(serverRequest.headers["content-type"]).send(serverRequest.data);
+            }).catch(() => {
+                next();
+            });
         }
     }
 });
