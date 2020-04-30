@@ -1,6 +1,7 @@
 const credentials = require("./credentials");
 const {SERVERNAME, DATASTORE, DATASTORETEMP} = process.env;
 const fs = require("fs");
+const fileType = require("file-type");
 const randomString = require("randomstring").generate;
 
 // Sequelize
@@ -48,11 +49,15 @@ const File = db.define("file", {
     primaryServer: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    type: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     updatedAt: false
 });
-File.hasOne(Client);
+File.belongsTo(Client);
 
 // Express
 const express = require("express");
@@ -96,7 +101,7 @@ app.use(async (req, res, next) => {
     });
     if (!client || client.secret !== credentials.secret) return next();
     
-    req.authClient = client;
+    req.Client = client;
     next();
 });
 
@@ -116,24 +121,30 @@ app.get("/:filename", async (req, res) => {
 
 // Upload File
 app.post("/", (req, res) => {
-    if (!req.authClient) return res.status(401).send("Unauthorized");
+    if (!req.Client) return res.status(401).send("Unauthorized");
     const form = formidable({
         uploadDir: DATASTORETEMP
     });
 
-    form.parse(req, (err, fields, {file}) => {
+    form.parse(req, async (err, fields, {file}) => {
         if (err) return res.status(400).send("Failed to parse files");
 
-        // Generate ID
-        const id = randomString({
-            length: 128,
-            capitalization: "lowercase"
+        // Add File to Database
+        const type = await fileType.fromFile(file.path);
+        const f = await File.create({
+            id: randomString({
+                length: 128,
+                capitalization: "lowercase"
+            }),
+            primaryServer: SERVERNAME,
+            type: type ? type.mime : null
         });
+        await f.setClient(req.Client);
 
         // Move File
-        fs.renameSync(file.path, `${DATASTORE}/${id}`);
+        fs.renameSync(file.path, `${DATASTORE}/${f.id}`);
 
         // Return ID
-        res.send(id);
+        res.send(f.id);
     });
 });
