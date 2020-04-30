@@ -101,8 +101,17 @@ app.use(async (req, res, next) => {
 });
 
 // Get File
-app.get("/:filename", (req, res) => {
-    console.log(req.params.filename);
+app.get("/:filename", async (req, res) => {
+    const {filename} = req.params;
+
+    // Check if file is stored on server
+    if (fs.existsSync(`${DATASTORE}/${filename}`)) {
+        // Serve File
+        const f = fs.readFileSync(`${DATASTORE}/${filename}`);
+        res.send(f);
+    } else {
+        res.status(404).send("file not found");
+    }
 });
 
 // Upload File
