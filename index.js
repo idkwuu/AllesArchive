@@ -73,7 +73,6 @@ app.get("/", (req, res) => res.send(homepage));
 // Client Authorization
 app.use(async (req, res, next) => {
     const header = req.headers.authorization;
-    console.log(header);
     if (typeof header !== "string") return next();
     if (header.split(" ").length !== 2 || !header.startsWith("Basic ")) return next();
 
