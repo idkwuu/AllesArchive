@@ -128,7 +128,13 @@ app.get("/:id", async (req, res, next) => {
         const fileData = fs.readFileSync(`${DATASTORE}/${file.id}`);
         res.type(file.type ? file.type : "text/plain").send(fileData);
     } else {
-        next();
+        if (SERVERNAME === file.primaryServer) {
+            // Primary Server does not have file - file is gone
+            await file.destroy();
+            next();
+        } else {
+            next();
+        }
     }
 });
 
