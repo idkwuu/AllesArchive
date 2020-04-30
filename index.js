@@ -1,6 +1,5 @@
-const {SERVERNAME} = process.env;
 const credentials = require("./credentials");
-const idLength = 125;
+const {SERVERNAME, DATASTORE, DATASTORETEMP} = process.env;
 const fs = require("fs");
 const randomString = require("randomstring").generate;
 
@@ -109,11 +108,23 @@ app.get("/:filename", (req, res) => {
 // Upload File
 app.post("/", (req, res) => {
     if (!req.authClient) return res.status(401).send("Unauthorized");
-    const form = formidable();
+    const form = formidable({
+        uploadDir: DATASTORETEMP
+    });
 
-    form.parse(req, (err, fields, file) => {
+    form.parse(req, (err, fields, {file}) => {
         if (err) return res.status(400).send("Failed to parse files");
-        console.log(file);
-        res.json({});
+
+        // Generate ID
+        const id = randomString({
+            length: 128,
+            capitalization: "lowercase"
+        });
+
+        // Move File
+        fs.renameSync(file.path, `${DATASTORE}/${id}`);
+
+        // Return ID
+        res.send(id);
     });
 });
