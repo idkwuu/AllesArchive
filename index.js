@@ -123,6 +123,12 @@ app.get("/:id", async (req, res, next) => {
     // Restrict Non-Public Files
     if (!file.public && !req.Client) return next();
 
+    // CORS for Public Files
+    if (file.public) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    }
+
     // Check if file is stored on server
     if (fs.existsSync(`${DATASTORE}/${file.id}`)) {
         // Serve File
