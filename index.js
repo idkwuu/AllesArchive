@@ -121,7 +121,7 @@ app.get("/:id", async (req, res, next) => {
     if (!file) return next();
 
     // Restrict Non-Public Files
-    if (!file.public && !req.client) return next();
+    if (!file.public && !req.Client) return next();
 
     // Check if file is stored on server
     if (fs.existsSync(`${DATASTORE}/${file.id}`)) {
