@@ -53,6 +53,10 @@ const File = db.define("file", {
     type: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    public: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
     }
 }, {
     updatedAt: false
@@ -128,6 +132,7 @@ app.post("/", (req, res) => {
 
     form.parse(req, async (err, fields, {file}) => {
         if (err) return res.status(400).send("Failed to parse files");
+        if (typeof fields.public !== "string") return res.status(400).send("No 'public' field");
 
         // Add File to Database
         const type = await fileType.fromFile(file.path);
@@ -137,7 +142,8 @@ app.post("/", (req, res) => {
                 capitalization: "lowercase"
             }),
             primaryServer: SERVERNAME,
-            type: type ? type.mime : null
+            type: type ? type.mime : null,
+            public: fields.public === "true" ? true : false
         });
         await f.setClient(req.Client);
 

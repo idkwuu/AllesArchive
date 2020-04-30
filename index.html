@@ -39,7 +39,8 @@
                 showError("");
 
                 const formData = new FormData();
-                formData.append("file", file);
+                formData.set("file", file);
+                formData.set("public", true);
                 
                 fetch("/", {
                     method: "POST",
