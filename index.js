@@ -74,7 +74,7 @@ db.sync().then(() =>
     )
 );
 
-// Base
+// Homepage
 const homepage = fs.readFileSync(`${__dirname}/index.html`, "utf8")
     .replace(/SERVERNAME/g, SERVERNAME);
 app.get("/", (req, res) => res.send(homepage));
@@ -184,3 +184,8 @@ app.post("/", (req, res) => {
         res.send(f.id);
     });
 });
+
+// 404 Page
+const notFoundPage = fs.readFileSync(`${__dirname}/404.html`, "utf8")
+    .replace(/SERVERNAME/g, SERVERNAME);
+app.use((req, res) => res.status(404).send(notFoundPage));
