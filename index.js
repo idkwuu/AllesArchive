@@ -110,16 +110,25 @@ app.use(async (req, res, next) => {
 });
 
 // Get File
-app.get("/:filename", async (req, res) => {
-    const {filename} = req.params;
+app.get("/:id", async (req, res, next) => {
+    // Get record from database
+    const file = await File.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+    if (!file) return next();
+
+    // Restrict Non-Public Files
+    if (!file.public && !req.client) return next();
 
     // Check if file is stored on server
-    if (fs.existsSync(`${DATASTORE}/${filename}`)) {
+    if (fs.existsSync(`${DATASTORE}/${file.id}`)) {
         // Serve File
-        const f = fs.readFileSync(`${DATASTORE}/${filename}`);
-        res.send(f);
+        const fileData = fs.readFileSync(`${DATASTORE}/${file.id}`);
+        res.type(file.type ? file.type : "text/plain").send(fileData);
     } else {
-        res.status(404).send("file not found");
+        next();
     }
 });
 
