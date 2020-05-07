@@ -166,7 +166,7 @@ app.post("/", (req, res) => {
     });
 
     form.parse(req, async (err, fields, {file}) => {
-        if (err) return res.status(400).send("Failed to parse files");
+        if (err || !file) return res.status(400).send("Failed to parse files");
         if (typeof fields.public !== "string") return res.status(400).send("No 'public' field");
 
         // Add File to Database
