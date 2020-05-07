@@ -165,12 +165,12 @@ app.post("/", (req, res) => {
         uploadDir: DATASTORETEMP
     });
 
-    form.parse(req, async (err, fields, {file}) => {
-        if (err || !file) return res.status(400).send("Failed to parse files");
+    form.parse(req, async (err, fields, data) => {
+        if (err || !data || !data.file) return res.status(400).send("Failed to parse files");
         if (typeof fields.public !== "string") return res.status(400).send("No 'public' field");
 
         // Add File to Database
-        const type = await fileType.fromFile(file.path);
+        const type = await fileType.fromFile(data.file.path);
         const f = await File.create({
             id: randomString({
                 length: 128,
@@ -183,7 +183,7 @@ app.post("/", (req, res) => {
         await f.setClient(req.Client);
 
         // Move File
-        fs.renameSync(file.path, `${DATASTORE}/${f.id}`);
+        fs.renameSync(data.file.path, `${DATASTORE}/${f.id}`);
 
         // Return ID
         res.send(f.id);
