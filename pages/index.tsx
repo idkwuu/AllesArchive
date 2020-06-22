@@ -21,7 +21,7 @@ import {
 } from "react-feather";
 
 const token =
-  "";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uIjoiMWM1ZjMyNDAtMDBjZi00NTQyLTljNTUtZDdkMjViMmRmZDZkIiwiaWF0IjoxNTkyODUzMzg0fQ.5aKE5-PiVZas4yyQB500z-rqa2kTFRjnv5TT8euVuc4";
 
 const fetcher = async (
   input: RequestInfo,
