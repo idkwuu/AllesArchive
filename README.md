@@ -7,12 +7,12 @@ A rewrite of [alleshq/site](https://github.com/alleshq/site) using:
 - SWR
 - Reactants 3
 
-Goals:
+## Goals
 
 - Use strong types
 - Don't reuse code where possible
 - Code should be readable and concise
 
-License:
+## License
 
-MIT (c) 2020 Alles
+This repository is licensed under the MIT license.
