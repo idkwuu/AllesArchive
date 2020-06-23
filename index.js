@@ -6,7 +6,8 @@ app.listen(8080);
 // Events
 const eventCodes = [
 	"customer.subscription.created",
-	"customer.subscription.deleted"
+	"customer.subscription.deleted",
+	"customer.subscription.updated"
 ];
 
 const events = {};
