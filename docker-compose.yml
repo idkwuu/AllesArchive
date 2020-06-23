@@ -1,0 +1,12 @@
+version: "3.4"
+
+services:
+  main:
+    build: .
+    restart: always
+    ports:
+        - 127.0.0.1:8080:8080
+    environment:
+        - ALLES_ID=ALLES_ID
+        - ALLES_SECRET=ALLES_SECRET
+        - SECRET=SECRET
