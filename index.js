@@ -26,6 +26,7 @@ app.post("/", async (req, res) => {
 			process.env.WEBHOOK_SECRET
 		);
 	} catch (err) {
+		console.log(err);
 		return res.status(400).send(`Webhook Error: ${err.message}`);
 	}
 
