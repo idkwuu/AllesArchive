@@ -1,6 +1,6 @@
 // HTTP Server
 const app = require("express")();
-app.use(require("body-parser").raw());
+app.use(require("body-parser").raw({type: "application/json"}));
 app.listen(8080);
 
 // Stripe
