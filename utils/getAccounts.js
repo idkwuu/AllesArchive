@@ -9,5 +9,5 @@ module.exports = async userId => {
 				password: process.env.ALLES_SECRET
 			}
 		}
-	)).data.id;
+	)).data;
 };
