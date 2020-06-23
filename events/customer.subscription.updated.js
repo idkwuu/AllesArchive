@@ -1,8 +1,8 @@
 const stripeIds = require("../stripeIds");
 const setPlus = require("../actions/setPlus");
 
-module.exports = async body => {
-	const {customer, plan} = body.data.object;
+module.exports = async event => {
+	const {customer, plan} = event.data.object;
 	const {product} = plan;
 
 	// Alles+
