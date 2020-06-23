@@ -7,7 +7,10 @@ module.exports = async (customer, max, active) => {
 
 	if (max) {
 		const accounts = await getAccounts(userId);
-		await Promise.all(accounts.map(account => setUserPlus(account.id)));
+		await setUserPlus(accounts.primary.id, active);
+		await Promise.all(
+			accounts.secondaries.map(account => setUserPlus(account.id, active))
+		);
 	} else await setUserPlus(userId, active);
 };
 
