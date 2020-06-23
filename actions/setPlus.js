@@ -7,7 +7,7 @@ module.exports = async (customer, max, active) => {
 
 	if (max) {
 		const accounts = await getAccounts(userId);
-		console.log(accounts);
+		await Promise.all(accounts.map(account => setUserPlus(account.id)));
 	} else await setUserPlus(userId, active);
 };
 
