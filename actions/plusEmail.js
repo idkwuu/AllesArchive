@@ -8,10 +8,10 @@ module.exports = async customerId => {
 	const customer = await stripe.customers.retrieve(customerId);
 
 	try {
-		axios.post(
+		await axios.post(
 			"https://pico.alles.cx/api/v1/send/message",
 			{
-				to: customer.email,
+				to: [customer.email],
 				from: "plus@alles.cx",
 				reply_to: "archie@alles.cx",
 				subject: "Welcome to Alles+!",
