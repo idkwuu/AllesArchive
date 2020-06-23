@@ -13,7 +13,7 @@ const events = {};
 eventCodes.forEach(code => (events[code] = require(`./events/${code}`)));
 
 // Webhook
-app.post("/", (req, res) => {
+app.post("/", async (req, res) => {
 	if (events[req.body.type]) await events[req.body.type](req.body, res);
 	res.status(204).send();
 });
