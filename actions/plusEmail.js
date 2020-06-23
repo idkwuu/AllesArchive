@@ -3,7 +3,7 @@ const getUserData = require("../utils/getUserData");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const axios = require("axios");
 const template = require("fs")
-	.readFileSync(`${__dirname}/plusEmail.html`, "utf8")
+	.readFileSync(`${__dirname}/../plusEmail.html`, "utf8")
 	.split("[x]");
 
 module.exports = async customerId => {
