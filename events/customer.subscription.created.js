@@ -1,12 +1,13 @@
 const stripeIds = require("../stripeIds");
 const setPlus = require("../actions/setPlus");
 
-module.exports = (body, res) => {
+module.exports = async body => {
 	const {customer, plan} = body.data.object;
 	const {product} = plan;
 
 	// Alles+
-	if (stripeIds.plus.includes(product)) setPlus(customer, false, true);
+	if (stripeIds.plus.includes(product)) await setPlus(customer, false, true);
 	// Alles+ Max
-	else if (stripeIds.plusMax.includes(product)) setPlus(customer, true, true);
+	else if (stripeIds.plusMax.includes(product))
+		await setPlus(customer, true, true);
 };

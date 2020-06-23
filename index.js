@@ -14,6 +14,6 @@ eventCodes.forEach(code => (events[code] = require(`./events/${code}`)));
 
 // Webhook
 app.post("/", async (req, res) => {
-	if (events[req.body.type]) await events[req.body.type](req.body, res);
+	if (events[req.body.type]) await events[req.body.type](req.body);
 	res.status(204).send();
 });
