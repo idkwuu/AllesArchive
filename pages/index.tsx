@@ -7,31 +7,33 @@ import {
   BreadcrumbItem,
   Avatar,
   Textarea,
-  Button
+  Button,
 } from "@reactants/ui";
 import {
   Circle,
   Settings as Cog,
-  User,
+  User as UserIcon,
   Users,
   AtSign,
   Image,
   Plus,
-  Minus
+  Minus,
 } from "react-feather";
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uIjoiMWM1ZjMyNDAtMDBjZi00NTQyLTljNTUtZDdkMjViMmRmZDZkIiwiaWF0IjoxNTkyODUzMzg0fQ.5aKE5-PiVZas4yyQB500z-rqa2kTFRjnv5TT8euVuc4";
+import { FeedItem } from "../types";
 
-const fetcher = async (
+const isServer = typeof window === "undefined";
+const authorization = "";
+
+async function fetcher<T = any>(
   input: RequestInfo,
   init?: RequestInit
-): Promise<any> => {
+): Promise<T> {
   return await fetch(input, {
     ...init,
-    headers: { Authorization: token }
-  }).then(res => res.json());
-};
+    headers: { authorization },
+  }).then((res) => res.json());
+}
 
 const SkeletonPost: React.FC = () => (
   <Box className="flex">
@@ -39,19 +41,19 @@ const SkeletonPost: React.FC = () => (
       <Button color="transparent" style={{ padding: 0, opacity: 0.5 }}>
         <Plus size={17.5} />
       </Button>
-      <span className="w-3 h-3"/>
+      <span className="w-3 h-3" />
       <Button color="transparent" style={{ padding: 0, opacity: 0.5 }}>
         <Minus size={17.5} />
       </Button>
     </div>
 
-    <a
-      href="#"
-      className="block hover:opacity-75 transition duration-100 cursor-pointer w-full"
-    >
+    <a className="block hover:opacity-75 transition duration-100 cursor-pointer w-full">
       <Box.Content>
         <div className="flex items-center mb-3">
-          <div className="mr-3 bg-gray-200 rounded-full" style={{width: 32.5, height: 32.5}} />
+          <div
+            className="mr-3 bg-gray-200 rounded-full"
+            style={{ width: 32.5, height: 32.5 }}
+          />
           <div className="space-y-1">
             <div className="bg-gray-200 rounded-sm dark:bg-white h-3 w-10" />
             <div className="bg-gray-200 rounded-sm h-3 w-15" />
@@ -70,13 +72,14 @@ const SkeletonPost: React.FC = () => (
   </Box>
 );
 
-const Post: React.FC<{
-  content: React.ReactNode;
-  replyCount: number;
-  score: number;
-  createdAt: string;
-  author: { name: string; plus: boolean; username: string };
-}> = ({ content, replyCount, score, author, createdAt }) => (
+const Post: React.FC<Omit<FeedItem, "type">> = ({
+  content,
+  replyCount,
+  score,
+  author,
+  createdAt,
+  slug,
+}) => (
   <Box className="flex">
     <div className="space-y-3 flex bg-white rounded-tl-lg rounded-bl-lg dark:bg-gray-750 border-r p-2.5 border-gray-200 dark:border-gray-700 flex-col items-center justify-center">
       <Button color="transparent" style={{ padding: 0 }}>
@@ -89,7 +92,7 @@ const Post: React.FC<{
     </div>
 
     <a
-      href="#"
+      href={`/p/${slug}`}
       className="block hover:opacity-75 transition duration-100 cursor-pointer w-full"
     >
       <Box.Content>
@@ -106,7 +109,7 @@ const Post: React.FC<{
         <div>{content}</div>
       </Box.Content>
       <Box.Footer
-        className="rounded-bl-none flex justify-between"
+        className="rounded-bl-none flex justify-between cursor-pointer"
         style={{ background: "transparent" }}
       >
         <span>{new Date(createdAt).toLocaleString()}</span>
@@ -117,26 +120,29 @@ const Post: React.FC<{
 );
 
 const Feed = () => {
-  const { data } = useSWR<any[]>("/api/feed", fetcher, { suspense: true });
-  console.log(data.feed[0]);
+  const { data } = useSWR<{ feed: FeedItem[] }>("/api/feed", fetcher, {
+    suspense: true,
+  });
 
   return (
     <>
-      {data.feed.map(item => (
-        item.type === "post" && <Post
-          content={item.content}
-          replyCount={item.replyCount}
-          score={item.score}
-          key={item.slug}
-          author={item.author}
-          createdAt={item.createdAt}
-        />
-      ))}
+      {data.feed.map(
+        (item) =>
+          item.type === "post" && (
+            <Post
+              content={item.content}
+              replyCount={item.replyCount}
+              score={item.score}
+              key={item.slug}
+              slug={item.slug}
+              author={item.author}
+              createdAt={item.createdAt}
+            />
+          )
+      )}
     </>
   );
 };
-
-const isServer = typeof window === "undefined";
 
 export default () => {
   const [value, setValue] = useState();
@@ -176,7 +182,7 @@ export default () => {
               </a>
               <a className="transition duration-100 hover:opacity-75" href="#">
                 <Box className="rounded-full p-2 text-gray-600 dark:text-gray-300">
-                  <User />
+                  <UserIcon />
                 </Box>
               </a>
               <a className="transition duration-100 hover:opacity-75" href="#">
@@ -198,11 +204,11 @@ export default () => {
               className="text-base"
               rows={4}
               value={value}
-              onChange={e => setValue(e.target.value)}
+              onChange={(e) => setValue(e.target.value)}
               style={{
                 background: "transparent",
                 border: "none",
-                padding: "15px"
+                padding: "15px",
               }}
             />
 
@@ -222,7 +228,15 @@ export default () => {
         </div>
 
         {!isServer && (
-          <Suspense fallback={<>{[1,2,3,4,5,6,7,8,9,10].map(key => <SkeletonPost key={key}/>)}</>}>
+          <Suspense
+            fallback={
+              <>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((key) => (
+                  <SkeletonPost key={key} />
+                ))}
+              </>
+            }
+          >
             <Feed />
           </Suspense>
         )}
