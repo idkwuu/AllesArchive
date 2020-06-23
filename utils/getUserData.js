@@ -1,11 +1,9 @@
 const axios = require("axios");
 
-module.exports = async customerId => {
+module.exports = async userId => {
 	try {
 		return (await axios.get(
-			`https://1api.alles.cx/v1/stripeCustomer?id=${encodeURIComponent(
-				customerId
-			)}`,
+			`https://1api.alles.cx/v1/user?id=${encodeURIComponent(userId)}`,
 			{
 				auth: {
 					username: process.env.ALLES_ID,
