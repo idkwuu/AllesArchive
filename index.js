@@ -1,6 +1,6 @@
 // HTTP Server
 const app = require("express")();
-app.use(require("body-parser").json());
+app.use(require("body-parser").raw());
 app.listen(8080);
 
 // Stripe
@@ -20,9 +20,12 @@ app.post("/", async (req, res) => {
 	const sig = req.headers["stripe-signature"];
 	let event;
 	try {
-		event = stripe.webhooks.constructEvent(req.body, sig, process.env.WEBHOOK_SECRET);
+		event = stripe.webhooks.constructEvent(
+			req.body,
+			sig,
+			process.env.WEBHOOK_SECRET
+		);
 	} catch (err) {
-		console.log(err);
 		return res.status(400).send(`Webhook Error: ${err.message}`);
 	}
 
