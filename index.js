@@ -10,10 +10,10 @@ const eventCodes = [
 ];
 
 const events = {};
-eventCodes.forEach(code => (events[code] = require(`./events/${code}.js`)));
+eventCodes.forEach(code => (events[code] = require(`./events/${code}`)));
 
 // Webhook
 app.post("/", (req, res) => {
-	if (events[req.body.type]) events[req.body.type](req.body, res);
-	else res.status(200).send("No handler");
+	if (events[req.body.type]) await events[req.body.type](req.body, res);
+	res.status(204).send();
 });
