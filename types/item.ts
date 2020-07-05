@@ -1,7 +1,11 @@
 import { User } from "./user";
 
-export interface FeedItem {
-  type: "post";
+export enum ItemTypes {
+  Post = "post",
+}
+
+export interface Item {
+  type: ItemTypes;
   replyCount: number;
   score: number;
   createdAt: string;
