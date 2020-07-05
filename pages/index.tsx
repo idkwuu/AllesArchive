@@ -145,7 +145,7 @@ const Feed = () => {
 };
 
 export default () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<string>();
 
   return (
     <>
