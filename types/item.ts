@@ -12,4 +12,5 @@ export interface Item {
   slug: string;
   author: User;
   content: string;
+  image: string;
 }

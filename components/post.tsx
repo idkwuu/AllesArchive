@@ -10,6 +10,7 @@ export const Post: React.FC<Partial<Item> & { skeleton?: boolean }> = ({
   author,
   createdAt,
   slug,
+  image,
   skeleton = false,
 }) => (
   <Box className="flex">
@@ -66,7 +67,8 @@ export const Post: React.FC<Partial<Item> & { skeleton?: boolean }> = ({
                 <div className="text-primary text-sm">@{author.username}</div>
               </div>
             </div>
-            <div>{content}</div>{" "}
+            <div>{content}</div>
+            {image && <img className="mt-5 rounded-lg" src={image} />}
           </>
         )}
       </Box.Content>
