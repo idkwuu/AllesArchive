@@ -23,7 +23,7 @@ import {
 import { FeedItem } from "../types";
 
 const isServer = typeof window === "undefined";
-const authorization = "";
+const authorization = process.env.NEXT_PUBLIC_AUTH;
 
 async function fetcher<T = any>(
   input: RequestInfo,
