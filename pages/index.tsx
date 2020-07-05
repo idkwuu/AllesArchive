@@ -18,6 +18,7 @@ import {
   Image,
   Plus,
   Minus,
+  MessageCircle,
 } from "react-feather";
 
 import { FeedItem } from "../types";
@@ -113,7 +114,10 @@ const Post: React.FC<Omit<FeedItem, "type">> = ({
         style={{ background: "transparent" }}
       >
         <span>{new Date(createdAt).toLocaleString()}</span>
-        <span>{replyCount === 0 ? "No" : replyCount} Replies</span>
+        <span className="flex items-center">
+          {replyCount}
+          <MessageCircle className="ml-1.5" size={17} />
+        </span>
       </Box.Footer>
     </a>
   </Box>
