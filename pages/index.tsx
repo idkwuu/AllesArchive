@@ -98,7 +98,7 @@ const Post: React.FC<Omit<FeedItem, "type">> = ({
     >
       <Box.Content>
         <div className="flex items-center mb-3">
-          <Avatar username="archie" className="mr-3" size={32.5} />
+          <Avatar username={author.username} className="mr-3" size={32.5} />
           <div>
             <div className="text-black dark:text-white text-sm">
               {author.name}

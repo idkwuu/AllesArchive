@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export interface FeedItem {
   type: "post";
   replyCount: number;
