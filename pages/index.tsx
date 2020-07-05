@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import {
   Box,
   Header,
