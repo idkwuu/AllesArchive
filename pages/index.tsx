@@ -16,8 +16,6 @@ import {
   Users,
   AtSign,
   Image,
-  Plus,
-  Minus,
 } from "react-feather";
 
 import { fetcher, isServer } from "../lib";
