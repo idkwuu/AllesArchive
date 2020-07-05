@@ -20,11 +20,9 @@ import {
   Minus,
 } from "react-feather";
 
-import { fetcher } from "../lib";
+import { fetcher, isServer } from "../lib";
 import { Item, ItemTypes } from "../types";
 import { Post } from "../components";
-
-const isServer = typeof window === "undefined";
 
 const ItemsFallback = () => (
   <>
