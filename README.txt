@@ -1,7 +1,7 @@
-site-next
-=========
+hub
+===
 
-A rewrite of [alleshq/site](https://github.com/alleshq/site) using:
+The main account hub written with:
 
 * Typescript
 * React Suspense
@@ -14,3 +14,5 @@ Goals
 * Use strong types
 * Don't reuse code where possible
 * Code should be readable and concise
+* Minimal user interface
+* Performance prioritized
