@@ -2,10 +2,8 @@
 const express = require("express");
 const app = express();
 app.use(require("body-parser").json());
+app.use((err, req, res, next) => res.status(500).json({err: "internalError"}));
 app.listen(8080, () => console.log("Express is listening..."));
-
-// Base route
-app.get("/", (req, res) => res.send("Hello! This is the Nexus API!"));
 
 // 404
 app.use((req, res) => res.status(404).json({err: "notFound"}));
