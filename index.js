@@ -6,3 +6,6 @@ app.listen(8080, () => console.log("Express is listening..."));
 
 // Base route
 app.get("/", (req, res) => res.send("Hello! This is the Nexus API!"));
+
+// 404
+app.use((req, res) => res.status(404).json({err: "notFound"}));
