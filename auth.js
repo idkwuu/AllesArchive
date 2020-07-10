@@ -16,8 +16,8 @@ module.exports = (req, res, next) => {
 		return res.status(401).json({err: "badAuthorization"});
 	}
 	if (credentials.length !== 2)
-        return res.status(401).json({err: "badAuthorization"});
-    console.log(credentials);
+		return res.status(401).json({err: "badAuthorization"});
+	console.log(credentials);
 
 	// Continue
 	next();
