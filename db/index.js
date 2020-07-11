@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(
+const db = new Sequelize(
 	process.env.DB_NAME,
 	process.env.DB_USERNAME,
 	process.env.DB_PASSWORD,
@@ -12,4 +12,7 @@ const sequelize = new Sequelize(
 		}
 	}
 );
-module.exports = sequelize;
+module.exports = db;
+
+// Nexus Client
+require("./nexusClient")(db);

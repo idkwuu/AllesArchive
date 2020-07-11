@@ -1,4 +1,6 @@
-module.exports = (req, res, next) => {
+const db = require("./db");
+
+module.exports = async (req, res, next) => {
 	// Auth Header
 	if (
 		typeof req.headers.authorization !== "string" ||
@@ -7,7 +9,7 @@ module.exports = (req, res, next) => {
 	)
 		return res.status(401).json({err: "badAuthorization"});
 
-	// Parse credentials
+	// Parse Credentials
 	const encoded = req.headers.authorization.split(" ")[1];
 	let credentials;
 	try {
@@ -17,7 +19,15 @@ module.exports = (req, res, next) => {
 	}
 	if (credentials.length !== 2)
 		return res.status(401).json({err: "badAuthorization"});
-	console.log(credentials);
+
+	// Get Client
+	const client = await db.NexusClient.findOne({
+		where: {
+			id: credentials[0]
+		}
+	});
+	if (!client || client.secret !== credentials[1])
+		return res.status(401).json({err: "badAuthorization"});
 
 	// Continue
 	next();
