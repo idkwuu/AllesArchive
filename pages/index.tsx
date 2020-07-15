@@ -1,5 +1,5 @@
 import { Header, Breadcrumb, BreadcrumbItem, Avatar, Box } from "@reactants/ui";
-import { Circle, User, Shield, Bell, Icon } from "react-feather";
+import { Circle, User, Shield, Bell, Icon, Grid } from "react-feather";
 import { Fragment } from "react";
 
 interface Category {
@@ -59,7 +59,7 @@ export default () => {
             <Avatar
               className="select-none cursor-pointer hover:opacity-85 transition duration-200 ease"
               username="dante"
-              size={37.5}
+              size={35}
             />
           </div>
         </div>
