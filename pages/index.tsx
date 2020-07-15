@@ -49,7 +49,13 @@ export default () => {
             </BreadcrumbItem>
           </Breadcrumb>
 
-          <div className="flex items-center">
+          <div className="flex items-center space-x-3">
+            <div
+              className="bg-danger text-white rounded-full flex items-center justify-center"
+              style={{ width: 0.6 * 37.5, height: 0.6 * 37.5 }}
+            >
+              2
+            </div>
             <Avatar username="dante" size={37.5} />
           </div>
         </div>
