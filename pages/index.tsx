@@ -1,5 +1,5 @@
 import { Box } from "@reactants/ui";
-import { User, Shield, Icon } from "react-feather";
+import { User, Shield, Icon, Grid, EyeOff } from "react-feather";
 import { Fragment } from "react";
 
 interface Category {
@@ -13,10 +13,8 @@ const categories: Category[] = [
     name: "Security",
     icon: Shield,
     links: [
-      { text: "Passphrase", href: "/passphrase" },
-      { text: "Multi-factor authentication", href: "/mfa" },
-      { text: "Active Sessions", href: "/sessions" },
-      { text: "Authorized Applications", href: "/apps" },
+      { text: "Logging in", href: "/auth" },
+      { text: "Sessions", href: "/sessions" },
     ],
   },
   {
@@ -24,13 +22,29 @@ const categories: Category[] = [
     icon: User,
     links: [
       {
-        text: "Contact details",
-        href: "/contact",
-      },
-      {
         text: "Personal info",
         href: "/info",
       },
+      {
+        text: "Contact details",
+        href: "/contact",
+      },
+    ],
+  },
+  {
+    name: "Applications",
+    icon: Grid,
+    links: [
+      { text: "Authorized apps", href: "/apps" },
+      { text: "Notifications", href: "/notifications" },
+    ],
+  },
+  {
+    name: "Privacy",
+    icon: EyeOff,
+    links: [
+      { text: "Telemetry", href: "/telemetry" },
+      { text: "Export your data", href: "/data" },
     ],
   },
 ];
@@ -42,27 +56,26 @@ export default () => {
         Hey, Dante<sup className="select-none text-primary">+</sup>
       </h4>
 
-      <div className="flex space-x-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {categories.map((category, i) => (
-          <Box className="flex-1" key={i}>
+          <Box key={i}>
             <Box.Header className="flex items-center space-x-2">
               <category.icon size={18.5} className="text-primary" />
               <span>{category.name}</span>
             </Box.Header>
 
-            {category.links.map((link, i) => (
-              <Fragment key={i}>
-                {i >= 1 && <hr className="opacity-25" />}
-                <Box.Content>
+            <div className="py-1.5">
+              {category.links.map((link, i) => (
+                <Fragment key={i}>
                   <a
-                    className="hover:text-primary transition duration-200 ease"
+                    className="block px-4 py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
                     href={link.href}
                   >
                     {link.text}
                   </a>
-                </Box.Content>
-              </Fragment>
-            ))}
+                </Fragment>
+              ))}
+            </div>
           </Box>
         ))}
       </div>
