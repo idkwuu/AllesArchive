@@ -1,5 +1,6 @@
 import { Header, Breadcrumb, BreadcrumbItem, Avatar, Box } from "@reactants/ui";
 import { Circle, User, Shield, Bell, Icon } from "react-feather";
+import { Fragment } from "react";
 
 interface Category {
   name: string;
@@ -50,11 +51,16 @@ export default () => {
           </Breadcrumb>
 
           <div className="flex items-center space-x-3">
-            <div className="bg-danger text-white rounded-full flex items-center justify-center py-0.5 px-2.5 space-x-1">
+            <div className="select-none cursor-pointer hover:bg-danger-85 transition duration-200 ease bg-danger text-white rounded-full flex items-center justify-center py-0.5 px-2.5 space-x-1">
               <Bell size={0.35 * 37.5} />
               <span>2</span>
             </div>
-            <Avatar username="dante" size={37.5} />
+
+            <Avatar
+              className="select-none cursor-pointer hover:opacity-85 transition duration-200 ease"
+              username="dante"
+              size={37.5}
+            />
           </div>
         </div>
       </Header>
@@ -65,15 +71,15 @@ export default () => {
         </h4>
 
         <div className="flex space-x-3">
-          {categories.map((category) => (
-            <Box className="flex-1">
+          {categories.map((category, i) => (
+            <Box className="flex-1" key={i}>
               <Box.Header className="flex items-center space-x-2">
                 <category.icon size={18.5} className="text-primary" />
                 <span>{category.name}</span>
               </Box.Header>
 
               {category.links.map((link, i) => (
-                <>
+                <Fragment key={i}>
                   {i >= 1 && <hr className="opacity-25" />}
                   <Box.Content>
                     <a
@@ -83,7 +89,7 @@ export default () => {
                       {link.text}
                     </a>
                   </Box.Content>
-                </>
+                </Fragment>
               ))}
             </Box>
           ))}
