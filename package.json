@@ -5,7 +5,7 @@
     "build": "NODE_ENV=production next build"
   },
   "dependencies": {
-    "@reactants/ui": "^3.0.0-beta.3",
+    "@reactants/ui": "^3.0.0-beta.5",
     "next": "^9.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

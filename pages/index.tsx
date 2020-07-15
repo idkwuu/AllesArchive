@@ -1,4 +1,4 @@
-import { Header, Breadcrumb, BreadcrumbItem, Avatar, Box } from "@reactants/ui";
+import { Header, Breadcrumb, Avatar, Box } from "@reactants/ui";
 import { Circle, User, Shield, Bell, Icon, Grid } from "react-feather";
 import { Fragment } from "react";
 
@@ -41,13 +41,13 @@ export default () => {
       <Header>
         <div className="p-5 max-w-2xl w-full mx-auto flex justify-between">
           <Breadcrumb>
-            <BreadcrumbItem
+            <Breadcrumb.Item
               href="#"
               className="font-medium text-lg inline-flex items-center"
             >
               <Circle className="text-gray-500 inline w-5 mr-2" />
               Alles
-            </BreadcrumbItem>
+            </Breadcrumb.Item>
           </Breadcrumb>
 
           <div className="flex items-center space-x-3">
