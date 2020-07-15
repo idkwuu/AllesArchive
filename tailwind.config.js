@@ -102,10 +102,10 @@ module.exports = {
     ],
   },
   purge: {
-    enabled: process.env.NODE_ENV === "production",
+    enabled: process.env.NODE_ENV === "PRODUCTION",
     content: [
       join(__dirname, "node_modules", "@reactants", "ui", "dist", "**", "*.js"),
-      join(__dirname, "pages", "**", "*.js"),
+      join(__dirname, "pages", "**", "*.tsx"),
     ],
     options: { whitelist: ["dark"] },
   },
