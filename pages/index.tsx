@@ -1,5 +1,5 @@
 import { Header, Breadcrumb, BreadcrumbItem, Avatar, Box } from "@reactants/ui";
-import { Circle, User, Shield, Icon } from "react-feather";
+import { Circle, User, Shield, Bell, Icon } from "react-feather";
 
 interface Category {
   name: string;
@@ -50,11 +50,9 @@ export default () => {
           </Breadcrumb>
 
           <div className="flex items-center space-x-3">
-            <div
-              className="bg-danger text-white rounded-full flex items-center justify-center"
-              style={{ width: 0.6 * 37.5, height: 0.6 * 37.5 }}
-            >
-              2
+            <div className="bg-danger text-white rounded-full flex items-center justify-center py-0.5 px-2.5 space-x-1">
+              <Bell size={0.35 * 37.5} />
+              <span>2</span>
             </div>
             <Avatar username="dante" size={37.5} />
           </div>
