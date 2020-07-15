@@ -1,5 +1,13 @@
-import { Header, Breadcrumb, Avatar, Box } from "@reactants/ui";
-import { Circle, User, Shield, Bell, Icon, Grid } from "react-feather";
+import {
+  Header,
+  Breadcrumb,
+  Avatar,
+  Box,
+  Popover,
+  Transition,
+  Menu,
+} from "@reactants/ui";
+import { Circle, User, Shield, Bell, Icon } from "react-feather";
 import { Fragment } from "react";
 
 interface Category {
@@ -56,10 +64,32 @@ export default () => {
               <span>2</span>
             </div>
 
-            <Avatar
-              className="select-none cursor-pointer hover:opacity-85 transition duration-200 ease"
-              username="dante"
-              size={35}
+            <Popover
+              className="relative inline-block"
+              trigger={(onClick) => (
+                <Avatar
+                  onClick={onClick}
+                  className="select-none cursor-pointer hover:opacity-85 transition duration-200 ease"
+                  username="dante"
+                  size={35}
+                />
+              )}
+              content={(isOpen) => (
+                <Transition
+                  show={isOpen}
+                  enter="transition ease-out duration-100 transform"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="transition ease-in duration-75 transform"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Menu className="absolute origin-top-right right-0">
+                    <Menu.Item>Settings</Menu.Item>
+                    <Menu.Item>Log out</Menu.Item>
+                  </Menu>
+                </Transition>
+              )}
             />
           </div>
         </div>
