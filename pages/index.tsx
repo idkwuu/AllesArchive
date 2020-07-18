@@ -10,14 +10,6 @@ interface Category {
 
 const categories: Category[] = [
   {
-    name: "Security",
-    icon: Shield,
-    links: [
-      { text: "Logging in", href: "/auth" },
-      { text: "Sessions", href: "/sessions" },
-    ],
-  },
-  {
     name: "Profile",
     icon: User,
     links: [
@@ -29,6 +21,14 @@ const categories: Category[] = [
         text: "Contact details",
         href: "/contact",
       },
+    ],
+  },
+  {
+    name: "Security",
+    icon: Shield,
+    links: [
+      { text: "Logging in", href: "/auth" },
+      { text: "Sessions", href: "/sessions" },
     ],
   },
   {
