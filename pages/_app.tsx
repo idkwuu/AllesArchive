@@ -10,6 +10,16 @@ import { Circle, Bell } from "react-feather";
 import "@reactants/ui/dist/index.css";
 
 export default function MyApp({ Component, pageProps }) {
+  const toggleDarkTheme = (e: React.MouseEvent<SVGAElement, MouseEvent>) => {
+    e.preventDefault();
+
+    if (document.documentElement.classList.contains("dark")) {
+      return document.documentElement.classList.remove("dark");
+    }
+
+    document.documentElement.classList.add("dark");
+  };
+
   return (
     <>
       <Header>
@@ -19,7 +29,10 @@ export default function MyApp({ Component, pageProps }) {
               href="#"
               className="font-medium text-lg inline-flex items-center"
             >
-              <Circle className="text-gray-500 inline w-5 mr-2" />
+              <Circle
+                onClick={toggleDarkTheme}
+                className="text-gray-500 inline w-5 mr-2"
+              />
               Alles
             </Breadcrumb.Item>
           </Breadcrumb>
