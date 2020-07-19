@@ -21,7 +21,7 @@ export default () => {
       <Box>
         <Box.Header>Enter your credentials</Box.Header>
         <Box.Content className="px-5 py-6">
-          <form onSubmit={onSubmit} className="space-y-5">
+          <form action="POST" onSubmit={onSubmit} className="space-y-5">
             <Input
               value={username}
               onChange={(e) => setUsername(filterUsername(e.target.value))}
