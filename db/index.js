@@ -16,3 +16,5 @@ module.exports = db;
 
 // Nexus Client
 require("./nexusClient")(db);
+require("./User")(db);
+require("./Session")(db);
