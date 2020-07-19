@@ -68,7 +68,7 @@ export default () => {
               {category.links.map((link, i) => (
                 <Fragment key={i}>
                   <a
-                    className="block px-4 py-2.5 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+                    className="block px-4 py-2.5 text-sm leading-5 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark-hover:bg-gray-700"
                     href={link.href}
                   >
                     {link.text}
