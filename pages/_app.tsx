@@ -9,7 +9,7 @@ import {
 import { Circle, Bell } from "react-feather";
 import "@reactants/ui/dist/index.css";
 
-export default function MyApp({ Component, pageProps }) {
+export default ({ Component, pageProps }) => {
   const toggleDarkTheme = (e: React.MouseEvent<SVGAElement, MouseEvent>) => {
     e.preventDefault();
 
@@ -77,4 +77,4 @@ export default function MyApp({ Component, pageProps }) {
       <Component {...pageProps} />
     </>
   );
-}
+};
