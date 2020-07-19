@@ -29,8 +29,8 @@ module.exports = db => {
 				defaultValue: 0,
 				allowNull: false
 			},
-            country: {
-                type: DataTypes.STRING
+			country: {
+				type: DataTypes.STRING
 			},
 			bDay: {
 				type: DataTypes.TINYINT
