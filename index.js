@@ -14,7 +14,10 @@ db.sync().then(() =>
 );
 
 // Create User
-app.post("/users", require("./api/users/create.js"));
+app.post("/users", require("./api/users/create"));
+
+// Get User from Name#Tag
+app.get("/nametag", require("./api/nametag"));
 
 // User Info
 app.get("/users/:id", require("./api/users"));
