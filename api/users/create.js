@@ -2,6 +2,7 @@ const db = require("../../db");
 const config = require("../../config");
 const uuid = require("uuid").v4;
 const argon2 = require("argon2");
+const tag = require("../../util/generateTag");
 
 module.exports = async (req, res) => {
 	if (
@@ -37,10 +38,14 @@ module.exports = async (req, res) => {
 		id: uuid(),
 		name,
 		nickname,
-		tag: "0001",
+		tag: await tag(name),
 		password
 	});
 
 	// Response
-	res.json({id: user.id});
+	res.json({
+		id: user.id,
+		name: user.name,
+		tag: user.tag
+	});
 };
