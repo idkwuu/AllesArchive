@@ -30,5 +30,8 @@ app.post("/users/:id/reputation", require("./api/users/reputation"));
 app.post("/users/:id/password", require("./api/users/password/update"));
 app.post("/users/:id/password/verify", require("./api/users/password/verify"));
 
+// Sessions
+app.post("/sessions", require("./api/sessions/create"));
+
 // 404
 app.use((req, res) => res.status(404).json({err: "notFound"}));
