@@ -21,6 +21,7 @@ app.get("/nametag", require("./api/nametag"));
 
 // User Info
 app.get("/users/:id", require("./api/users"));
+app.post("/users/:id/reputation", require("./api/users/reputation"));
 
 // Password
 app.post("/users/:id/password", require("./api/users/password/update"));
