@@ -22,5 +22,8 @@ app.get("/nametag", require("./api/nametag"));
 // User Info
 app.get("/users/:id", require("./api/users"));
 
+// Password
+app.post("/users/:id/password/verify", require("./api/users/password/verify"));
+
 // 404
 app.use((req, res) => res.status(404).json({err: "notFound"}));
