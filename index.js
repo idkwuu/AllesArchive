@@ -23,6 +23,7 @@ app.get("/nametag", require("./api/nametag"));
 app.get("/users/:id", require("./api/users"));
 
 // Password
+app.post("/users/:id/password", require("./api/users/password/update"));
 app.post("/users/:id/password/verify", require("./api/users/password/verify"));
 
 // 404
