@@ -32,6 +32,7 @@ app.post("/users/:id/password/verify", require("./api/users/password/verify"));
 
 // Sessions
 app.post("/sessions", require("./api/sessions/create"));
+app.get("/sessions/:id", require("./api/sessions"));
 app.post("/sessions/token", require("./api/sessions/token"));
 
 // 404
