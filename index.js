@@ -17,5 +17,19 @@ app.get("/nametag", (req, res) => {
         .catch(() => res.status(400).json({err: "missingResource"}));
 });
 
+// Get user data
+app.get("/users/:id", (req, res) => {
+    nexus.getUser(req.params.id)
+        .then(user => res.json({
+            id: user.id,
+            name: user.name,
+            tag: user.tag,
+            nickname: user.nickname,
+            plus: user.plus,
+            createdAt: user.createdAt
+        }))
+        .catch(() => res.status(400).json({err: "missingResource"}));
+});
+
 // 404
 app.use((req, res) => res.status(404).json({err: "notFound"}));
