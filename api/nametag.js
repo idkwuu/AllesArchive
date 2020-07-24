@@ -1,7 +1,7 @@
 const db = require("../db");
 
 module.exports = async (req, res) => {
-	const {name, tag} = req.body;
+	const {name, tag} = req.query;
 	if (typeof name !== "string")
 		return res.status(400).json({err: "badRequest"});
 
