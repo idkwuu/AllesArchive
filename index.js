@@ -26,6 +26,9 @@ app.post("/users/:id", require("./api/users/update"));
 // Reputation
 app.post("/users/:id/reputation", require("./api/users/reputation"));
 
+// XP
+app.post("/users/:id/xp", require("./api/users/xp"));
+
 // Password
 app.post("/users/:id/password", require("./api/users/password/update"));
 app.post("/users/:id/password/verify", require("./api/users/password/verify"));
