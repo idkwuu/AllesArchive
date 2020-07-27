@@ -25,6 +25,7 @@ app.get("/users/:id", (req, res) => {
             name: user.name,
             tag: user.tag,
             nickname: user.nickname,
+            xp: user.xp,
             plus: user.plus,
             createdAt: user.createdAt
         }))
