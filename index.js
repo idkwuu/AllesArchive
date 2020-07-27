@@ -14,7 +14,7 @@ app.get("/nametag", (req, res) => {
     
     nexus.nametag(req.query.name, req.query.tag)
         .then(({id}) => res.json({id}))
-        .catch(() => res.status(400).json({err: "missingResource"}));
+        .catch(() => res.status(404).json({err: "missingResource"}));
 });
 
 // Get user data
@@ -28,7 +28,7 @@ app.get("/users/:id", (req, res) => {
             plus: user.plus,
             createdAt: user.createdAt
         }))
-        .catch(() => res.status(400).json({err: "missingResource"}));
+        .catch(() => res.status(404).json({err: "missingResource"}));
 });
 
 // 404
