@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
 			id: req.params.id
 		}
 	});
-	if (!session) return res.status(400).json({err: "missingResource"});
+	if (!session) return res.status(404).json({err: "missingResource"});
 
 	// Response
 	res.json({

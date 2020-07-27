@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
 				tag
 			}
 		});
-		if (!user) return res.status(400).json({err: "missingResource"});
+		if (!user) return res.status(404).json({err: "missingResource"});
 		res.json({
 			id: user.id,
 			name: user.name,

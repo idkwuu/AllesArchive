@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 			id: req.params.id
 		}
 	});
-	if (!user) return res.status(400).json({err: "missingResource"});
+	if (!user) return res.status(404).json({err: "missingResource"});
 
 	// Update
 	await user.update({
