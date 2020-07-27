@@ -32,12 +32,14 @@ module.exports = async (req, res) => {
 		hasPassword: !!user.password,
 		stripeCustomerId: user.stripeCustomerId,
 		country: user.country,
-		bDay: user.bDay,
-		bMonth: user.bMonth,
-		bYear: user.bYear,
-		birthday:
-			user.bDay && user.bMonth && user.bYear
-				? new Date(`${user.bYear}-${user.bMonth}-${user.bDay}`)
-				: null
+		birth: {
+			day: user.bDay,
+			month: user.bMonth,
+			year: user.bYear,
+			date:
+				user.bDay && user.bMonth && user.bYear
+					? new Date(`${user.bYear}-${user.bMonth}-${user.bDay}`)
+					: null
+		}
 	});
 };
