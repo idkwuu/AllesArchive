@@ -142,9 +142,7 @@ module.exports = user => {
                     }
 
                     to {
-                        stroke-dashoffset: ${
-                            (1 - user.xp.levelProgress) * 100
-                        };
+                        stroke-dashoffset: ${calculateCircleProgress(user.xp.levelProgress * 100)};
                     }
                 }
             </style>
