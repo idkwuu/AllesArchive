@@ -1,0 +1,2 @@
+# AllesID Stats SVG
+This project serves an SVG containing user information sourced from Alles' Horizon API. It is based on [this project](https://github.com/anuraghazra/github-readme-stats), and can be used in READMEs.
