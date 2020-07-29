@@ -143,7 +143,7 @@ module.exports = user => {
 
                     to {
                         stroke-dashoffset: ${
-                            user.xp.levelProgress * 100
+                            (1 - user.xp.levelProgress) * 100
                         };
                     }
                 }
