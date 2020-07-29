@@ -27,7 +27,7 @@ module.exports = user => {
             />
             <text x="25" y="35">
                 <tspan class="name">${user.name}</tspan>
-                <tspan class="tag">#${user.tag}</tag>
+                <tspan class="tag">#${user.tag}</tspan>
             </text>
             <g>
                 <g transform="translate(400, ${height / 1.85})">
