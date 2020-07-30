@@ -3,7 +3,7 @@ const moment = require("moment");
 module.exports = user => {
     const items = [
         ["Nickname", user.nickname],
-        ["XP", user.xp.total],
+        ["XP", user.xp.total.toString()],
         ["User since", moment(user.createdAt).format("LL")]
     ];
     const height = Math.max(45 + (items.length + 1) * 20, 150);
@@ -26,7 +26,7 @@ module.exports = user => {
                 stroke="#E4E2E2"
             />
             <text x="25" y="35">
-                <tspan class="name">${user.name}</tspan>
+                <tspan class="name">${encodeHTML(user.name)}</tspan>
                 <tspan class="tag">#${user.tag}</tspan>
             </text>
             <g>
@@ -49,7 +49,7 @@ module.exports = user => {
                     ${items.map((item, i) =>`
                         <g class="stagger" style="animation-delay: ${(i + 3) * 150}ms" transform="translate(25, ${20 * i})">
                             <text class="stat bold" y="12.5">${item[0]}:</text>
-                            <text class="stat" x="135" y="12.5">${item[1]}</text>
+                            <text class="stat" x="135" y="12.5">${encodeHTML(item[1])}</text>
                         </g>
                     `).join("")}
                 </svg>
@@ -157,3 +157,7 @@ const calculateCircleProgress = value => {
     if (value > 100) value = 100;
     return ((100 - value) / 100) * c;
 };
+
+const encodeHTML = str => str
+    .replace(/[\u00A0-\u9999<>&](?!#)/gim, i => "&#" + i.charCodeAt(0) + ";")
+    .replace(/\u0008/gim, "");
