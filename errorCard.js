@@ -1,7 +1,7 @@
 module.exports = `
 <svg width="495" height="120" viewBox="0 0 495 120" fill="none" xmlns="http://www.w3.org/2000/svg">
     <style>
-        .text { font: 600 16px "Segoe UI", Ubuntu, Sans-Serif; fill: #2F80ED }
+        .text { font: 600 16px "Segoe UI", Ubuntu, Sans-Serif; fill: #23529f }
         .small { font: 600 12px "Segoe UI", Ubuntu, Sans-Serif; fill: #252525 }
         .gray { fill: #858585 }
     </style>

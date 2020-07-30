@@ -58,14 +58,14 @@ module.exports = user => {
             <style>
                 .name {
                     font: 600 18px "Segoe UI", Ubuntu, Sans-Serif;
-                    fill: #2f80ed;
+                    fill: #23529f;
                     fill-opacity: 0;
                     animation: fadeIn 0.8s ease-in-out forwards;
                 }
 
                 .tag {
                     font: 400 12px "Segoe UI", Ubuntu, Sans-Serif;
-                    fill: #2f80ed;
+                    fill: #23529f;
                     display: inline-block;
                     fill-opacity: 0;
                     animation: fadeIn 0.8s ease-in-out 1s forwards;
@@ -97,14 +97,14 @@ module.exports = user => {
                 }
 
                 .rank-circle-rim {
-                    stroke: #2f80ed;
+                    stroke: #23529f;
                     fill: none;
                     stroke-width: 6;
                     opacity: 0.2;
                 }
 
                 .rank-circle {
-                    stroke: #2f80ed;
+                    stroke: #23529f;
                     stroke-dasharray: 250;
                     fill: none;
                     stroke-width: 6;
