@@ -1,11 +1,11 @@
-import {Box} from "@reactants/ui";
-import {User, Shield, Icon, Grid, EyeOff} from "react-feather";
-import {Fragment} from "react";
+import { Box } from "@reactants/ui";
+import { User, Shield, Icon, Grid, EyeOff } from "react-feather";
+import { Fragment } from "react";
 
 interface Category {
 	name: string;
 	icon: Icon;
-	links: {text: string; href: string}[];
+	links: { text: string; href: string }[];
 }
 
 const categories: Category[] = [
@@ -15,38 +15,38 @@ const categories: Category[] = [
 		links: [
 			{
 				text: "Personal info",
-				href: "/info"
+				href: "/info",
 			},
 			{
 				text: "Contact details",
-				href: "/contact"
-			}
-		]
+				href: "/contact",
+			},
+		],
 	},
 	{
 		name: "Security",
 		icon: Shield,
 		links: [
-			{text: "Logging in", href: "/auth"},
-			{text: "Sessions", href: "/sessions"}
-		]
+			{ text: "Logging in", href: "/auth" },
+			{ text: "Sessions", href: "/sessions" },
+		],
 	},
 	{
 		name: "Applications",
 		icon: Grid,
 		links: [
-			{text: "Authorized apps", href: "/apps"},
-			{text: "Notifications", href: "/notifications"}
-		]
+			{ text: "Authorized apps", href: "/apps" },
+			{ text: "Notifications", href: "/notifications" },
+		],
 	},
 	{
 		name: "Privacy",
 		icon: EyeOff,
 		links: [
-			{text: "Telemetry", href: "/telemetry"},
-			{text: "Export your data", href: "/data"}
-		]
-	}
+			{ text: "Telemetry", href: "/telemetry" },
+			{ text: "Export your data", href: "/data" },
+		],
+	},
 ];
 
 export default () => {

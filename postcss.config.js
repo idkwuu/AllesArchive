@@ -22,11 +22,11 @@ module.exports = {
 							content: [
 								"./pages/**/*.tsx",
 								"./components/**/*.tsx",
-								"./node_modules/@reactants/ui/dist/index.js"
-							]
-						}
+								"./node_modules/@reactants/ui/dist/index.js",
+							],
+						},
 					],
-					"postcss-preset-env"
+					"postcss-preset-env",
 			  ]
-			: ["postcss-preset-env"]
+			: ["postcss-preset-env"],
 };

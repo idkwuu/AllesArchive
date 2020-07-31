@@ -1,6 +1,6 @@
-import {Box, Input, Button} from "@reactants/ui";
-import {LogIn, Circle} from "react-feather";
-import {useState, FormEvent} from "react";
+import { Box, Input, Button } from "@reactants/ui";
+import { LogIn, Circle } from "react-feather";
+import { useState, FormEvent } from "react";
 
 export default () => {
 	const [nametag, setNametag] = useState<string>("");

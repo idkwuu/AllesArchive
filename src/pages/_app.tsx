@@ -4,12 +4,12 @@ import {
 	Popover,
 	Avatar,
 	Transition,
-	Menu
+	Menu,
 } from "@reactants/ui";
-import {Circle, Bell} from "react-feather";
+import { Circle, Bell } from "react-feather";
 import "@reactants/ui/dist/index.css";
 
-export default ({Component, pageProps}) => {
+export default ({ Component, pageProps }) => {
 	const toggleDarkTheme = (e: React.MouseEvent<SVGAElement, MouseEvent>) => {
 		e.preventDefault();
 
