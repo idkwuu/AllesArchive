@@ -31,6 +31,6 @@ Here is a [list of issues](https://github.com/alleshq/hub/issues?q=is%3Aissue+is
 
 ## Maintainers
 
-Archie Baer ([@archiebaer](https://github.com/archiebaer)) - Alles
+Archie Baer ([@archiebaer](https://github.com/archiebaer))
 
-Dante Issaias ([@danteissaias](https://github.com/danteissaias)) - Independent Contributor
+Dante Issaias ([@danteissaias](https://github.com/danteissaias))
