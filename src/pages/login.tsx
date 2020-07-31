@@ -11,7 +11,11 @@ export default () => {
 		e.preventDefault();
 		if (!nametag || !password) return;
 		setLoading(true);
-		setTimeout(() => setLoading(false), 1000);
+		fetch("/api/login", {
+			method: "POST",
+			body: JSON.stringify({ nametag, password }),
+			headers: [["Content-Type", "application/json"]],
+		});
 	};
 
 	const updateNametag = (value: string) => {
