@@ -5,7 +5,7 @@ import { useState, FormEvent } from "react";
 export default () => {
 	const [nametag, setNametag] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-	const [loading, setLoading] = useState<boolean>();
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
