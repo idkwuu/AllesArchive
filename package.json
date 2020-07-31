@@ -1,22 +1,24 @@
 {
-  "scripts": {
-    "start": "next start",
-    "dev": "next dev",
-    "build": "NODE_ENV=production next build"
-  },
-  "dependencies": {
-    "@reactants/ui": "^3.0.0",
-    "next": "^9.4.4",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-feather": "^2.0.8"
-  },
-  "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^2.3.0",
-    "@types/node": "^14.0.13",
-    "@types/react": "^16.9.38",
-    "@types/react-dom": "^16.9.8",
-    "postcss-preset-env": "^6.7.0",
-    "typescript": "^3.9.6"
-  }
+	"scripts": {
+		"start": "next start",
+		"dev": "next dev",
+		"build": "NODE_ENV=production next build",
+		"format": "prettier --write \"**/*.+(ts|json)\""
+	},
+	"dependencies": {
+		"@reactants/ui": "^3.0.0",
+		"next": "^9.4.4",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-feather": "^2.0.8"
+	},
+	"devDependencies": {
+		"@fullhuman/postcss-purgecss": "^2.3.0",
+		"@types/node": "^14.0.13",
+		"@types/react": "^16.9.38",
+		"@types/react-dom": "^16.9.8",
+		"postcss-preset-env": "^6.7.0",
+		"prettier": "^2.0.5",
+		"typescript": "^3.9.6"
+	}
 }
