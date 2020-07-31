@@ -20,7 +20,11 @@ export default () => {
 		const isFirstCharLetter =
 			((value[0] || "").match(/\w/gi) || []).length >= 1;
 
+		// TODO: These two need to actually set the nametag minus the excluded value
+		// or the behaviour of the cursor is strange.
+		if (value.includes("#") && !hasOneSeperator) return;
 		if (isLastCharSeperator && !isFirstCharLetter) return;
+
 		if (isLastCharSeperator && hasOneSeperator) return setNametag(value);
 		if (!value.includes("#")) return setNametag(value.replace(/[^\w# ]/gi, ""));
 
