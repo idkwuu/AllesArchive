@@ -3,18 +3,31 @@ import {LogIn, Circle} from "react-feather";
 import {useState, FormEvent} from "react";
 
 export default () => {
-	const [name, setName] = useState<string>();
-	const [tag, setTag] = useState<string>();
-	const [password, setPassword] = useState<string>();
+	const [nametag, setNametag] = useState<string>("");
+	const [password, setPassword] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>();
-	const filterName = (u: string) => u.replace(/[^\w\s]/gi, "");
-	const filterTag = (u: string) => u.replace(/[^\d]/gi, "");
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (!name || !tag || !password) return;
+		if (!nametag || !password) return;
 		setLoading(true);
 		setTimeout(() => setLoading(false), 1000);
+	};
+
+	const updateNametag = (value: string) => {
+		const isLastCharSeperator = value[value.length - 1] == "#";
+		const hasOneSeperator = value.split("#").length - 1 === 1;
+		const isFirstCharLetter =
+			((value[0] || "").match(/\w/gi) || []).length >= 1;
+
+		if (isLastCharSeperator && !isFirstCharLetter) return;
+		if (isLastCharSeperator && hasOneSeperator) return setNametag(value);
+		if (!value.includes("#")) return setNametag(value.replace(/[^\w# ]/gi, ""));
+
+		const splitTokens = value.split("#");
+		if (splitTokens[1].length >= 5) return;
+		const tokens = splitTokens[0] + "#" + splitTokens[1].replace(/[^\d]/gi, "");
+		setNametag(tokens);
 	};
 
 	return (
@@ -24,23 +37,12 @@ export default () => {
 				<Box.Header>Enter your credentials</Box.Header>
 				<Box.Content className="px-5 py-6">
 					<form action="POST" onSubmit={onSubmit} className="space-y-5">
-						<label className="text-sm mb-2 block">
-							Nametag<sup className="text-danger opacity-75"></sup>
-						</label>
-
-						<div className="flex space-x-3">
-							<Input
-								value={name}
-								onChange={e => setName(filterName(e.target.value))}
-								placeholder="jessica"
-							/>
-
-							<Input
-								value={tag}
-								onChange={e => setTag(filterTag(e.target.value))}
-								placeholder="0001"
-							/>
-						</div>
+						<Input
+							label="Nametag"
+							value={nametag}
+							onChange={e => updateNametag(e.target.value)}
+							placeholder="jessica#0001"
+						/>
 
 						<Input
 							value={password}
