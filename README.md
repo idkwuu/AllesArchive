@@ -33,4 +33,4 @@ Here is a [list of issues](https://github.com/alleshq/hub/issues?q=is%3Aissue+is
 
 Archie Baer ([@archiebaer](https://github.com/archiebaer)) - Alles
 
-Dante Issaias ([@danteissaias](https://github.com/danteissaias)) - Independant Contributor
+Dante Issaias ([@danteissaias](https://github.com/danteissaias)) - Independent Contributor
