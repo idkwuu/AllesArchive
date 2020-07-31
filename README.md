@@ -2,8 +2,6 @@
   <img src="https://i.imgur.com/SGWCbtl.png" height="120" />
 </p>
 
-# Hub
-
 The central component of The Alles Platform. This application is responsible for handing user authentication, third-party app authorization and user account settings.
 
 ![Screenshot](https://i.imgur.com/PVSQjsT.png)
