@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { User } from "../../types";
 
-type Credentials = {
-	nametag: string;
-	password: string;
-};
-
 export default async (
 	{ method, body }: NextApiRequest,
 	res: NextApiResponse
