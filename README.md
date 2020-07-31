@@ -31,6 +31,27 @@ Here is a [list of issues](https://github.com/alleshq/hub/issues?q=is%3Aissue+is
 
 ## Maintainers
 
-Archie Baer ([@archiebaer](https://github.com/archiebaer))
-
-Dante Issaias ([@danteissaias](https://github.com/danteissaias))
+<table>
+	<tr>
+		<td align="center">
+			<a href="https://github.com/danteissaias">
+				<img
+					src="https://avatars3.githubusercontent.com/u/13090065?s=460&v=4"
+					width="100px;"
+					alt=""
+				/>
+				<br />
+				<sub> <b>Dante Issaias</b></sub></a
+			>
+		</td>
+		<td align="center">
+			<a href="https://github.com/archiebaer"
+				><img
+					src="https://avatars2.githubusercontent.com/u/42045366?s=460&u=19e4ba3c1703180c41a874131a55b505f9fb059f&v=4"
+					width="100px;"
+					alt=""
+				/><br /><sub><b>Archie Baer</b></sub></a
+			>
+		</td>
+	</tr>
+</table>
