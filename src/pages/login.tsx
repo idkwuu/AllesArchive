@@ -3,14 +3,16 @@ import {LogIn, Circle} from "react-feather";
 import {useState, FormEvent} from "react";
 
 export default () => {
-	const [username, setUsername] = useState<string>();
+	const [name, setName] = useState<string>();
+	const [tag, setTag] = useState<string>();
 	const [password, setPassword] = useState<string>();
 	const [loading, setLoading] = useState<boolean>();
-	const filterUsername = (u: string) => u.replace(/[^\w\s]/gi, "");
+	const filterName = (u: string) => u.replace(/[^\w\s]/gi, "");
+	const filterTag = (u: string) => u.replace(/[^\d]/gi, "");
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (!username || !password) return;
+		if (!name || !tag || !password) return;
 		setLoading(true);
 		setTimeout(() => setLoading(false), 1000);
 	};
@@ -22,12 +24,23 @@ export default () => {
 				<Box.Header>Enter your credentials</Box.Header>
 				<Box.Content className="px-5 py-6">
 					<form action="POST" onSubmit={onSubmit} className="space-y-5">
-						<Input
-							value={username}
-							onChange={e => setUsername(filterUsername(e.target.value))}
-							label="Username"
-							placeholder="jessica"
-						/>
+						<label className="text-sm mb-2 block">
+							Nametag<sup className="text-danger opacity-75"></sup>
+						</label>
+
+						<div className="flex space-x-3">
+							<Input
+								value={name}
+								onChange={e => setName(filterName(e.target.value))}
+								placeholder="jessica"
+							/>
+
+							<Input
+								value={tag}
+								onChange={e => setTag(filterTag(e.target.value))}
+								placeholder="0001"
+							/>
+						</div>
 
 						<Input
 							value={password}
