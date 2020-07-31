@@ -45,7 +45,7 @@ export default () => {
 							label="Nametag"
 							value={nametag}
 							onChange={e => updateNametag(e.target.value)}
-							placeholder="jessica#0001"
+							placeholder="Jessica Adams#0001"
 						/>
 
 						<Input
