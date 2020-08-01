@@ -15,7 +15,8 @@ module.exports = db => {
 			}
 		},
 		{
-			paranoid: true
+			paranoid: true,
+			updatedAt: false
 		}
 	);
 
