@@ -73,7 +73,6 @@ export default function Login() {
 								placeholder="Jessica Adams#0001"
 								errored={!!nametagError}
 								note={nametagError}
-								onBlur={validateNametag}
 								hasNote={true}
 							/>
 
