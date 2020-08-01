@@ -1,6 +1,7 @@
 import { Box, Input, Button } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
+import axios from "axios";
 
 export default () => {
 	const [nametag, setNametag] = useState<string>("");
@@ -9,12 +10,19 @@ export default () => {
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (!nametag || !password) return;
+		if (!nametag || !password || nametag.split("#").length < 2) return;
+		const nt = nametag.split("#");
+		const tag = nt.pop();
+		const username = nt.join("#");
+		if (tag.length !== 4) return;
+
+
 		setLoading(true);
-		fetch("/api/login", {
-			method: "POST",
-			body: JSON.stringify({ nametag, password }),
-			headers: [["Content-Type", "application/json"]],
+		axios.post("/api/login", {
+			body: {
+				name: username,
+				tag
+			}
 		});
 	};
 
