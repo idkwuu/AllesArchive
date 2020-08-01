@@ -1,8 +1,8 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { Box, Input, Button, Toast } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
-import { Session } from "../types";
+import cookies from "js-cookie";
 
 export default function Login() {
 	const [nametag, setNametag] = useState<string>("");
@@ -21,20 +21,23 @@ export default function Login() {
 
 		setError("");
 		setLoading(true);
-		try {
-			const session: Session = await axios.post("/api/login", {
+		axios
+			.post("/api/login", {
 				name,
 				tag,
 				password,
+			})
+			.then(res => {
+				cookies.set("sessionToken", res.data.token, {
+					domain: process.env.NODE_ENV === "production" ? "alles.cx" : null,
+					expires: 365,
+				});
+				location.href = "/";
+			})
+			.catch(() => {
+				setError("The username or password entered is incorrect");
+				setLoading(false);
 			});
-		} catch (error) {
-			if (!error.isAxiosError)
-				return setError("An unknown error occured. Try again.");
-
-			const { response } = error as AxiosError;
-			setError(response.data.err);
-			setLoading(false);
-		}
 	};
 
 	return (
