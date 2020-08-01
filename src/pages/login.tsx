@@ -15,14 +15,14 @@ export default () => {
 
 		const splitNametag = nametag.split("#");
 		const tag = splitNametag.pop();
-		const username = splitNametag.join("#");
-		if (tag.length !== 4 || !username) return;
+		const name = splitNametag.join("#");
+		if (tag.length !== 4 || !name) return;
 
 		setLoading(true);
 		axios.post("/api/login", {
-			name: username,
+			name,
 			tag,
-			password
+			password,
 		});
 	};
 
