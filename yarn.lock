@@ -1032,10 +1032,10 @@
   resolved "https://registry.yarnpkg.com/@next/react-refresh-utils/-/react-refresh-utils-9.4.4.tgz#d94cbb3b354a07f1f5b80e554d6b9e34aba99e41"
   integrity sha512-9nKENeWRI6kQk44TbeqleIVtNLfcS3klVUepzl/ZCqzR5Bi06uqBCD277hdVvG/wL1pxA+R/pgJQLqnF5E2wPQ==
 
-"@reactants/ui@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@reactants/ui/-/ui-3.3.0.tgz#024d2410e5d5459e7aa835dbf223a7a0aaaf5d17"
-  integrity sha512-GXThHZwyWF/174/RSN5kBRnDoOoN727WZNnr4Gl0Kz1j96+L2CymYpKqGH0Ye3zozSbeCKEcOgdIXlMFoDj08w==
+"@reactants/ui@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@reactants/ui/-/ui-3.3.1.tgz#d151489ed7941af8d362b8488474a8fba15a9643"
+  integrity sha512-GJYUg03TDS4aKx6Bhb/AP+M8YvquxMiZDJhjHc43bDw0NIR6t+zl5kqF52Axz/J3d3XyRrJ2+1ihKSs1bCtlPQ==
 
 "@types/color-name@^1.1.1":
   version "1.1.1"
