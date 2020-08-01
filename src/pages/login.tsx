@@ -1,13 +1,14 @@
-import axios from "axios";
-import { Box, Input, Button } from "@reactants/ui";
+import axios, { AxiosError } from "axios";
+import { Box, Input, Button, Toast } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
 import { Session } from "../types";
 
-export default () => {
+export default function Login() {
 	const [nametag, setNametag] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(false);
+	const [error, setError] = useState<string>("");
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -18,17 +19,28 @@ export default () => {
 		const name = splitNametag.join("#");
 		if (tag.length !== 4 || !name) return;
 
+		setError("");
 		setLoading(true);
-		axios.post("/api/login", {
-			name,
-			tag,
-			password,
-		});
+		try {
+			const session: Session = await axios.post("/api/login", {
+				name,
+				tag,
+				password,
+			});
+		} catch (error) {
+			if (!error.isAxiosError)
+				return setError("An unknown error occured. Try again.");
+
+			const { response } = error as AxiosError;
+			setError(response.data.err);
+			setLoading(false);
+		}
 	};
 
 	return (
 		<main className="sm:max-w-sm p-5 mx-auto mt-12 space-y-7">
 			<h1 className="font-medium text-center mb-5 text-4xl">Sign In</h1>
+			{error && <Toast color="danger" content={error} />}
 			<Box>
 				<Box.Header>Enter your credentials</Box.Header>
 				<Box.Content className="px-5 py-6">
@@ -77,4 +89,4 @@ export default () => {
 			</Box>
 		</main>
 	);
-};
+}
