@@ -1,28 +1,27 @@
+import axios from "axios";
 import { Box, Input, Button } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
-import axios from "axios";
+import { Session } from "../types";
 
 export default () => {
 	const [nametag, setNametag] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!nametag || !password || nametag.split("#").length < 2) return;
-		const nt = nametag.split("#");
-		const tag = nt.pop();
-		const username = nt.join("#");
-		if (tag.length !== 4) return;
 
+		const splitNametag = nametag.split("#");
+		const tag = splitNametag.pop();
+		const name = splitNametag.join("#");
+		if (tag.length !== 4) return;
+		if (name.length <= 0) return;
 
 		setLoading(true);
-		axios.post("/api/login", {
-			body: {
-				name: username,
-				tag
-			}
+		const session: Session = await axios.post("/api/login", {
+			body: { name, tag },
 		});
 	};
 

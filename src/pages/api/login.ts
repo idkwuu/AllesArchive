@@ -1,11 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { User } from "../../types";
 
-export default async (
-	req: NextApiRequest,
-	res: NextApiResponse
-) => {
-	if (!req.body || typeof req.body.nametag !== "string" || typeof req.body.password !== "string")
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+	if (
+		!req.body ||
+		typeof req.body.nametag !== "string" ||
+		typeof req.body.password !== "string"
+	)
 		return res.status(400).send({ err: "badRequest" });
 
 	const { NEXUS_ID, NEXUS_SECRET } = process.env;
