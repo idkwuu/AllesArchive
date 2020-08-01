@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
+import getAddress from "../../utils/getAddress";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (
@@ -10,20 +11,71 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	)
 		return res.status(400).send({ err: "badRequest" });
 
-	const { NEXUS_ID, NEXUS_SECRET } = process.env;
-	const name = encodeURIComponent(req.body.name);
-	const tag = encodeURIComponent(req.body.tag);
-
 	// Get user id from nametag
+	let id: string;
 	try {
-		const { id } = await axios
-			.get(`https://nexus.alles.cc/nametag?name=${name}&tag=${tag}`, {
-				auth: { username: NEXUS_ID, password: NEXUS_SECRET },
-			})
-			.then(res => res.data);
-
-		console.log(id);
+		id = (
+			await axios.get(
+				`https://nexus.alles.cc/nametag?name=${encodeURIComponent(
+					req.body.name
+				)}&tag=${encodeURIComponent(req.body.tag)}`,
+				{
+					auth: {
+						username: process.env.NEXUS_ID,
+						password: process.env.NEXUS_SECRET,
+					},
+				}
+			)
+		).data.id;
 	} catch (err) {
 		return res.status(400).json({ err: "user.signIn.credentials" });
 	}
+
+	// Validate password
+	try {
+		if (
+			!(
+				await axios.post(
+					`https://nexus.alles.cc/users/${id}/password/verify`,
+					{
+						password: req.body.password,
+					},
+					{
+						auth: {
+							username: process.env.NEXUS_ID,
+							password: process.env.NEXUS_SECRET,
+						},
+					}
+				)
+			).data.matches
+		)
+			return res.status(400).json({ err: "user.signIn.credentials" });
+	} catch (err) {
+		return res.status(400).json({ err: "user.signIn.credentials" });
+	}
+
+	// Create session
+	let token: string;
+	try {
+		token = (
+			await axios.post(
+				`https://nexus.alles.cc/sessions`,
+				{
+					user: id,
+					address: getAddress(req),
+				},
+				{
+					auth: {
+						username: process.env.NEXUS_ID,
+						password: process.env.NEXUS_SECRET,
+					},
+				}
+			)
+		).data.token;
+	} catch (err) {
+		return res.status(500).json({ err: "internalError" });
+	}
+
+	// Response
+	res.json({ token });
 };
