@@ -26,26 +26,6 @@ export default () => {
 		});
 	};
 
-	const updateNametag = (value: string) => {
-		const isLastCharSeperator = value[value.length - 1] == "#";
-		const hasOneSeperator = value.split("#").length - 1 === 1;
-		const isFirstCharLetter =
-			((value[0] || "").match(/\w/gi) || []).length >= 1;
-
-		// TODO: These two need to actually set the nametag minus the excluded value
-		// or the behaviour of the cursor is strange.
-		if (value.includes("#") && !hasOneSeperator) return;
-		if (isLastCharSeperator && !isFirstCharLetter) return;
-
-		if (isLastCharSeperator && hasOneSeperator) return setNametag(value);
-		if (!value.includes("#")) return setNametag(value.replace(/[^\w# ]/gi, ""));
-
-		const splitTokens = value.split("#");
-		if (splitTokens[1].length >= 5) return;
-		const tokens = splitTokens[0] + "#" + splitTokens[1].replace(/[^\d]/gi, "");
-		setNametag(tokens);
-	};
-
 	return (
 		<main className="sm:max-w-sm p-5 mx-auto mt-12 space-y-7">
 			<h1 className="font-medium text-center mb-5 text-4xl">Sign In</h1>
@@ -56,7 +36,7 @@ export default () => {
 						<Input
 							label="Nametag"
 							value={nametag}
-							onChange={e => updateNametag(e.target.value)}
+							onChange={e => setNametag(e.target.value)}
 							placeholder="Jessica Adams#0001"
 						/>
 
