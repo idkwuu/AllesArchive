@@ -49,7 +49,7 @@ const categories: Category[] = [
 	},
 ];
 
-export default () => {
+export default function Index() {
 	return (
 		<main className="sm:max-w-2xl p-5 mx-auto my-5 space-y-7">
 			<h4 className="font-medium text-3xl">
@@ -81,4 +81,4 @@ export default () => {
 			</div>
 		</main>
 	);
-};
+}
