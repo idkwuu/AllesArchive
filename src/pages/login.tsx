@@ -11,17 +11,18 @@ export default () => {
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (!nametag || !password || nametag.split("#").length < 2) return;
+		if (!password || nametag.split("#").length < 2) return;
 
 		const splitNametag = nametag.split("#");
 		const tag = splitNametag.pop();
-		const name = splitNametag.join("#");
-		if (tag.length !== 4) return;
-		if (name.length <= 0) return;
+		const username = splitNametag.join("#");
+		if (tag.length !== 4 || !username) return;
 
 		setLoading(true);
-		const session: Session = await axios.post("/api/login", {
-			body: { name, tag },
+		axios.post("/api/login", {
+			name: username,
+			tag,
+			password
 		});
 	};
 
@@ -31,7 +32,7 @@ export default () => {
 			<Box>
 				<Box.Header>Enter your credentials</Box.Header>
 				<Box.Content className="px-5 py-6">
-					<form action="POST" onSubmit={onSubmit} className="space-y-5">
+					<form method="POST" onSubmit={onSubmit} className="space-y-5">
 						<Input
 							label="Nametag"
 							value={nametag}
