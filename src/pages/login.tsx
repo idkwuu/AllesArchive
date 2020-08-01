@@ -2,7 +2,7 @@ import axios from "axios";
 import { Box, Input, Button, Toast } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
-import { set } from "es-cookie";
+import cookies from "es-cookie";
 
 export default function Login() {
 	const [nametag, setNametag] = useState<string>("");
@@ -23,23 +23,26 @@ export default function Login() {
 
 		setError("");
 		setLoading(true);
-		axios
-			.post("/api/login", {
-				name,
-				tag,
-				password,
-			})
-			.then(res => {
-				set("sessionToken", res.data.token, {
-					domain: process.env.NODE_ENV === "production" ? "alles.cx" : null,
-					expires: 365,
-				});
-				location.href = "/";
-			})
-			.catch(() => {
-				setError("The username or password entered is incorrect");
-				setLoading(false);
+
+		try {
+			const { token }: { token: string } = await axios
+				.post("/api/login", {
+					name,
+					tag,
+					password,
+				})
+				.then(res => res.data);
+
+			cookies.set("sessionToken", token, {
+				domain: process.env.NODE_ENV === "production" ? "alles.cx" : null,
+				expires: 365,
 			});
+
+			location.href = "/";
+		} catch (error) {
+			setError("The username or password entered is incorrect");
+			setLoading(false);
+		}
 	};
 
 	const REQUIRED_FIELD = (field: string) => `${field} is a required field.`;
