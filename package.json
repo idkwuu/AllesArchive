@@ -6,7 +6,7 @@
 		"format": "prettier --write \"src/**/*.+(ts|tsx)\" \"*.+(json|ts|md|js)\""
 	},
 	"dependencies": {
-		"@reactants/ui": "^3.0.1",
+		"@reactants/ui": "^3.2.0",
 		"axios": "^0.19.2",
 		"next": "^9.4.4",
 		"react": "^16.13.1",
