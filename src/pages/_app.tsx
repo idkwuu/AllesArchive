@@ -47,7 +47,7 @@ export default ({ Component, pageProps }) => {
 								<Avatar
 									onClick={onClick}
 									className="select-none cursor-pointer hover:opacity-85 transition duration-200 ease"
-									username="dante"
+									id="b990537f-8037-49b7-a9df-b4b2a36b7911"
 									size={35}
 								/>
 							)}
