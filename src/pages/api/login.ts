@@ -2,22 +2,17 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { User } from "../../types";
 
 export default async (
-	{ method, body }: NextApiRequest,
+	req: NextApiRequest,
 	res: NextApiResponse
 ) => {
-	if (method !== "POST") {
-		return res.status(405).send({ err: "methodNotAllowed" });
-	}
-
-	if (!body || !body.nametag || !body.password) {
+	if (!req.body || typeof req.body.nametag !== "string" || typeof req.body.password !== "string")
 		return res.status(400).send({ err: "badRequest" });
-	}
 
 	const { NEXUS_ID, NEXUS_SECRET } = process.env;
 	const auth = Buffer.from(`${NEXUS_ID}:${NEXUS_SECRET}`);
-	const nametag = body.nametag.split("#");
+	const nametag = req.body.nametag.split("#");
 
-	// 1. Convert nametag to id
+	// Convert nametag to id
 	const {
 		id,
 	}: Pick<
@@ -28,9 +23,7 @@ export default async (
 		{ headers: [["Authorization", `Basic ${auth.toString("base64")}`]] }
 	).then(res => res.json());
 
-	// 2. Verify Password
+	// Verify Password
 
-	// 3. Create Session
-
-	return res.send(id);
+	// Create Session
 };
