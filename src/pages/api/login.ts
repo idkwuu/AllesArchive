@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import getAddress from "../../utils/getAddress";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,71 +11,40 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	)
 		return res.status(400).send({ err: "badRequest" });
 
-	// Get user id from nametag
-	let id: string;
+	const name = encodeURIComponent(req.body.name);
+	const tag = encodeURIComponent(req.body.tag);
+	const password = req.body.password;
+
+	const { NEXUS_ID, NEXUS_SECRET, NEXUS_URI } = process.env;
+	const auth = { username: NEXUS_ID, password: NEXUS_SECRET };
+
 	try {
-		id = (
-			await axios.get(
-				`https://nexus.alles.cc/nametag?name=${encodeURIComponent(
-					req.body.name
-				)}&tag=${encodeURIComponent(req.body.tag)}`,
-				{
-					auth: {
-						username: process.env.NEXUS_ID,
-						password: process.env.NEXUS_SECRET,
-					},
-				}
-			)
-		).data.id;
-	} catch (err) {
+		// Get user id from nametag
+		const {
+			id,
+		}: {
+			id: string;
+		} = await axios
+			.get(`${NEXUS_URI}/nametag?name=${name}&tag=${tag}`, { auth })
+			.then(res => res.data);
+
+		// Validate password
+		const { matches } = await axios
+			.post(`${NEXUS_URI}/users/${id}/password/verify`, { password }, { auth })
+			.then(res => res.data);
+
+		if (!matches) throw Error();
+
+		// Create session
+		const user = id;
+		const address = getAddress(req);
+
+		const { token } = await axios
+			.post(`${NEXUS_URI}/sessions`, { user, address }, { auth })
+			.then(res => res.data);
+
+		res.json({ token });
+	} catch (error) {
 		return res.status(400).json({ err: "user.signIn.credentials" });
 	}
-
-	// Validate password
-	try {
-		if (
-			!(
-				await axios.post(
-					`https://nexus.alles.cc/users/${id}/password/verify`,
-					{
-						password: req.body.password,
-					},
-					{
-						auth: {
-							username: process.env.NEXUS_ID,
-							password: process.env.NEXUS_SECRET,
-						},
-					}
-				)
-			).data.matches
-		)
-			return res.status(400).json({ err: "user.signIn.credentials" });
-	} catch (err) {
-		return res.status(400).json({ err: "user.signIn.credentials" });
-	}
-
-	// Create session
-	let token: string;
-	try {
-		token = (
-			await axios.post(
-				`https://nexus.alles.cc/sessions`,
-				{
-					user: id,
-					address: getAddress(req),
-				},
-				{
-					auth: {
-						username: process.env.NEXUS_ID,
-						password: process.env.NEXUS_SECRET,
-					},
-				}
-			)
-		).data.token;
-	} catch (err) {
-		return res.status(500).json({ err: "internalError" });
-	}
-
-	// Response
-	res.json({ token });
 };
