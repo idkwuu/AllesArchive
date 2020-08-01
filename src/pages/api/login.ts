@@ -13,8 +13,8 @@ export default async (
 		return res.status(400).send({ err: "badRequest" });
 	}
 
-	const { NEXUS_CLIENT_ID, NEXUS_CLIENT_SECRET } = process.env;
-	const auth = Buffer.from(`${NEXUS_CLIENT_ID}:${NEXUS_CLIENT_SECRET}`);
+	const { NEXUS_ID, NEXUS_SECRET } = process.env;
+	const auth = Buffer.from(`${NEXUS_ID}:${NEXUS_SECRET}`);
 	const nametag = body.nametag.split("#");
 
 	// 1. Convert nametag to id
