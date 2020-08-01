@@ -2,7 +2,7 @@ import axios from "axios";
 import { Box, Input, Button, Toast } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
-import cookies from "js-cookie";
+import { set } from "es-cookie";
 
 export default function Login() {
 	const [nametag, setNametag] = useState<string>("");
@@ -30,7 +30,7 @@ export default function Login() {
 				password,
 			})
 			.then(res => {
-				cookies.set("sessionToken", res.data.token, {
+				set("sessionToken", res.data.token, {
 					domain: process.env.NODE_ENV === "production" ? "alles.cx" : null,
 					expires: 365,
 				});
