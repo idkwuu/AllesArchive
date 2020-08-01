@@ -10,24 +10,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	)
 		return res.status(400).send({ err: "badRequest" });
 
+	const { NEXUS_ID, NEXUS_SECRET } = process.env;
+	const name = encodeURIComponent(req.body.name);
+	const tag = encodeURIComponent(req.body.tag);
+
 	// Get user id from nametag
-	let id: String;
 	try {
-		id = (
-			await axios.get(
-				`https://nexus.alles.cc/nametag?name=${encodeURIComponent(
-					req.body.name
-				)}&tag=${encodeURIComponent(req.body.tag)}`,
-				{
-					auth: {
-						username: process.env.NEXUS_ID,
-						password: process.env.NEXUS_SECRET,
-					},
-				}
-			)
-		).data.id;
+		const { id } = await axios
+			.get(`https://nexus.alles.cc/nametag?name=${name}&tag=${tag}`, {
+				auth: { username: NEXUS_ID, password: NEXUS_SECRET },
+			})
+			.then(res => res.data);
+
+		console.log(id);
 	} catch (err) {
 		return res.status(400).json({ err: "user.signIn.credentials" });
 	}
-	console.log(id);
 };
