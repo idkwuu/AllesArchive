@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import getAddress from "../../utils/getAddress";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
