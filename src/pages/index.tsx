@@ -1,7 +1,10 @@
 import { Box } from "@reactants/ui";
-import { User, Shield, Icon, Grid, EyeOff } from "react-feather";
+import { User as UserIcon, Shield, Icon, Grid, EyeOff } from "react-feather";
 import { Fragment } from "react";
 import { Page } from "../components";
+import { NextPage } from "next";
+import axios from "axios";
+import { User } from "../types";
 
 interface Category {
 	name: string;
@@ -12,7 +15,7 @@ interface Category {
 const categories: Category[] = [
 	{
 		name: "Profile",
-		icon: User,
+		icon: UserIcon,
 		links: [
 			{
 				text: "Personal info",
@@ -50,12 +53,13 @@ const categories: Category[] = [
 	},
 ];
 
-export default function Index() {
+const Index: NextPage<{ user: User }> = ({ user }) => {
 	return (
 		<Page>
 			<main className="sm:max-w-2xl p-5 mx-auto my-5 space-y-7">
 				<h4 className="font-medium text-3xl">
-					Hey, Dante<sup className="select-none text-primary">+</sup>
+					Hey, {user.nickname}
+					{user.plus && <sup className="select-none text-primary">+</sup>}
 				</h4>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -84,4 +88,15 @@ export default function Index() {
 			</main>
 		</Page>
 	);
-}
+};
+
+Index.getInitialProps = async ctx => {
+	const { cookie } = ctx.req.headers;
+	const user: User = await axios
+		.get(`${process.env.PUBLIC_URI}/api/me`, { headers: { cookie: cookie } })
+		.then(res => res.data);
+
+	return { user };
+};
+
+export default Index;
