@@ -13,6 +13,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		return res.status(400).send({ err: "badRequest" });
 	}
 
+	const delay = Math.floor(Math.random() * 100) + 75;
+	await new Promise((resolve) => setTimeout(() => resolve(), delay));
+
 	const name = encodeURIComponent(req.body.name);
 	const tag = encodeURIComponent(req.body.tag);
 	const password = req.body.password;
