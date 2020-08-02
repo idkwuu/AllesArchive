@@ -41,8 +41,9 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 						? process.env.COOKIE_DOMAIN
 						: null,
 				expires: 365,
-				sameSite: "none",
-				secure: true,
+				...(process.env.NODE_ENV === "production"
+					? { sameSite: "none", secure: true }
+					: {}),
 			});
 
 			Router.push(query?.next?.toString() ?? "/");
