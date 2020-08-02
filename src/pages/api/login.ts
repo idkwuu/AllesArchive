@@ -8,8 +8,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		typeof req.body.name !== "string" ||
 		typeof req.body.tag !== "string" ||
 		typeof req.body.password !== "string"
-	)
+	) {
 		return res.status(400).send({ err: "badRequest" });
+	}
 
 	const name = encodeURIComponent(req.body.name);
 	const tag = encodeURIComponent(req.body.tag);
