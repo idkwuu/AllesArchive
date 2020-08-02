@@ -33,7 +33,7 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 					tag,
 					password,
 				})
-				.then(res => res.data);
+				.then((res) => res.data);
 
 			setCookie("sessionToken", token, {
 				domain:
@@ -69,13 +69,13 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 							<Input
 								label="Nametag"
 								value={nametag}
-								onChange={e => setNametag(e.target.value)}
+								onChange={(e) => setNametag(e.target.value)}
 								placeholder="Jessica Adams#0001"
 							/>
 
 							<Input
 								value={password}
-								onChange={e => setPassword(e.target.value)}
+								onChange={(e) => setPassword(e.target.value)}
 								label="Password"
 								type="password"
 								placeholder="••••••••••"

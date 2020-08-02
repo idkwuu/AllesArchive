@@ -29,12 +29,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			"user"
 		> = await axios
 			.get(`${NEXUS_URI}/nametag?name=${name}&tag=${tag}`, { auth })
-			.then(res => res.data);
+			.then((res) => res.data);
 
 		// Validate password
 		const { matches } = await axios
 			.post(`${NEXUS_URI}/users/${id}/password/verify`, { password }, { auth })
-			.then(res => res.data);
+			.then((res) => res.data);
 
 		if (!matches) throw Error();
 
@@ -44,7 +44,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 		const { token } = await axios
 			.post(`${NEXUS_URI}/sessions`, { user, address }, { auth })
-			.then(res => res.data);
+			.then((res) => res.data);
 
 		res.json({ token });
 	} catch (error) {

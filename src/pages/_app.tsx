@@ -45,7 +45,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 				const headers = isServer ? { cookie } : {};
 				const user: User = await axios
 					.get(`${process.env.PUBLIC_URI ?? ""}/api/me`, { headers })
-					.then(res => res.data);
+					.then((res) => res.data);
 
 				return { ...props, user };
 			} catch (error) {

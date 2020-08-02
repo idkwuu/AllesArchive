@@ -58,7 +58,7 @@ export const Page: React.FC<Props> = ({
 
 							<Popover
 								className="relative inline-block"
-								trigger={onClick => (
+								trigger={(onClick) => (
 									<Avatar
 										onClick={onClick}
 										className="select-none cursor-pointer hover:opacity-85 transition duration-200 ease"
@@ -66,7 +66,7 @@ export const Page: React.FC<Props> = ({
 										size={35}
 									/>
 								)}
-								content={isOpen => (
+								content={(isOpen) => (
 									<Transition
 										show={isOpen}
 										enter="transition ease-out duration-100 transform"

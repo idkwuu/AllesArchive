@@ -15,12 +15,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		// Get session from token
 		const session: Omit<Session, "token"> = await axios
 			.post(`${NEXUS_URI}/sessions/token`, { token }, { auth })
-			.then(res => res.data);
+			.then((res) => res.data);
 
 		// Get user by id
 		const user: User = await axios
 			.get(`${NEXUS_URI}/users/${session.user}`, { auth })
-			.then(res => res.data);
+			.then((res) => res.data);
 
 		res.send(user);
 	} catch (error) {

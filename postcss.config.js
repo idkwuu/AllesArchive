@@ -5,7 +5,7 @@ module.exports = {
 					[
 						"@fullhuman/postcss-purgecss",
 						{
-							defaultExtractor: content => {
+							defaultExtractor: (content) => {
 								// Capture as liberally as possible, including things like `h-(screen-1.5)`
 								const broadMatches =
 									content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || [];
