@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-import getAddress from "../../utils/getAddress";
 import { Session } from "../../types";
+import { getAddress } from "../../lib";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (
