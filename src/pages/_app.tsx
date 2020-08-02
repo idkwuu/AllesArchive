@@ -41,6 +41,8 @@ Hub.getInitialProps = async (appContext: AppContext) => {
 	const redirect = (location: string) =>
 		isServer
 			? ctx.res.writeHead(302, { location }).end()
+			: /^https?:\/\//i.test(location)
+			? (window.location.href = location)
 			: Router.push(location);
 
 	switch (ctx.pathname) {

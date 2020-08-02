@@ -46,7 +46,12 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 					: {}),
 			});
 
-			Router.push(query?.next?.toString() ?? "/");
+			const location = query?.next?.toString() ?? "/";
+			const redirect = (location: string) =>
+				/^https?:\/\//i.test(location)
+					? (window.location.href = location)
+					: Router.push(location);
+			redirect(location);
 		} catch (error) {
 			setError("The username or password entered is incorrect");
 			setLoading(false);
