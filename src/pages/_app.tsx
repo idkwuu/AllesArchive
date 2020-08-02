@@ -3,16 +3,33 @@ import App from "next/app";
 import type { AppProps, AppContext } from "next/app";
 import axios from "axios";
 import nextCookies from "next-cookies";
+import { remove as removeCookie } from "es-cookie";
 import Router from "next/router";
 import { UserContext } from "../lib";
 import type { User } from "../types";
+import { useEffect } from "react";
 
 type Props = {
 	user: User;
+	clearSessionToken?: boolean;
 } & AppProps;
 
-function MyApp({ Component, pageProps, user }: Props) {
-	return (
+function MyApp({
+	Component,
+	pageProps,
+	user,
+	clearSessionToken = false,
+}: Props) {
+	useEffect(() => {
+		if (clearSessionToken) {
+			removeCookie("sessionToken");
+			location.reload();
+		}
+	});
+
+	return clearSessionToken ? (
+		<></>
+	) : (
 		<UserContext.Provider value={user}>
 			<Component {...pageProps} />
 		</UserContext.Provider>
@@ -49,8 +66,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 
 				return { ...props, user };
 			} catch (error) {
-				redirect(`/login?next=${ctx.pathname}`);
-				return { ...props };
+				return { ...props, clearSessionToken: true };
 			}
 	}
 };
