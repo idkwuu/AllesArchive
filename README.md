@@ -22,6 +22,34 @@ yarn dev
 
 Now you can start developing! 🎉
 
+## Running in production
+
+Requirements:
+
+- Docker
+- A functioning instance of [Nexua](https://github.com/alleshq/nexus)
+- A valid pair of Nexus credentials
+
+To get started, edit the `docker-compose.yml` file to fit your needs.
+
+Make sure that you have all the necessary environment variables configured:
+
+```
+NEXUS_ID=
+NEXUS_SECRET=
+NEXUS_URI=
+COOKIE_DOMAIN=
+PUBLIC_URI=
+```
+
+Then to start the application using `docker-compose` run:
+
+```
+docker-compose up
+```
+
+Now you have your own production instance of The Alles Hub! 🎉
+
 ## Contributing
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device.
