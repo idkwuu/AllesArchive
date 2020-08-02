@@ -14,12 +14,7 @@ type Props = {
 	clearSessionToken?: boolean;
 } & AppProps;
 
-function MyApp({
-	Component,
-	pageProps,
-	user,
-	clearSessionToken = false,
-}: Props) {
+function Hub({ Component, pageProps, user, clearSessionToken = false }: Props) {
 	useEffect(() => {
 		if (clearSessionToken) {
 			removeCookie("sessionToken");
@@ -36,7 +31,7 @@ function MyApp({
 	);
 }
 
-MyApp.getInitialProps = async (appContext: AppContext) => {
+Hub.getInitialProps = async (appContext: AppContext) => {
 	const props = await App.getInitialProps(appContext);
 
 	const { ctx } = appContext;
@@ -71,4 +66,4 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 	}
 };
 
-export default MyApp;
+export default Hub;
