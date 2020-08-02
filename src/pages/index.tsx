@@ -65,7 +65,14 @@ const Index: NextPage = () => {
 					{user.plus && <sup className="select-none text-primary">+</sup>}
 				</h4>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+				<h4 className="text-3xl text-gray-600">
+					We're still developing this section of our website...
+				</h4>
+
+				<div
+					className="grid grid-cols-1 md:grid-cols-2 gap-3 pointer-events-none select-none"
+					style={{ filter: "blur(5px)" }}
+				>
 					{categories.map((category, i) => (
 						<Box key={i}>
 							<Box.Header className="flex items-center space-x-2">
