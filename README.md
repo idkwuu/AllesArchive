@@ -27,7 +27,7 @@ Now you can start developing! 🎉
 Requirements:
 
 - Docker
-- A functioning instance of [Nexua](https://github.com/alleshq/nexus)
+- A functioning instance of [Nexus](https://github.com/alleshq/nexus)
 - A valid pair of Nexus credentials
 
 To get started, edit the `docker-compose.yml` file to fit your needs.
