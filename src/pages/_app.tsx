@@ -39,13 +39,19 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 			return { ...props };
 		default:
 			if (!cookies.sessionToken) redirect(`/login?next=${ctx.pathname}`);
-			const cookie = ctx.req?.headers.cookie ?? "";
-			const headers = isServer ? { cookie } : {};
-			const user: User = await axios
-				.get(`${process.env.PUBLIC_URI ?? ""}/api/me`, { headers })
-				.then(res => res.data);
 
-			return { ...props, user };
+			try {
+				const cookie = ctx.req?.headers.cookie ?? "";
+				const headers = isServer ? { cookie } : {};
+				const user: User = await axios
+					.get(`${process.env.PUBLIC_URI ?? ""}/api/me`, { headers })
+					.then(res => res.data);
+
+				return { ...props, user };
+			} catch (error) {
+				redirect(`/login?next=${ctx.pathname}`);
+				return { ...props };
+			}
 	}
 };
 
