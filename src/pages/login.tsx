@@ -119,4 +119,6 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 	);
 };
 
+Login.getInitialProps = async ({ query }) => Promise.resolve({ query });
+
 export default Login;
