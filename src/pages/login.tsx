@@ -2,7 +2,7 @@ import axios from "axios";
 import { Box, Input, Button, Toast, Breadcrumb } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
-import cookies from "es-cookie";
+import { set as setCookie } from "es-cookie";
 import { Page } from "../components";
 
 export default function Login() {
@@ -32,7 +32,7 @@ export default function Login() {
 				})
 				.then(res => res.data);
 
-			cookies.set("sessionToken", token, {
+			setCookie("sessionToken", token, {
 				domain:
 					process.env.NODE_ENV === "production"
 						? process.env.COOKIE_DOMAIN
@@ -42,6 +42,7 @@ export default function Login() {
 
 			location.href = "/";
 		} catch (error) {
+			console.log(error);
 			setError("The username or password entered is incorrect");
 			setLoading(false);
 		}
