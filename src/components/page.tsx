@@ -12,9 +12,14 @@ import Link from "next/link";
 
 type Props = {
 	authenticated?: boolean;
+	breadcrumbs?: React.ReactNode;
 };
 
-export const Page: React.FC<Props> = ({ children, authenticated = true }) => {
+export const Page: React.FC<Props> = ({
+	children,
+	authenticated = true,
+	breadcrumbs = null,
+}) => {
 	const toggleDarkTheme = (e: React.MouseEvent<SVGAElement, MouseEvent>) => {
 		e.preventDefault();
 
@@ -28,16 +33,17 @@ export const Page: React.FC<Props> = ({ children, authenticated = true }) => {
 			<Header>
 				<div className="p-5 max-w-2xl w-full mx-auto flex justify-between">
 					<Breadcrumb>
-						<Breadcrumb.Item
-							href="#"
-							className="font-medium text-lg inline-flex items-center"
-						>
-							<Circle
-								onClick={toggleDarkTheme}
-								className="text-gray-500 inline w-5 mr-2"
-							/>
-							Alles
-						</Breadcrumb.Item>
+						<Link href="/" passHref>
+							<Breadcrumb.Item className="font-medium text-lg inline-flex items-center">
+								<Circle
+									onClick={toggleDarkTheme}
+									className="text-gray-500 inline w-5 mr-2"
+								/>
+								Alles
+							</Breadcrumb.Item>
+						</Link>
+
+						{breadcrumbs}
 					</Breadcrumb>
 
 					{authenticated ? (

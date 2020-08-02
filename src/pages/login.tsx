@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Box, Input, Button, Toast } from "@reactants/ui";
+import { Box, Input, Button, Toast, Breadcrumb } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
 import cookies from "es-cookie";
@@ -44,11 +44,15 @@ export default function Login() {
 		}
 	};
 
-	const REQUIRED_FIELD = (field: string) => `${field} is a required field.`;
-	const INVALID_FIELD = (field: string) => `${field} is invalid or malformed.`;
-
 	return (
-		<Page authenticated={false}>
+		<Page
+			authenticated={false}
+			breadcrumbs={
+				<Breadcrumb.Item className="opacity-50 pointer-events-none select-none">
+					Sign In
+				</Breadcrumb.Item>
+			}
+		>
 			<main className="sm:max-w-sm p-5 mx-auto mt-12 space-y-7">
 				<h1 className="font-medium text-center mb-5 text-4xl">Sign In</h1>
 				{error && <Toast color="danger" content={error} />}
