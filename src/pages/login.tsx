@@ -3,6 +3,7 @@ import { Box, Input, Button, Toast } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
 import cookies from "es-cookie";
+import { Page } from "../components";
 
 export default function Login() {
 	const [nametag, setNametag] = useState<string>("");
@@ -61,62 +62,64 @@ export default function Login() {
 	};
 
 	return (
-		<main className="sm:max-w-sm p-5 mx-auto mt-12 space-y-7">
-			<h1 className="font-medium text-center mb-5 text-4xl">Sign In</h1>
-			{error && <Toast color="danger" content={error} />}
-			<Box>
-				<Box.Header>Enter your credentials</Box.Header>
-				<Box.Content className="px-5 py-6">
-					<form method="POST" onSubmit={onSubmit} className="space-y-7">
-						<div className="space-y-2">
-							<Input
-								label="Nametag"
-								value={nametag}
-								onChange={e => updateNametag(e)}
-								placeholder="Jessica Adams#0001"
-								errored={!!nametagError}
-								note={nametagError}
-								hasNote={true}
-							/>
+		<Page authenticated={false}>
+			<main className="sm:max-w-sm p-5 mx-auto mt-12 space-y-7">
+				<h1 className="font-medium text-center mb-5 text-4xl">Sign In</h1>
+				{error && <Toast color="danger" content={error} />}
+				<Box>
+					<Box.Header>Enter your credentials</Box.Header>
+					<Box.Content className="px-5 py-6">
+						<form method="POST" onSubmit={onSubmit} className="space-y-7">
+							<div className="space-y-2">
+								<Input
+									label="Nametag"
+									value={nametag}
+									onChange={e => updateNametag(e)}
+									placeholder="Jessica Adams#0001"
+									errored={!!nametagError}
+									note={nametagError}
+									hasNote={true}
+								/>
 
-							<Input
-								value={password}
-								onChange={e => setPassword(e.target.value)}
-								label="Password"
-								type="password"
-								placeholder="••••••••••"
-								errored={!!passwordError}
-								note={passwordError}
-							/>
-						</div>
+								<Input
+									value={password}
+									onChange={e => setPassword(e.target.value)}
+									label="Password"
+									type="password"
+									placeholder="••••••••••"
+									errored={!!passwordError}
+									note={passwordError}
+								/>
+							</div>
 
+							<Button
+								loading={loading}
+								icon={<LogIn />}
+								size="lg"
+								className="w-full"
+								color="primary"
+							>
+								Sign In
+							</Button>
+						</form>
+					</Box.Content>
+				</Box>
+
+				<Box>
+					<Box.Header>Sign in another way</Box.Header>
+					<Box.Content className="space-y-5 px-5 py-6">
 						<Button
-							loading={loading}
-							icon={<LogIn />}
+							disabled={true}
+							icon={<Circle />}
 							size="lg"
 							className="w-full"
-							color="primary"
+							color="inverted"
 						>
-							Sign In
+							Sign In With Pulsar
 						</Button>
-					</form>
-				</Box.Content>
-			</Box>
-
-			<Box>
-				<Box.Header>Sign in another way</Box.Header>
-				<Box.Content className="space-y-5 px-5 py-6">
-					<Button
-						disabled={true}
-						icon={<Circle />}
-						size="lg"
-						className="w-full"
-						color="inverted"
-					>
-						Sign In With Pulsar
-					</Button>
-				</Box.Content>
-			</Box>
-		</main>
+					</Box.Content>
+				</Box>
+			</main>
+		</Page>
 	);
 }
