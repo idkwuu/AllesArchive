@@ -24,7 +24,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 		res.send(user);
 	} catch (error) {
-		console.log(error);
-		res.send({});
+		res.status(500).send({ err: "internalError" });
 	}
 };
