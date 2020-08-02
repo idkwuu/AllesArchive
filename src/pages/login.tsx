@@ -33,7 +33,10 @@ export default function Login() {
 				.then(res => res.data);
 
 			cookies.set("sessionToken", token, {
-				domain: process.env.NODE_ENV === "production" ? "alles.cx" : null,
+				domain:
+					process.env.NODE_ENV === "production"
+						? process.env.COOKIE_DOMAIN
+						: null,
 				expires: 365,
 			});
 
