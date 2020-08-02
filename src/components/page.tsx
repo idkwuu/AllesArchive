@@ -11,6 +11,7 @@ import { Circle, Bell } from "react-feather";
 import Link from "next/link";
 import { remove as removeCookie } from "es-cookie";
 import Router from "next/router";
+import { useUser } from "../lib";
 
 type Props = {
 	authenticated?: boolean;
@@ -29,6 +30,8 @@ export const Page: React.FC<Props> = ({
 			document.documentElement.classList.remove("dark");
 		else document.documentElement.classList.add("dark");
 	};
+
+	const user = useUser();
 
 	const logOut = () => {
 		removeCookie("sessionToken");
@@ -66,7 +69,7 @@ export const Page: React.FC<Props> = ({
 									<Avatar
 										onClick={onClick}
 										className="select-none cursor-pointer hover:opacity-85 transition duration-200 ease"
-										id="b990537f-8037-49b7-a9df-b4b2a36b7911"
+										id={user.id}
 										size={35}
 									/>
 								)}

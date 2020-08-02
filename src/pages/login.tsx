@@ -6,7 +6,6 @@ import { set as setCookie } from "es-cookie";
 import { NextPage } from "next";
 import Router from "next/router";
 import { ParsedUrlQuery } from "querystring";
-import nextCookies from "next-cookies";
 import { Page } from "../components";
 
 const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
@@ -44,9 +43,8 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 				expires: 365,
 			});
 
-			Router.push(query.next?.toString() ?? "/");
+			Router.push(query?.next?.toString() ?? "/");
 		} catch (error) {
-			console.log(error);
 			setError("The username or password entered is incorrect");
 			setLoading(false);
 		}
@@ -113,13 +111,6 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 			</main>
 		</Page>
 	);
-};
-
-Login.getInitialProps = async ctx => {
-	const cookies = nextCookies(ctx);
-	if (cookies.sessionToken)
-		ctx.res.writeHead(302, { Location: ctx.query.next ?? "/" }).end();
-	return { query: ctx.query };
 };
 
 export default Login;

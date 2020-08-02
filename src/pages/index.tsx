@@ -3,9 +3,9 @@ import { User as UserIcon, Shield, Icon, Grid, EyeOff } from "react-feather";
 import { Fragment } from "react";
 import { Page } from "../components";
 import { User } from "../types";
-import { withAuth } from "../lib";
 import { NextPage } from "next";
 import Link from "next/link";
+import { useUser } from "../lib";
 
 interface Category {
 	name: string;
@@ -54,7 +54,9 @@ const categories: Category[] = [
 	},
 ];
 
-const Index: NextPage<{ user: User }> = ({ user }) => {
+const Index: NextPage = () => {
+	const user = useUser();
+
 	return (
 		<Page>
 			<main className="sm:max-w-2xl p-5 mx-auto my-5 space-y-7">
@@ -90,4 +92,4 @@ const Index: NextPage<{ user: User }> = ({ user }) => {
 	);
 };
 
-export default withAuth(Index);
+export default Index;
