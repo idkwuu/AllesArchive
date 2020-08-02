@@ -2,9 +2,10 @@ import { Box } from "@reactants/ui";
 import { User as UserIcon, Shield, Icon, Grid, EyeOff } from "react-feather";
 import { Fragment } from "react";
 import { Page } from "../components";
-import { NextPage } from "next";
-import axios from "axios";
 import { User } from "../types";
+import { withAuth } from "../lib";
+import { NextPage } from "next";
+import Link from "next/link";
 
 interface Category {
 	name: string;
@@ -73,12 +74,11 @@ const Index: NextPage<{ user: User }> = ({ user }) => {
 							<div className="py-1.5">
 								{category.links.map((link, i) => (
 									<Fragment key={i}>
-										<a
-											className="block px-4 py-2.5 text-sm leading-5 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark-hover:bg-gray-700 focus:bg-gray-100 dark-focus:bg-gray-700"
-											href={link.href}
-										>
-											{link.text}
-										</a>
+										<Link href={link.href} passHref>
+											<a className="block px-4 py-2.5 text-sm leading-5 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark-hover:bg-gray-700 focus:bg-gray-100 dark-focus:bg-gray-700">
+												{link.text}
+											</a>
+										</Link>
 									</Fragment>
 								))}
 							</div>
@@ -90,13 +90,4 @@ const Index: NextPage<{ user: User }> = ({ user }) => {
 	);
 };
 
-Index.getInitialProps = async ctx => {
-	const { cookie } = ctx.req.headers;
-	const user: User = await axios
-		.get(`${process.env.PUBLIC_URI}/api/me`, { headers: { cookie: cookie } })
-		.then(res => res.data);
-
-	return { user };
-};
-
-export default Index;
+export default withAuth(Index);
