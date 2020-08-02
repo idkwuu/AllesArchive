@@ -12,7 +12,8 @@
 		"next": "^9.4.4",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
-		"react-feather": "^2.0.8"
+		"react-feather": "^2.0.8",
+		"swr": "^0.3.0"
 	},
 	"devDependencies": {
 		"@fullhuman/postcss-purgecss": "^2.3.0",

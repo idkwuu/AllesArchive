@@ -11,7 +11,7 @@ import { Circle, Bell } from "react-feather";
 import Link from "next/link";
 import { remove as removeCookie } from "es-cookie";
 import Router from "next/router";
-import { useUser } from "../lib";
+import { useUser, useTheme } from "../lib";
 
 type Props = {
 	authenticated?: boolean;
@@ -23,15 +23,8 @@ export const Page: React.FC<Props> = ({
 	authenticated = true,
 	breadcrumbs = null,
 }) => {
-	const toggleDarkTheme = (e: React.MouseEvent<SVGAElement, MouseEvent>) => {
-		e.preventDefault();
-
-		if (document.documentElement.classList.contains("dark"))
-			document.documentElement.classList.remove("dark");
-		else document.documentElement.classList.add("dark");
-	};
-
 	const user = useUser();
+	const { toggleTheme } = useTheme();
 
 	const logOut = () => {
 		removeCookie("sessionToken");
@@ -46,7 +39,7 @@ export const Page: React.FC<Props> = ({
 						<Link href="/" passHref>
 							<Breadcrumb.Item className="font-medium text-lg inline-flex items-center">
 								<Circle
-									onClick={toggleDarkTheme}
+									onClick={toggleTheme}
 									className="text-gray-500 inline w-5 mr-2"
 								/>
 								Alles
