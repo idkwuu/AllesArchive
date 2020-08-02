@@ -3,9 +3,13 @@ import { Box, Input, Button, Toast, Breadcrumb } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
 import { set as setCookie } from "es-cookie";
+import { NextPage } from "next";
+import Router from "next/router";
+import { ParsedUrlQuery } from "querystring";
+import nextCookies from "next-cookies";
 import { Page } from "../components";
 
-export default function Login() {
+const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 	const [nametag, setNametag] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(false);
@@ -40,7 +44,7 @@ export default function Login() {
 				expires: 365,
 			});
 
-			location.href = "/";
+			Router.push(query.next?.toString() ?? "/");
 		} catch (error) {
 			console.log(error);
 			setError("The username or password entered is incorrect");
@@ -109,4 +113,13 @@ export default function Login() {
 			</main>
 		</Page>
 	);
-}
+};
+
+Login.getInitialProps = async ctx => {
+	const cookies = nextCookies(ctx);
+	if (cookies.sessionToken)
+		ctx.res.writeHead(302, { Location: ctx.query.next ?? "/" }).end();
+	return { query: ctx.query };
+};
+
+export default Login;
