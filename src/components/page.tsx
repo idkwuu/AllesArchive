@@ -9,6 +9,8 @@ import {
 } from "@reactants/ui";
 import { Circle, Bell } from "react-feather";
 import Link from "next/link";
+import { remove as removeCookie } from "es-cookie";
+import Router from "next/router";
 
 type Props = {
 	authenticated?: boolean;
@@ -26,6 +28,11 @@ export const Page: React.FC<Props> = ({
 		if (document.documentElement.classList.contains("dark"))
 			document.documentElement.classList.remove("dark");
 		else document.documentElement.classList.add("dark");
+	};
+
+	const logOut = () => {
+		removeCookie("sessionToken");
+		Router.push("/login");
 	};
 
 	return (
@@ -74,8 +81,12 @@ export const Page: React.FC<Props> = ({
 										leaveTo="opacity-0 scale-95"
 									>
 										<Menu className="absolute origin-top-right right-0">
-											<Menu.Item>Settings</Menu.Item>
-											<Menu.Item>Log out</Menu.Item>
+											<Menu.Item
+												onClick={() => logOut()}
+												className="cursor-pointer"
+											>
+												Log out
+											</Menu.Item>
 										</Menu>
 									</Transition>
 								)}
