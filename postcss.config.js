@@ -20,8 +20,7 @@ module.exports = {
 							},
 							whitelist: ["dark", "html", "body"],
 							content: [
-								"./pages/**/*.tsx",
-								"./components/**/*.tsx",
+								"./src/**/*.tsx",
 								"./node_modules/@reactants/ui/dist/index.js",
 							],
 						},
