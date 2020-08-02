@@ -42,7 +42,7 @@ COOKIE_DOMAIN=
 PUBLIC_URI=
 ```
 
-Then to start the application using `docker-compose` run:
+Then start the application by running:
 
 ```
 docker-compose up
