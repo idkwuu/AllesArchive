@@ -30,7 +30,7 @@ Requirements:
 - A functioning instance of [Nexus](https://github.com/alleshq/nexus)
 - A valid pair of Nexus credentials
 
-To get started, edit the `docker-compose.yml` file to fit your needs.
+To get started, rename the `docker-compose-example.yml` file to `docker-compose.yml` and edit it to fit your needs.
 
 Make sure that you have all the necessary environment variables configured:
 
