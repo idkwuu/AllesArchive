@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import getAddress from "../../utils/getAddress";
+import { Session } from "../../types";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (
@@ -23,9 +24,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		// Get user id from nametag
 		const {
 			id,
-		}: {
-			id: string;
-		} = await axios
+		}: Omit<
+			Session,
+			"user"
+		> = await axios
 			.get(`${NEXUS_URI}/nametag?name=${name}&tag=${tag}`, { auth })
 			.then(res => res.data);
 
