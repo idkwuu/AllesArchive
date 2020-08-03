@@ -11,20 +11,10 @@ import { useEffect } from "react";
 
 type Props = {
 	user: User;
-	clearSessionToken?: boolean;
 } & AppProps;
 
-function Hub({ Component, pageProps, user, clearSessionToken = false }: Props) {
-	useEffect(() => {
-		if (clearSessionToken) {
-			removeCookie("sessionToken");
-			location.reload();
-		}
-	});
-
-	return clearSessionToken ? (
-		<></>
-	) : (
+function Hub({ Component, pageProps, user }: Props) {
+	return (
 		<UserContext.Provider value={user}>
 			<Component {...pageProps} />
 		</UserContext.Provider>
@@ -48,9 +38,6 @@ Hub.getInitialProps = async (appContext: AppContext) => {
 	switch (ctx.pathname) {
 		case "/_error":
 			return { ...props };
-		case "/login":
-			if (cookies.sessionToken) redirect(ctx.query.next?.toString() ?? "/");
-			return { ...props };
 		default:
 			if (!cookies.sessionToken) redirect(`/login?next=${ctx.pathname}`);
 
@@ -61,9 +48,12 @@ Hub.getInitialProps = async (appContext: AppContext) => {
 					.get(`${process.env.PUBLIC_URI ?? ""}/api/me`, { headers })
 					.then((res) => res.data);
 
+				if (ctx.pathname === "/login")
+					redirect(ctx.query.next?.toString() ?? "/");
+
 				return { ...props, user };
 			} catch (error) {
-				return { ...props, clearSessionToken: true };
+				return { ...props };
 			}
 	}
 };
