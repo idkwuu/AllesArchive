@@ -10,7 +10,7 @@ type Props = {
 	user: User;
 } & AppProps;
 
-function Hub({ Component, pageProps, user }: Props) {
+export default function Hub({ Component, pageProps, user }: Props) {
 	return (
 		<UserContext.Provider value={user}>
 			<Component {...pageProps} />
@@ -18,7 +18,7 @@ function Hub({ Component, pageProps, user }: Props) {
 	);
 }
 
-Hub.getInitialProps = async (appContext: AppContext) => {
+export async function getInitialProps(appContext: AppContext) {
 	const props = await App.getInitialProps(appContext);
 
 	const { ctx } = appContext;
@@ -59,6 +59,4 @@ Hub.getInitialProps = async (appContext: AppContext) => {
 
 		return { ...props };
 	}
-};
-
-export default Hub;
+}
