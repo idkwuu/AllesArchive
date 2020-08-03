@@ -18,7 +18,7 @@ export default function Hub({ Component, pageProps, user }: Props) {
 	);
 }
 
-export async function getInitialProps(appContext: AppContext) {
+Hub.getInitialProps = async (appContext: AppContext) => {
 	const props = await App.getInitialProps(appContext);
 
 	const { ctx } = appContext;
@@ -59,4 +59,4 @@ export async function getInitialProps(appContext: AppContext) {
 
 		return { ...props };
 	}
-}
+};
