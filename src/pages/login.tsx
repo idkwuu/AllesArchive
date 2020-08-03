@@ -36,13 +36,13 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 				.then((res) => res.data);
 
 			setCookie("sessionToken", token, {
-				domain:
-					process.env.NODE_ENV === "production"
-						? process.env.COOKIE_DOMAIN
-						: null,
 				expires: 365,
 				...(process.env.NODE_ENV === "production"
-					? { sameSite: "none", secure: true }
+					? {
+							domain: process.env.COOKIE_DOMAIN,
+							sameSite: "none",
+							secure: true,
+					  }
 					: {}),
 			});
 
