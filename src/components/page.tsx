@@ -10,6 +10,7 @@ import {
 import { Circle, Bell } from "react-feather";
 import Link from "next/link";
 import Router from "next/router";
+import Head from "next/head";
 import { useUser, useTheme } from "../lib";
 
 type Props = {
@@ -27,16 +28,25 @@ export const Page: React.FC<Props> = ({
 
 	const logOut = () => {
 		// delete all cookies
+		const domain = `Domain=${process.env.NEXT_PUBLIC_COOKIE_DOMAIN};`;
+		const expires = `Expires=${new Date().toUTCString()};`;
+		const path = "Path=/;";
+
 		document.cookie.split(";").forEach(function (c) {
 			document.cookie = c
 				.replace(/^ +/, "")
-				.replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+				.replace(/=.*/, "=;" + expires + domain + path);
 		});
+
 		Router.push("/login");
 	};
 
 	return (
 		<>
+			<Head>
+				<title>Alles</title>
+			</Head>
+
 			<Header>
 				<div className="p-5 max-w-2xl w-full mx-auto flex justify-between">
 					<Breadcrumb>
