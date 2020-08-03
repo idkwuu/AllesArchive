@@ -1,7 +1,6 @@
 import { Box } from "@reactants/ui";
 import { User as UserIcon, Shield, Icon, Grid, EyeOff } from "react-feather";
 import { Fragment } from "react";
-import type { NextPage } from "next";
 import Link from "next/link";
 import { Page } from "../components";
 import { useUser } from "../lib";
