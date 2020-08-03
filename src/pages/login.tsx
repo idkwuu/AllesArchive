@@ -36,7 +36,7 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 
 			const date = new Date();
 			const isProduction = process.env.NODE_ENV === "production";
-			date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+			date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
 
 			setCookie("sessionToken", token, {
 				expires: date,
