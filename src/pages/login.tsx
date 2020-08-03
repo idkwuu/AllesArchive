@@ -40,8 +40,6 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 				...(process.env.NODE_ENV === "production"
 					? {
 							domain: process.env.COOKIE_DOMAIN,
-							sameSite: "none",
-							secure: true,
 					  }
 					: {}),
 			});
