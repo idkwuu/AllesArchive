@@ -11,6 +11,7 @@ import { Circle, Bell } from "react-feather";
 import Link from "next/link";
 import Router from "next/router";
 import Head from "next/head";
+import moment from "moment";
 import { useUser, useTheme } from "../lib";
 
 type Props = {
@@ -25,6 +26,7 @@ export const Page: React.FC<Props> = ({
 }) => {
 	const user = useUser();
 	const { toggleTheme } = useTheme();
+	const d = process.env.buildTimestamp;
 
 	const logOut = () => {
 		// delete all cookies
@@ -42,7 +44,7 @@ export const Page: React.FC<Props> = ({
 	};
 
 	return (
-		<>
+		<div style={{ position: "relative", minHeight: "100vh" }}>
 			<Head>
 				<title>Alles</title>
 			</Head>
@@ -116,7 +118,36 @@ export const Page: React.FC<Props> = ({
 				</div>
 			</Header>
 
-			{children}
-		</>
+			<div className="pt-5 pb-15">{children}</div>
+
+			<footer className="border-gray-400 flex items-center justify-center text-sm absolute bottom-0 w-full h-15 text-gray-500 dark:text-gray-400">
+				<div className="w-full max-w-2xl">
+					<div className="float-left space-x-5">
+						Built on {moment(d).format("LL")} at {moment(d).format("LT")}
+					</div>
+
+					<div className="float-right space-x-7">
+						<a
+							href="https://github.com/alleshq/hub"
+							className="text-primary hover:opacity-75 transition duration-200 ease"
+						>
+							Source
+						</a>
+
+						<Link href="/privacy" passHref>
+							<a className="text-primary hover:opacity-75 transition duration-200 ease">
+								Privacy
+							</a>
+						</Link>
+
+						<Link href="/terms" passHref>
+							<a className="text-primary hover:opacity-75 transition duration-200 ease">
+								Terms
+							</a>
+						</Link>
+					</div>
+				</div>
+			</footer>
+		</div>
 	);
 };

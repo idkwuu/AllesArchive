@@ -10,5 +10,6 @@ declare namespace NodeJS {
 		readonly NEXUS_URI: string;
 		readonly PUBLIC_URI: string;
 		readonly NEXT_PUBLIC_COOKIE_DOMAIN: string;
+		readonly buildTimestamp: string;
 	}
 }

@@ -66,7 +66,7 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 				</Breadcrumb.Item>
 			}
 		>
-			<main className="sm:max-w-sm p-5 mx-auto mt-12 space-y-7">
+			<main className="sm:max-w-sm p-5 mx-auto space-y-7">
 				<h1 className="font-medium text-center mb-5 text-4xl">Sign In</h1>
 				{error && <Toast color="danger" content={error} />}
 				<Box>
