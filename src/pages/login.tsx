@@ -43,6 +43,7 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 			const security = isProduction ? `Secure; SameSite=None;` : "";
 			const path = "Path=/;";
 			const cookie = value + expires + domain + path + security;
+			console.log(cookie);
 			document.cookie = cookie;
 
 			const location = query?.next?.toString() ?? "/";
@@ -50,6 +51,7 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 				? (window.location.href = location)
 				: Router.push(location);
 		} catch (error) {
+			console.log(error);
 			setError("The nametag or password entered is incorrect.");
 			setLoading(false);
 		}
