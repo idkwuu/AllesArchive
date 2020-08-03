@@ -117,6 +117,6 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 	);
 }
 
-export async function getInitialProps({ query }) {
+Login.getInitialProps = ({ query }) => {
 	return { query };
-}
+};
