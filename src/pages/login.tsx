@@ -35,13 +35,14 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 				})
 				.then((res) => res.data);
 
+			const { NODE_ENV, COOKIE_DOMAIN } = process.env;
 			setCookie("sessionToken", token, {
 				expires: 365,
-				...(process.env.NODE_ENV === "production"
-					? {
-							domain: process.env.COOKIE_DOMAIN,
-					  }
-					: {}),
+				...(NODE_ENV === "production" && {
+					domain: COOKIE_DOMAIN,
+					secure: true,
+					sameSite: "none",
+				}),
 			});
 
 			const location = query?.next?.toString() ?? "/";

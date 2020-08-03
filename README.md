@@ -42,6 +42,8 @@ COOKIE_DOMAIN=
 PUBLIC_URI=
 ```
 
+> Note: Sometimes a leading do is required in front of `COOKIE_DOMAIN` if you want it to be available across subdomains.
+
 Then start the application by running:
 
 ```
