@@ -3,11 +3,9 @@ import App from "next/app";
 import type { AppProps, AppContext } from "next/app";
 import axios from "axios";
 import nextCookies from "next-cookies";
-import { remove as removeCookie } from "es-cookie";
 import Router from "next/router";
 import { UserContext } from "../lib";
 import type { User } from "../types";
-import { useEffect } from "react";
 
 type Props = {
 	user: User;
@@ -35,32 +33,33 @@ Hub.getInitialProps = async (appContext: AppContext) => {
 			? (window.location.href = location)
 			: Router.push(location);
 
-	switch (ctx.pathname) {
-		case "/_error":
-			return { ...props };
-		default:
-			if (!cookies.sessionToken)
-				try {
-					const cookie = ctx.req?.headers.cookie ?? "";
-					const headers = isServer ? { cookie } : {};
-					const user: User = await axios
-						.get(`${process.env.PUBLIC_URI ?? ""}/api/me`, { headers })
-						.then((res) => res.data);
+	const excludedPaths = ["/_error"];
+	const redirectIfLoggedInPaths = ["/login", "/register"];
+	const allowGuestPaths = [];
 
-					// At this point the token is valid, if we're at
-					// the login page, we're already logged in, so we
-					// redirect to home or ?next.
-					if (ctx.pathname === "/login")
-						redirect(ctx.query.next?.toString() ?? "/");
+	// Don't do authentication for excluded paths
+	if (excludedPaths.includes(ctx.pathname)) {
+		return { ...props };
+	}
 
-					return { ...props, user };
-				} catch (error) {
-					// At this point the token is invalid, we don't want
-					// to redirect login to login because that's a bad idea.
-					if (ctx.pathname !== "/login")
-						redirect(`/login?next=${ctx.pathname}`);
-					return { ...props };
-				}
+	try {
+		const cookie = ctx.req?.headers.cookie ?? "";
+		const headers = isServer ? { cookie } : {};
+		const user: User = await axios
+			.get(`${process.env.PUBLIC_URI ?? ""}/api/me`, { headers })
+			.then((res) => res.data);
+
+		// At this point we're 100% sure the token is valid.
+		if (redirectIfLoggedInPaths.includes(ctx.pathname))
+			redirect(ctx.query.next?.toString() ?? "/");
+
+		return { ...props, user };
+	} catch (error) {
+		// At this point we're 100% sure the token is invalid.
+		if (!redirectIfLoggedInPaths.includes(ctx.pathname))
+			redirect(`/login?next=${ctx.pathname}`);
+
+		return { ...props };
 	}
 };
 
