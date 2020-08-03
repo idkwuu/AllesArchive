@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-import { Session, User } from "../../types";
+import type { NextApiRequest, NextApiResponse } from "next";
+import type { Session, User } from "../../types";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (!req.cookies.sessionToken) {

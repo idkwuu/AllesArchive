@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-import { Session } from "../../types";
+import type { NextApiRequest, NextApiResponse } from "next";
+import type { Session } from "../../types";
 import { getAddress } from "../../lib";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

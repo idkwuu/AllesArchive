@@ -1,10 +1,9 @@
 import { Box } from "@reactants/ui";
 import { User as UserIcon, Shield, Icon, Grid, EyeOff } from "react-feather";
 import { Fragment } from "react";
-import { Page } from "../components";
-import { User } from "../types";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import Link from "next/link";
+import { Page } from "../components";
 import { useUser } from "../lib";
 
 interface Category {
@@ -54,7 +53,7 @@ const categories: Category[] = [
 	},
 ];
 
-const Index: NextPage = () => {
+export default function Index() {
 	const user = useUser();
 
 	return (
@@ -97,6 +96,4 @@ const Index: NextPage = () => {
 			</main>
 		</Page>
 	);
-};
-
-export default Index;
+}

@@ -1,10 +1,10 @@
 import "@reactants/ui/dist/index.css";
-import App from "next/app";
-import type { AppProps, AppContext } from "next/app";
 import axios from "axios";
+import App from "next/app";
 import Router from "next/router";
-import { UserContext } from "../lib";
+import type { AppProps, AppContext } from "next/app";
 import type { User } from "../types";
+import { UserContext } from "../lib";
 
 type Props = {
 	user: User;

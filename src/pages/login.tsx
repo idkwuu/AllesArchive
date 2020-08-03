@@ -3,12 +3,11 @@ import { Box, Input, Button, Toast, Breadcrumb } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
 import { set as setCookie } from "es-cookie";
-import { NextPage } from "next";
 import Router from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { Page } from "../components";
 
-const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
+export default function Login({ query }: { query: ParsedUrlQuery }) {
 	const [nametag, setNametag] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(false);
@@ -116,8 +115,8 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 			</main>
 		</Page>
 	);
-};
+}
 
-Login.getInitialProps = async ({ query }) => Promise.resolve({ query });
-
-export default Login;
+export async function getInitialProps({ query }) {
+	return { query };
+}
