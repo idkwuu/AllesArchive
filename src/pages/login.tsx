@@ -49,7 +49,7 @@ const Login: NextPage<{ query: ParsedUrlQuery }> = ({ query }) => {
 				? (window.location.href = location)
 				: Router.push(location);
 		} catch (error) {
-			setError("The username or password entered is incorrect");
+			setError("The nametag or password entered is incorrect.");
 			setLoading(false);
 		}
 	};
