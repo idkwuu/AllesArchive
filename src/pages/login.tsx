@@ -34,11 +34,11 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 				})
 				.then((res) => res.data);
 
-			const { NODE_ENV, COOKIE_DOMAIN } = process.env;
+			const { NODE_ENV, NEXT_PUBLIC_COOKIE_DOMAIN } = process.env;
 			setCookie("sessionToken", token, {
 				expires: 365,
 				...(NODE_ENV === "production" && {
-					domain: COOKIE_DOMAIN,
+					domain: NEXT_PUBLIC_COOKIE_DOMAIN,
 					secure: true,
 					sameSite: "none",
 				}),

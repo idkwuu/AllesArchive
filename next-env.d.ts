@@ -8,7 +8,7 @@ declare namespace NodeJS {
 		readonly NEXUS_ID: string;
 		readonly NEXUS_SECRET: string;
 		readonly NEXUS_URI: string;
-		readonly COOKIE_DOMAIN: string;
 		readonly PUBLIC_URI: string;
+		readonly NEXT_PUBLIC_COOKIE_DOMAIN: string;
 	}
 }
