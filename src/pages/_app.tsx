@@ -2,7 +2,6 @@ import "@reactants/ui/dist/index.css";
 import App from "next/app";
 import type { AppProps, AppContext } from "next/app";
 import axios from "axios";
-import nextCookies from "next-cookies";
 import Router from "next/router";
 import { UserContext } from "../lib";
 import type { User } from "../types";
@@ -23,7 +22,6 @@ Hub.getInitialProps = async (appContext: AppContext) => {
 	const props = await App.getInitialProps(appContext);
 
 	const { ctx } = appContext;
-	const cookies = nextCookies(ctx);
 	const isServer = typeof window === "undefined";
 
 	const redirect = (location: string) =>
