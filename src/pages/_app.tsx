@@ -39,22 +39,28 @@ Hub.getInitialProps = async (appContext: AppContext) => {
 		case "/_error":
 			return { ...props };
 		default:
-			if (!cookies.sessionToken) redirect(`/login?next=${ctx.pathname}`);
+			if (!cookies.sessionToken)
+				try {
+					const cookie = ctx.req?.headers.cookie ?? "";
+					const headers = isServer ? { cookie } : {};
+					const user: User = await axios
+						.get(`${process.env.PUBLIC_URI ?? ""}/api/me`, { headers })
+						.then((res) => res.data);
 
-			try {
-				const cookie = ctx.req?.headers.cookie ?? "";
-				const headers = isServer ? { cookie } : {};
-				const user: User = await axios
-					.get(`${process.env.PUBLIC_URI ?? ""}/api/me`, { headers })
-					.then((res) => res.data);
+					// At this point the token is valid, if we're at
+					// the login page, we're already logged in, so we
+					// redirect to home or ?next.
+					if (ctx.pathname === "/login")
+						redirect(ctx.query.next?.toString() ?? "/");
 
-				if (ctx.pathname === "/login")
-					redirect(ctx.query.next?.toString() ?? "/");
-
-				return { ...props, user };
-			} catch (error) {
-				return { ...props };
-			}
+					return { ...props, user };
+				} catch (error) {
+					// At this point the token is invalid, we don't want
+					// to redirect login to login because that's a bad idea.
+					if (ctx.pathname !== "/login")
+						redirect(`/login?next=${ctx.pathname}`);
+					return { ...props };
+				}
 	}
 };
 
