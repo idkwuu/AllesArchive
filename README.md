@@ -38,8 +38,8 @@ Make sure that you have all the necessary environment variables configured:
 NEXUS_ID=
 NEXUS_SECRET=
 NEXUS_URI=
-COOKIE_DOMAIN=
 PUBLIC_URI=
+NEXT_PUBLIC_COOKIE_DOMAIN=
 ```
 
 > Note: Sometimes a leading do is required in front of `COOKIE_DOMAIN` if you want it to be available across subdomains.
