@@ -2,7 +2,6 @@ import axios from "axios";
 import { Box, Input, Button, Toast, Breadcrumb } from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
-import { set as setCookie } from "es-cookie";
 import Router from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { Page } from "../components";
@@ -34,21 +33,23 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 				})
 				.then((res) => res.data);
 
-			setCookie("sessionToken", token, {
-				expires: 365,
-				...(process.env.NODE_ENV === "production" && {
-					domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN,
-					secure: true,
-					sameSite: "none",
-				}),
-			});
+			const date = new Date();
+			const isProduction = process.env.NODE_ENV === "production";
+			date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+			const expires = `Expires=${date.toUTCString()};`;
+			const domain = `Domain=${process.env.NEXT_PUBLIC_COOKIE_DOMAIN};`;
+			const value = `sessionToken=${token};`;
+			const security = isProduction ? `Secure; SameSite=None;` : "";
+			const path = "Path=/;";
+			const cookie = value + expires + domain + path + security;
+			document.cookie = cookie;
 
 			const location = query?.next?.toString() ?? "/";
 			/^https?:\/\/|^\/\//i.test(location)
 				? (window.location.href = location)
 				: Router.push(location);
 		} catch (error) {
-			console.log(error);
 			setError("The nametag or password entered is incorrect.");
 			setLoading(false);
 		}

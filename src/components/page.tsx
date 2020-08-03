@@ -9,7 +9,6 @@ import {
 } from "@reactants/ui";
 import { Circle, Bell } from "react-feather";
 import Link from "next/link";
-import { remove as removeCookie } from "es-cookie";
 import Router from "next/router";
 import { useUser, useTheme } from "../lib";
 
@@ -27,7 +26,12 @@ export const Page: React.FC<Props> = ({
 	const { toggleTheme } = useTheme();
 
 	const logOut = () => {
-		removeCookie("sessionToken");
+		// delete all cookies
+		document.cookie.split(";").forEach(function (c) {
+			document.cookie = c
+				.replace(/^ +/, "")
+				.replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+		});
 		Router.push("/login");
 	};
 
