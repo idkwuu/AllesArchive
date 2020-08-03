@@ -34,11 +34,10 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 				})
 				.then((res) => res.data);
 
-			const { NODE_ENV, NEXT_PUBLIC_COOKIE_DOMAIN } = process.env;
 			setCookie("sessionToken", token, {
 				expires: 365,
-				...(NODE_ENV === "production" && {
-					domain: NEXT_PUBLIC_COOKIE_DOMAIN,
+				...(process.env.NODE_ENV === "production" && {
+					domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN,
 					secure: true,
 					sameSite: "none",
 				}),
@@ -49,6 +48,7 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 				? (window.location.href = location)
 				: Router.push(location);
 		} catch (error) {
+			console.log(error);
 			setError("The nametag or password entered is incorrect.");
 			setLoading(false);
 		}
