@@ -5,6 +5,7 @@ import { useState, FormEvent } from "react";
 import Router from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { Page } from "../components";
+import { setCookie } from "../lib";
 
 export default function Login({ query }: { query: ParsedUrlQuery }) {
 	const [nametag, setNametag] = useState<string>("");
@@ -37,13 +38,14 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 			const isProduction = process.env.NODE_ENV === "production";
 			date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
 
-			const expires = `Expires=${date.toUTCString()};`;
-			const domain = `Domain=${process.env.NEXT_PUBLIC_COOKIE_DOMAIN};`;
-			const value = `sessionToken=${token};`;
-			const security = isProduction ? `Secure; SameSite=None;` : "";
-			const path = "Path=/;";
-			const cookie = value + expires + domain + path + security;
-			document.cookie = cookie;
+			setCookie("sessionToken", token, {
+				expires: date,
+				...(isProduction && {
+					domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN,
+					sameSite: "none",
+					secure: true,
+				}),
+			});
 
 			const location = query?.next?.toString() ?? "/";
 			/^https?:\/\/|^\/\//i.test(location)
