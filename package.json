@@ -8,9 +8,11 @@
 	"dependencies": {
 		"@reactants/ui": "^3.4.0",
 		"axios": "^0.19.2",
+		"classnames": "^2.2.6",
 		"es-cookie": "^1.3.2",
 		"moment": "^2.27.0",
 		"next": "^9.4.4",
+		"next-cookies": "^2.0.3",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-feather": "^2.0.8",

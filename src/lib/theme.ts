@@ -1,20 +1,21 @@
 // https://github.com/pacocoursey/paco/blob/master/lib/theme.ts
 import { useCallback, useEffect } from "react";
 import useSWR from "swr";
+import * as cookies from "es-cookie";
 
 export type Theme = "dark" | "light";
 
-export const themeStorageKey = "theme";
+export const themeCookieName = "theme";
 
 const isServer = typeof window === "undefined";
 const getTheme = (): Theme => {
 	if (isServer) return "light";
-	return (localStorage.getItem(themeStorageKey) as Theme) || "light";
+	return (cookies.get(themeCookieName) as Theme) || "light";
 };
 
 const setDarkMode = () => {
 	try {
-		localStorage.setItem(themeStorageKey, "dark");
+		cookies.set(themeCookieName, "dark");
 		document.documentElement.classList.add("dark");
 	} catch (err) {
 		console.error(err);
@@ -23,7 +24,7 @@ const setDarkMode = () => {
 
 const setLightMode = () => {
 	try {
-		localStorage.setItem(themeStorageKey, "light");
+		cookies.set(themeCookieName, "light");
 		document.documentElement.classList.remove("dark");
 	} catch (err) {
 		console.error(err);
@@ -54,7 +55,7 @@ const disableAnimation = () => {
 };
 
 export const useTheme = () => {
-	const { data: theme, mutate } = useSWR(themeStorageKey, getTheme, {
+	const { data: theme, mutate } = useSWR(themeCookieName, getTheme, {
 		initialData: getTheme(),
 	});
 
