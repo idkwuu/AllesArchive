@@ -12,6 +12,7 @@ import Link from "next/link";
 import Router from "next/router";
 import Head from "next/head";
 import moment from "moment";
+import { remove as removeCookie } from "es-cookie";
 import { useUser, useTheme } from "../lib";
 
 type Props = {
@@ -29,17 +30,9 @@ export const Page: React.FC<Props> = ({
 	const d = process.env.buildTimestamp;
 
 	const logOut = () => {
-		// delete all cookies
-		const domain = `Domain=${process.env.NEXT_PUBLIC_COOKIE_DOMAIN};`;
-		const expires = `Expires=${new Date().toUTCString()};`;
-		const path = "Path=/;";
-
-		document.cookie.split(";").forEach(function (c) {
-			document.cookie = c
-				.replace(/^ +/, "")
-				.replace(/=.*/, "=;" + expires + domain + path);
-		});
-
+		const isProduction = process.env.NODE_ENV === "production";
+		const domain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
+		removeCookie("sesionToken", isProduction && { domain });
 		Router.push("/login");
 	};
 

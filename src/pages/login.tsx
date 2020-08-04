@@ -4,8 +4,8 @@ import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
 import Router from "next/router";
 import { ParsedUrlQuery } from "querystring";
+import { set as setCookie } from "es-cookie";
 import { Page } from "../components";
-import { setCookie } from "../lib";
 
 export default function Login({ query }: { query: ParsedUrlQuery }) {
 	const [nametag, setNametag] = useState<string>("");
@@ -34,14 +34,12 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 				})
 				.then((res) => res.data);
 
-			const date = new Date();
 			const isProduction = process.env.NODE_ENV === "production";
-			date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
-
+			const domain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
 			setCookie("sessionToken", token, {
-				expires: date,
+				expires: 365,
 				...(isProduction && {
-					domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN,
+					domain,
 					sameSite: "none",
 					secure: true,
 				}),
