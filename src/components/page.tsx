@@ -17,13 +17,15 @@ import { useUser, useTheme } from "../lib";
 
 type Props = {
 	authenticated?: boolean;
+	title?: string;
 	breadcrumbs?: React.ReactNode;
 };
 
 export const Page: React.FC<Props> = ({
 	children,
 	authenticated = true,
-	breadcrumbs = null,
+	title,
+	breadcrumbs,
 }) => {
 	const user = useUser();
 	const { toggleTheme } = useTheme();
@@ -39,7 +41,7 @@ export const Page: React.FC<Props> = ({
 	return (
 		<div style={{ position: "relative", minHeight: "100vh" }}>
 			<Head>
-				<title>Alles</title>
+				<title>Alles{title ? ` • ${title}` : ``}</title>
 			</Head>
 
 			<Header>

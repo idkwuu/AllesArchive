@@ -58,6 +58,7 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 	return (
 		<Page
 			authenticated={false}
+			title="Sign in"
 			breadcrumbs={
 				<Breadcrumb.Item className="opacity-75 pointer-events-none select-none">
 					Sign In
