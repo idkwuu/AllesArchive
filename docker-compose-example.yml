@@ -1,0 +1,10 @@
+version: "3.4"
+
+services:
+  main:
+    build: .
+    restart: always
+    environment:
+      - BOT_TOKEN=
+      - PREFIX=
+      - PLUS_ROLE=
