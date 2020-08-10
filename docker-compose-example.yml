@@ -9,3 +9,4 @@ services:
       - PREFIX=
       - LINKED_ROLE=
       - PLUS_ROLE=
+      - JWT_SECRET=

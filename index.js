@@ -1,5 +1,8 @@
 const axios = require("axios");
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
+
+// Discord
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 
@@ -7,6 +10,15 @@ const bot = new Discord.Client();
 const help = fs.readFileSync(`${__dirname}/help.md`, "utf8").replace(/\$/g, process.env.PREFIX);
 const commands = {
     help: msg => msg.channel.send(help),
+    link: async msg => {
+        try {
+            const token = jwt.sign({ discord: msg.author.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            await msg.author.send(`Hey! Ready to link your AllesID? Use this link: https://adcb.alles.cc/${token}`);
+            await msg.channel.send("Awesome! I've sent you a dm, just click the link to connect your AllesID.");
+        } catch (err) {
+            await msg.channel.send(`Sorry, ${msg.author}, I tried to dm you but something went wrong. Make sure that you are allowing dms from me :)`);
+        }
+    },
     nope: msg => msg.channel.send("https://tenor.com/view/folding-ideas-foldingideas-dan-olson-nope-gif-14177991"),
     user: async (msg, cmd) => {
         if (cmd.split(" ").length > 1) {
@@ -20,11 +32,11 @@ const commands = {
                     name = name.join("#");
                     id = await nametag(name, tag);
                 } else if (id.length !== 36)
-                    return msg.channel.send("You need to specify the user using an id or name#tag");
+                    return await msg.channel.send("You need to specify the user using an id or name#tag");
 
                 const user = await getUserData(id);
                 const progress = Math.round(user.xp.levelProgress * 10);
-                msg.channel.send(
+                await msg.channel.send(
                     `**ID:** ${user.id}\n` +
                     `**Name:** ${esc(user.name)}\n` +
                     `**Nickname:** ${esc(user.nickname)}\n` +
@@ -43,11 +55,11 @@ const commands = {
             user = await getUserData(await userFromDiscord(msg.author.id));
         } catch (err) { }
 
-        msg.channel.send(
+        await msg.channel.send(
             `You are ${msg.author}` +
             (user ?
                 `, or ${esc(user.name)}#${user.tag} on Alles (${user.id})` :
-                ". Your discord account is not currently connected to an AllesID. Visit https://alles.cx/connections for more information."
+                `. Your discord account is not currently connected to an AllesID. Run \`${process.env.PREFIX}link\` to link it!`
             )
         );
     },
