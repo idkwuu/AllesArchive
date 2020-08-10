@@ -63,7 +63,7 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
 
     // On Message
     bot.on("message", async msg => {
-        if (msg.content.startsWith(process.env.PREFIX)) {
+        if (msg.content.startsWith(process.env.PREFIX) && msg.guild) {
             const cmdString = msg.content.substr(process.env.PREFIX.length).toLowerCase();
             const cmd = commands[cmdString.split(" ")[0]];
             if (cmd) await cmd(msg, cmdString);
