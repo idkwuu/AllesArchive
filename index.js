@@ -37,7 +37,20 @@ const commands = {
             }
         } else msg.channel.send("You must specify the user id");
     },
-    whoami: msg => msg.channel.send(`You are ${msg.author}. Your discord account is not currently connected to an AllesID. Visit https://alles.cx/connections for more information.`),
+    whoami: async msg => {
+        let user;
+        try {
+            user = await getUserData(await userFromDiscord(msg.author.id));
+        } catch (err) { }
+
+        msg.channel.send(
+            `You are ${msg.author}` +
+            (user ?
+                `, or ${esc(user.name)}#${user.tag} on Alles (${user.id})` :
+                ". Your discord account is not currently connected to an AllesID. Visit https://alles.cx/connections for more information."
+            )
+        );
+    },
     xp: msg => msg.channel.send("*Coming soon!*")
 };
 
