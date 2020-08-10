@@ -62,7 +62,7 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
         .forEach(async member => {
             let user;
             try {
-                //user = await getUserData(await userFromDiscord(member.user.id));
+                user = await getUserData(await userFromDiscord(member.user.id));
             } catch (err) { }
 
             // Set Name
@@ -93,8 +93,12 @@ const nametag = async (name, tag) => (
 ).data.id;
 
 // Get User ID from Discord ID
-const userFromDiscord = async discordId => {
-    return "00000000-0000-0000-0000-000000000000";
+const userFromDiscord = async discord => {
+    const { alles } = (await axios.get(
+        `https://pizza.alles.cc/fec36e89-cc5f-4111-9191-9096eb1097d1/discord/${encodeURIComponent(discord)}`
+    )).data;
+    if (alles) return alles;
+    else throw new Error("Alles id not set");
 };
 
 // Escape
