@@ -1,6 +1,43 @@
 const axios = require("axios");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
+const quickauth = require("@alleshq/quickauth");
+
+// Express
+const express = require("express");
+const app = express();
+app.use(require("cookie-parser")());
+app.use((_err, _req, res, _next) => res.status(500).json({ err: "internalError" }));
+app.listen(8080, () => console.log("Express is listening"));
+app.get("/", (_req, res) => res.redirect("https://alles.link/discord"));
+
+// QuickAuth redirect
+app.get("/token/:token", (req, res) => {
+    res.cookie("discordToken", req.params.token, { sameSite: "strict" });
+    res.redirect(quickauth.url(`${process.env.ORIGIN}/auth`));
+});
+
+// QuickAuth callback
+app.get("/auth", (req, res) => {
+    if (typeof req.query.token !== "string") return res.status(400).json({ err: "badRequest" });
+    if (typeof req.cookies.discordToken !== "string") {
+        if (typeof req.query.retry === "string") {
+            return res.status(400).json({ err: "badAuthorization" });
+        } else {
+            return res.send(`<meta http-equiv="refresh" content="0; /auth?token=${encodeURIComponent(req.query.token)}&retry" />`);
+        }
+    };
+    quickauth(req.query.token, `${process.env.ORIGIN}/auth`)
+        .then(async alles => {
+            const { discord } = await jwt.verify(req.cookies.discordToken, process.env.JWT_SECRET);
+            console.log(`${alles} - ${discord}`);
+            res.send(discord);
+        })
+        .catch(() => res.status(401).json({ err: "badAuthorization" }));
+});
+
+// 404
+app.use((_req, res) => res.status(404).json({ err: "notFound" }));
 
 // Discord
 const Discord = require("discord.js");
@@ -13,7 +50,7 @@ const commands = {
     link: async msg => {
         try {
             const token = jwt.sign({ discord: msg.author.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-            await msg.author.send(`Hey! Ready to link your AllesID? Use this link: https://adcb.alles.cc/${token}`);
+            await msg.author.send(`Hey! Ready to link your AllesID? Use this link: ${process.env.ORIGIN}/token/${token}`);
             await msg.channel.send("Awesome! I've sent you a dm, just click the link to connect your AllesID.");
         } catch (err) {
             await msg.channel.send(`Sorry, ${msg.author}, I tried to dm you but something went wrong. Make sure that you are allowing dms from me :)`);

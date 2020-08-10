@@ -10,3 +10,4 @@ services:
       - LINKED_ROLE=
       - PLUS_ROLE=
       - JWT_SECRET=
+      - ORIGIN=
