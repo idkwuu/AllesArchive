@@ -7,4 +7,5 @@ services:
     environment:
       - BOT_TOKEN=
       - PREFIX=
+      - LINKED_ROLE=
       - PLUS_ROLE=

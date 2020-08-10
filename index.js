@@ -45,6 +45,7 @@ const commands = {
 bot.login(process.env.BOT_TOKEN).then(async () => {
     console.log("Bot is online");
     const server = bot.guilds.cache.first();
+    const linkedRole = await server.roles.fetch(process.env.LINKED_ROLE);
     const plusRole = await server.roles.fetch(process.env.PLUS_ROLE);
 
     // On Message
@@ -71,14 +72,16 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
                 if (member.nickname !== nickname) await member.setNickname(nickname);
             } catch (err) { }
 
-            // Assigned Plus Role
+            // Assign Roles
             try {
-                const hasPlusRole = member.roles.cache.array().map(r => r.id).includes(process.env.PLUS_ROLE);
-                if (user && user.plus && !hasPlusRole) await member.roles.add(plusRole);
-                if (!user || (!user.plus && hasPlusRole)) await member.roles.remove(plusRole);
+                const roles = member.roles.cache.array().map(r => r.id);
+                if (user && !roles.includes(process.env.LINKED_ROLE)) await member.roles.add(linkedRole);
+                if (!user && roles.includes(process.env.LINKED_ROLE)) await member.roles.remove(linkedRole);
+                if (user && user.plus && !roles.includes(process.env.PLUS_ROLE)) await member.roles.add(plusRole);
+                if (!user || (!user.plus && roles.includes(process.env.PLUS_ROLE))) await member.roles.remove(plusRole);
             } catch (err) { }
         });
-    setInterval(memberList, 300000);
+    setInterval(memberList, 60000);
     memberList();
 });
 
