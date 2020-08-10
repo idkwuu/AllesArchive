@@ -61,6 +61,9 @@ app.get("/auth", (req, res) => {
                             authorization: process.env.PIZZA_SECRET
                         }
                     });
+
+                    // Add xp
+                    await nexus.addXp(alles, 250);
                 }
 
                 res.send("All done! Your AllesID and Discord account are now connected!");
