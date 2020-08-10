@@ -190,7 +190,7 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
 
             // Set Name
             try {
-                const nickname = user ? `${user.name.substr(0, 27)}#${user.tag}` : null;
+                const nickname = user ? user.nickname.substr(0, 32) : null;
                 if (member.nickname !== nickname) await member.setNickname(nickname);
             } catch (err) { }
 
