@@ -15,3 +15,5 @@ services:
       - ORIGIN=
       - PIZZA_SECRET=
       - PIZZA_BASE=
+      - NEXUS_ID=
+      - NEXUS_SECRET=

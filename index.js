@@ -2,6 +2,9 @@ const axios = require("axios");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const quickauth = require("@alleshq/quickauth");
+const nexus = require("@alleshq/nexus");
+nexus.setCredentials(process.env.NEXUS_ID, process.env.NEXUS_SECRET);
+const xpDates = {};
 
 // Express
 const express = require("express");
@@ -115,9 +118,9 @@ const commands = {
                     (user.plus ? "\n\n✨ _This user has **Alles+**_ ✨" : "")
                 );
             } catch (err) {
-                msg.channel.send("That user doesn't seem to exist");
+                await msg.channel.send("That user doesn't seem to exist");
             }
-        } else msg.channel.send("You must specify the user id");
+        } else await msg.channel.send("You must specify the user id");
     },
     whoami: async msg => {
         let user;
@@ -133,7 +136,27 @@ const commands = {
             )
         );
     },
-    xp: msg => msg.channel.send("*Coming soon!*")
+    xp: async msg => {
+        let user;
+        try {
+            user = await userFromDiscord(msg.author.id);
+        } catch (err) {
+            return await msg.channel.send(`Sorry, ${msg.author}, you'll need to connect your AllesID first. Try \`${process.env.PREFIX}link\``);
+        }
+
+        if (xpDates[user] && xpDates[user] > new Date().getTime() - 1000 * 60 * 60) {
+            const minsLeft = Math.ceil(((xpDates[user] + 1000 * 60 * 60) - new Date().getTime()) / (1000 * 60));
+            return await msg.channel.send(`Hold up, ${msg.author}! You still have to wait ${minsLeft} minute${minsLeft === 1 ? "" : "s"} before you can do this again.`);
+        }
+
+        xpDates[user] = new Date().getTime();
+        try {
+            await nexus.addXp(user, 5);
+            await msg.channel.send(`Boop! +5xp!`);
+        } catch (err) {
+            await msg.channel.send(`Oh no! Something went wrong when trying to add your xp, ${msg.author}!`)
+        }
+    }
 };
 
 // Bot
@@ -149,7 +172,7 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
             const cmdString = msg.content.substr(process.env.PREFIX.length).toLowerCase();
             const cmd = commands[cmdString.split(" ")[0]];
             if (cmd) await cmd(msg, cmdString);
-            else msg.channel.send(`Sorry, ${msg.author}, that command doesn't exist! Try ${process.env.PREFIX}help to see all the commands you can use :)`);
+            else await msg.channel.send(`Sorry, ${msg.author}, that command doesn't exist! Try ${process.env.PREFIX}help to see all the commands you can use :)`);
         }
     });
 

@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@alleshq/nexus@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@alleshq/nexus/-/nexus-1.0.6.tgz#850722e0a239d0fd22942e670793b28a4314f846"
+  integrity sha512-XWNrRMal4iW4EGCi6YhGY8j+13hMi+oEHLuyARWiOGCH6q/6D6Bz4FaOFXsslU8YZmM8rAvTlUJC0NEjSjNURA==
+  dependencies:
+    axios "^0.19.2"
+
 "@alleshq/quickauth@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@alleshq/quickauth/-/quickauth-1.0.0.tgz#87d9331473dd3ced97e8e7c37338bda83a6c4635"
