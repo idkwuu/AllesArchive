@@ -1,5 +1,12 @@
 import axios from "axios";
-import { Box, Input, Button, Toast, Breadcrumb } from "@reactants/ui";
+import {
+	Box,
+	Input,
+	Button,
+	Toast,
+	Breadcrumb,
+	Transition,
+} from "@reactants/ui";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
 import Router from "next/router";
@@ -12,6 +19,7 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 	const [password, setPassword] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string>("");
+	const [showError, setShowError] = useState<boolean>(false);
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -22,7 +30,7 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 		const name = splitNametag.join("#");
 		if (tag.length !== 4 || !name) return;
 
-		setError("");
+		setShowError(false);
 		setLoading(true);
 
 		try {
@@ -51,6 +59,7 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 				: Router.push(location);
 		} catch (error) {
 			setError("The nametag or password entered is incorrect.");
+			setShowError(true);
 			setLoading(false);
 		}
 	};
@@ -67,7 +76,19 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 		>
 			<main className="sm:max-w-sm p-5 mx-auto space-y-7">
 				<h1 className="font-medium text-center mb-5 text-4xl">Sign In</h1>
-				{error && <Toast color="danger" content={error} />}
+
+				<Transition
+					show={showError}
+					enter="transition ease-out duration-100 transform"
+					enterFrom="opacity-0 scale-95"
+					enterTo="opacity-100 scale-100"
+					leave="transition ease-in duration-75 transform"
+					leaveFrom="opacity-100 scale-100"
+					leaveTo="opacity-0 scale-95"
+				>
+					<Toast color="danger" content={error} />
+				</Transition>
+
 				<Box>
 					<Box.Header>Enter your credentials</Box.Header>
 					<Box.Content className="px-5 py-6">

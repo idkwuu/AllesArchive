@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		return res.status(400).send({ err: "badRequest" });
 	}
 
-	const delay = Math.floor(Math.random() * 100) + 75;
+	const delay = Math.floor(Math.random() * 200) + 50;
 	await new Promise((resolve) => setTimeout(() => resolve(), delay));
 
 	const name = encodeURIComponent(req.body.name);
