@@ -11,3 +11,5 @@ services:
       - PLUS_ROLE=
       - JWT_SECRET=
       - ORIGIN=
+      - PIZZA_SECRET=
+      - PIZZA_BASE=

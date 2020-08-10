@@ -30,8 +30,41 @@ app.get("/auth", (req, res) => {
     quickauth(req.query.token, `${process.env.ORIGIN}/auth`)
         .then(async alles => {
             const { discord } = await jwt.verify(req.cookies.discordToken, process.env.JWT_SECRET);
-            console.log(`${alles} - ${discord}`);
-            res.send(discord);
+            let allesRecord;
+
+            // Check if account already connected
+            try {
+                allesRecord = (await axios.get(`${process.env.PIZZA_BASE}/alles/${alles}`)).data;
+                if (allesRecord.discord) return res.status(400).send("This AllesID is already connected to a discord account!");
+            } catch (err) { }
+            try {
+                await axios.get(`${process.env.PIZZA_BASE}/discord/${discord}`);
+                return res.status(400).send("This discord account is already connected to an AllesID!");
+            } catch (err) { }
+
+            // Create or update record
+            try {
+                if (allesRecord) {
+                    // Update
+                    await axios.patch(`${process.env.PIZZA_BASE}/alles/${alles}`, { discord }, {
+                        headers: {
+                            authorization: process.env.PIZZA_SECRET
+                        }
+                    });
+                } else {
+                    // Create
+                    await axios.put(process.env.PIZZA_BASE, { alles, discord }, {
+                        headers: {
+                            authorization: process.env.PIZZA_SECRET
+                        }
+                    });
+                }
+
+                res.send("All done! Your AllesID and Discord account are now connected!");
+            } catch (err) {
+                console.error(`Failed to ${allesRecord ? "update" : "create"} record for AllesID ${alles} => Discord ${discord}`);
+                return res.status(500).send("Uh oh! Something went wrong! Please report this issue!");
+            }
         })
         .catch(() => res.status(401).json({ err: "badAuthorization" }));
 });
