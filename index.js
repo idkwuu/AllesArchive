@@ -61,11 +61,12 @@ app.get("/auth", (req, res) => {
                             authorization: process.env.PIZZA_SECRET
                         }
                     });
-
-                    // Add xp
-                    await nexus.addXp(alles, 250);
                 }
 
+                // Add xp
+                await nexus.addXp(alles, 250);
+
+                // Response
                 res.send("All done! Your AllesID and Discord account are now connected!");
             } catch (err) {
                 console.error(`Failed to ${allesRecord ? "update" : "create"} record for AllesID ${alles} => Discord ${discord}`);
