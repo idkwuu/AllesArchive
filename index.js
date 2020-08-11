@@ -116,6 +116,7 @@ const commands = {
                 await msg.channel.send(
                     `**ID:** ${user.id}\n` +
                     `**Name:** ${esc(user.name)}\n` +
+                    `**Tag:** #${user.tag}\n` +
                     `**Nickname:** ${esc(user.nickname)}\n` +
                     `**XP:** ${user.xp.total} (Level ${user.xp.level}, ${user.xp.levelXp}/${user.xp.levelXpMax})\n` +
                     `${"▓".repeat(progress)}${"░".repeat(10 - progress)} ${Math.floor(user.xp.levelProgress * 100)}%` +
