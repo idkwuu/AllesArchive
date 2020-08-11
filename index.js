@@ -191,7 +191,7 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
             // Set Name
             try {
                 const nickname = user ? user.nickname.substr(0, 32) : null;
-                if (member.nickname !== nickname) await member.setNickname(nickname);
+                if (member.nickname !== nickname && member.user.username !== nickname) await member.setNickname(nickname);
             } catch (err) { }
 
             // Assign Roles
