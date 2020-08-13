@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@alleshq/nexus": "^1.0.6",
     "@alleshq/quickauth": "^1.0.0",
     "axios": "^0.19.2",
     "cookie-parser": "^1.4.5",

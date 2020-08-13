@@ -2,8 +2,6 @@ const axios = require("axios");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const quickauth = require("@alleshq/quickauth");
-const nexus = require("@alleshq/nexus");
-nexus.setCredentials(process.env.NEXUS_ID, process.env.NEXUS_SECRET);
 const xpDates = {};
 
 // Express
@@ -64,7 +62,7 @@ app.get("/auth", (req, res) => {
                 }
 
                 // Add xp
-                await nexus.addXp(alles, 250);
+                await nexus("POST", `users/${alles}/xp`, { xp: 250 });
 
                 // Response
                 res.send("All done! Your AllesID and Discord account are now connected!");
@@ -157,7 +155,7 @@ const commands = {
         xpDates[user] = new Date().getTime();
         if (Math.floor(Math.random() * 5) === 0) return await msg.channel.send(`Uh oh, ${msg.author}! The Alles gods have decided not to give you xp this time. Try again in an hour.`)
         try {
-            await nexus.addXp(user, 10);
+            await nexus("POST", `users/${alles}/xp`, { xp: 10 });
             await msg.channel.send(`Boop! +10xp!`);
         } catch (err) {
             await msg.channel.send(`Oh no! Something went wrong when trying to add your xp, ${msg.author}!`)
@@ -182,7 +180,7 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
         }
 
         try {
-            await nexus.addReputation(await userFromDiscord(msg.author.id), 1);
+            await nexus("POST", `users/${await userFromDiscord(msg.author.id)}/reputation`, { score: 1 });
         } catch (err) { }
     });
 
@@ -236,3 +234,14 @@ const userFromDiscord = async discord => {
 const esc = content => content
     .replace(/@everyone/g, "@.everyone")
     .replace(/@here/g, "@.here");
+
+// Nexus
+const nexus = async (method, endpoint, data) => (await axios({
+    method,
+    url: `${process.env.NEXUS_URI}/${endpoint}`,
+    data,
+    auth: {
+        username: process.env.NEXUS_ID,
+        password: process.env.NEXUS_SECRET
+    }
+})).data;
