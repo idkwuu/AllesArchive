@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@alleshq/nexus@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@alleshq/nexus/-/nexus-1.0.3.tgz#ad051968651cd5eccbeb375417466c6624eda969"
-  integrity sha512-N7SIe+sIhCz0JJdfowcuQ/gSkZij6Rdij2HJYJyggx3b0fnNwzVA7SVxpS8MTrYdvBHQkq2JCuHtLXyJLSCvlg==
-  dependencies:
-    axios "^0.19.2"
-
 accepts@~1.3.7:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.7.tgz#531bc726517a3b2b41f850021c6cc15eaab507cd"
