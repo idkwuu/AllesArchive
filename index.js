@@ -95,7 +95,7 @@ const commands = {
             await msg.channel.send(`Sorry, ${msg.author}, I tried to dm you but something went wrong. Make sure that you are allowing dms from me :)`);
         }
     },
-    me: msg => {
+    me: async msg => {
         try {
             await userStats(await userFromDiscord(msg.author.id), msg);
         } catch (err) {
