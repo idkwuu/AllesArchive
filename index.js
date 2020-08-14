@@ -142,22 +142,22 @@ const commands = {
     xp: async msg => {
         let user;
         try {
-            user = await userFromDiscord(msg.author.id);
+            user = await getUserData(await userFromDiscord(msg.author.id));
         } catch (err) {
             return await msg.channel.send(`Sorry, ${msg.author}, you'll need to connect your AllesID first. Try \`${process.env.PREFIX}link\``);
         }
 
         if (user.xp.level >= 50) return await msg.channel.send(`bruh, you're on level ${user.xp.level} smh`);
 
-        if (xpDates[user] && xpDates[user] > new Date().getTime() - 1000 * 60 * 60) {
-            const minsLeft = Math.ceil(((xpDates[user] + 1000 * 60 * 60) - new Date().getTime()) / (1000 * 60));
+        if (xpDates[user.id] && xpDates[user.id] > new Date().getTime() - 1000 * 60 * 60) {
+            const minsLeft = Math.ceil(((xpDates[user.id] + 1000 * 60 * 60) - new Date().getTime()) / (1000 * 60));
             return await msg.channel.send(`Hold up, ${msg.author}! You still have to wait ${minsLeft} minute${minsLeft === 1 ? "" : "s"} before you can do this again.`);
         }
 
-        xpDates[user] = new Date().getTime();
+        xpDates[user.id] = new Date().getTime();
         if (Math.floor(Math.random() * 5) === 0) return await msg.channel.send(`Uh oh, ${msg.author}! The Alles gods have decided not to give you xp this time. Try again in an hour.`)
         try {
-            await nexus("POST", `users/${user}/xp`, { xp: 10 });
+            await nexus("POST", `users/${user.id}/xp`, { xp: 10 });
             await msg.channel.send(`Boop! +10xp!`);
         } catch (err) {
             await msg.channel.send(`Oh no! Something went wrong when trying to add your xp, ${msg.author}!`)
