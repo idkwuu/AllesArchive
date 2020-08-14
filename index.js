@@ -79,6 +79,7 @@ app.use((_req, res) => res.status(404).json({ err: "notFound" }));
 
 // Discord
 const Discord = require("discord.js");
+const { O_DIRECT } = require("constants");
 const bot = new Discord.Client();
 
 // Commands
@@ -92,6 +93,13 @@ const commands = {
             await msg.channel.send("Awesome! I've sent you a dm, just click the link to connect your AllesID.");
         } catch (err) {
             await msg.channel.send(`Sorry, ${msg.author}, I tried to dm you but something went wrong. Make sure that you are allowing dms from me :)`);
+        }
+    },
+    me: msg => {
+        try {
+            await userStats(await userFromDiscord(msg.author.id), msg);
+        } catch (err) {
+            await msg.channel.send(`Your discord account is not currently connected to an AllesID. Run \`${process.env.PREFIX}link\` to link it!`);
         }
     },
     nope: msg => msg.channel.send("https://tenor.com/view/folding-ideas-foldingideas-dan-olson-nope-gif-14177991"),
@@ -109,35 +117,11 @@ const commands = {
                 } else if (id.length !== 36)
                     return await msg.channel.send("You need to specify the user using an id or name#tag");
 
-                const user = await getUserData(id);
-                const progress = Math.round(user.xp.levelProgress * 10);
-                await msg.channel.send(
-                    `**ID:** ${user.id}\n` +
-                    `**Name:** ${esc(user.name)}\n` +
-                    `**Tag:** #${user.tag}\n` +
-                    `**Nickname:** ${esc(user.nickname)}\n` +
-                    `**XP:** ${user.xp.total} (Level ${user.xp.level}, ${user.xp.levelXp}/${user.xp.levelXpMax})\n` +
-                    `${"▓".repeat(progress)}${"░".repeat(10 - progress)} ${Math.floor(user.xp.levelProgress * 100)}%` +
-                    (user.plus ? "\n\n✨ _This user has **Alles+**_ ✨" : "")
-                );
+                await userStats(id, msg);
             } catch (err) {
                 await msg.channel.send("That user doesn't seem to exist");
             }
         } else await msg.channel.send("You must specify the user id");
-    },
-    whoami: async msg => {
-        let user;
-        try {
-            user = await getUserData(await userFromDiscord(msg.author.id));
-        } catch (err) { }
-
-        await msg.channel.send(
-            `You are ${msg.author}` +
-            (user ?
-                `, or ${esc(user.name)}#${user.tag} on Alles (${user.id})` :
-                `. Your discord account is not currently connected to an AllesID. Run \`${process.env.PREFIX}link\` to link it!`
-            )
-        );
     },
     xp: async msg => {
         let user;
@@ -247,3 +231,18 @@ const nexus = async (method, endpoint, data) => (await axios({
         password: process.env.NEXUS_SECRET
     }
 })).data;
+
+// User Stats
+const userStats = async (id, msg) => {
+    const user = await getUserData(id);
+    const progress = Math.round(user.xp.levelProgress * 10);
+    await msg.channel.send(
+        `**ID:** ${user.id}\n` +
+        `**Name:** ${esc(user.name)}\n` +
+        `**Tag:** #${user.tag}\n` +
+        `**Nickname:** ${esc(user.nickname)}\n` +
+        `**XP:** ${user.xp.total} (Level ${user.xp.level}, ${user.xp.levelXp}/${user.xp.levelXpMax})\n` +
+        `${"▓".repeat(progress)}${"░".repeat(10 - progress)} ${Math.floor(user.xp.levelProgress * 100)}%` +
+        (user.plus ? "\n\n✨ _This user has **Alles+**_ ✨" : "")
+    );
+}
