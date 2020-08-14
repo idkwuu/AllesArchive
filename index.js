@@ -147,6 +147,8 @@ const commands = {
             return await msg.channel.send(`Sorry, ${msg.author}, you'll need to connect your AllesID first. Try \`${process.env.PREFIX}link\``);
         }
 
+        if (user.xp.level >= 50) return await msg.channel.send(`bruh, you're on level ${user.xp.level} smh`);
+
         if (xpDates[user] && xpDates[user] > new Date().getTime() - 1000 * 60 * 60) {
             const minsLeft = Math.ceil(((xpDates[user] + 1000 * 60 * 60) - new Date().getTime()) / (1000 * 60));
             return await msg.channel.send(`Hold up, ${msg.author}! You still have to wait ${minsLeft} minute${minsLeft === 1 ? "" : "s"} before you can do this again.`);
