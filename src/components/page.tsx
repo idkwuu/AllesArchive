@@ -62,10 +62,12 @@ export const Page: React.FC<Props> = ({
 
 					{authenticated ? (
 						<div className="flex items-center space-x-3">
+							{/*
 							<div className="select-none cursor-pointer hover:bg-danger-85 transition duration-200 ease bg-danger text-white rounded-full flex items-center justify-center py-0.5 px-2.5 space-x-1">
 								<Bell size={0.35 * 37.5} />
 								<span>2</span>
 							</div>
+							*/}
 
 							<Popover
 								className="relative inline-block"
