@@ -22,7 +22,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			.get(`${NEXUS_URI}/users/${session.user}`, { auth })
 			.then((res) => res.data);
 
-		res.send(user);
+		res.json({
+			id: user.id,
+			name: user.name,
+			tag: user.tag,
+			nickname: user.nickname,
+			xp: user.xp,
+			plus: user.plus,
+			createdAt: user.createdAt,
+		});
 	} catch (error) {
 		res.status(500).send({ err: "internalError" });
 	}
