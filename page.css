@@ -46,6 +46,18 @@ body {
 	color: #23539b;
 }
 
+.copyCurl {
+	margin-left: 16px;
+	color: gray;
+	float: left;
+	cursor: pointer;
+}
+
+.madeByAlles {
+	margin-right: 16px;
+	float: right;
+}
+
 @media (prefers-color-scheme: dark) {
 	html {
 		background-color: #000;
@@ -60,5 +72,17 @@ body {
 	}
 	.allesLink {
 		color: #3498db;
+	}
+}
+
+@media (max-width: 500px) {
+	.copyCurl {
+		display: none;
+	}
+
+	.madeByAlles {
+		width: 100%;
+		float: none;
+		text-align: center;
 	}
 }
