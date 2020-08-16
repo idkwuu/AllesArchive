@@ -79,7 +79,6 @@ app.use((_req, res) => res.status(404).json({ err: "notFound" }));
 
 // Discord
 const Discord = require("discord.js");
-const { O_DIRECT } = require("constants");
 const bot = new Discord.Client();
 
 // Commands
