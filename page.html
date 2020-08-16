@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+			rel="stylesheet"
+		/>
+		<link href="./page.css" rel="stylesheet" />
+		<title>UUID</title>
+	</head>
+	<body>
+		<div class="main-content">
+			<h2>Your UUID is</h2>
+			<h1 id="uuid">[x]</h1>
+			<a href="#" onclick="copyToClipboard()" class="copyClipboardBtn"
+				>Copy to clipboard</a
+			>
+		</div>
+		<div class="footer">
+			<p style="margin-left: 16px; color: gray; float: left;">
+				<a onclick="copyCurl()" style="text-decoration: none;"
+					>Psst... you can curl this url</a
+				>
+			</p>
+
+			<p style="margin-right: 16px; float: right;">
+				Made with <img src="heart.svg" width="12px" /> by
+				<a
+					class="allesLink"
+					href="https://alles.cx"
+					style="text-decoration: none;"
+					>Alles</a
+				>
+			</p>
+		</div>
+		<script>
+			function copy(value) {
+				const el = document.createElement("textarea");
+				el.value = value;
+				el.setAttribute("readonly", "");
+				el.style.position = "absolute";
+				el.style.left = "-9999px";
+				document.body.appendChild(el);
+				el.select();
+				document.execCommand("copy");
+				document.body.removeChild(el);
+			}
+
+			function copyToClipboard() {
+				copy(document.getElementById("uuid").innerHTML);
+			}
+
+			function copyCurl() {
+				copy(`curl ${document.location.origin}`);
+			}
+		</script>
+	</body>
+</html>
