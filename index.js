@@ -138,9 +138,8 @@ const commands = {
         }
 
         xpDates[user.id] = new Date().getTime();
-        if (Math.floor(Math.random() * 5) === 0) return await msg.channel.send(`Uh oh, ${msg.author}! The Alles gods have decided not to give you xp this time. Try again in an hour.`)
         try {
-            await nexus("POST", `users/${user.id}/xp`, { xp: 10 });
+            await nexus("POST", `users/${user.id}/xp`, { xp: 5 });
             await msg.channel.send(`Boop! +10xp!`);
         } catch (err) {
             await msg.channel.send(`Oh no! Something went wrong when trying to add your xp, ${msg.author}!`)
