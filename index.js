@@ -140,7 +140,7 @@ const commands = {
         xpDates[user.id] = new Date().getTime();
         try {
             await nexus("POST", `users/${user.id}/xp`, { xp: 5 });
-            await msg.channel.send(`Boop! +10xp!`);
+            await msg.channel.send(`Boop! +5xp!`);
         } catch (err) {
             await msg.channel.send(`Oh no! Something went wrong when trying to add your xp, ${msg.author}!`)
         }
