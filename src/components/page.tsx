@@ -131,17 +131,19 @@ export const Page: React.FC<Props> = ({
 							Source
 						</a>
 
-						<Link href="/privacy" passHref>
-							<a className="text-primary hover:opacity-75 transition duration-200 ease">
-								Privacy
-							</a>
-						</Link>
+						<a
+							href="https://files.alles.cc/Documents/Privacy%20Policy.txt"
+							className="text-primary hover:opacity-75 transition duration-200 ease"
+						>
+							Privacy
+						</a>
 
-						<Link href="/terms" passHref>
-							<a className="text-primary hover:opacity-75 transition duration-200 ease">
-								Terms
-							</a>
-						</Link>
+						<a
+							href="https://files.alles.cc/Documents/Terms%20of%20Service.txt"
+							className="text-primary hover:opacity-75 transition duration-200 ease"
+						>
+							Terms
+						</a>
 					</div>
 				</div>
 			</footer>
