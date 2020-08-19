@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
 		nickname: user.nickname,
 		plus: user.plus,
 		createdAt: user.createdAt,
-		reputation: user.reputation,
 		xp: {
 			total: user.xp,
 			level: level.level,

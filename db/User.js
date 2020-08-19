@@ -24,11 +24,6 @@ module.exports = db => {
 			password: {
 				type: DataTypes.STRING
 			},
-			reputation: {
-				type: DataTypes.INTEGER,
-				defaultValue: 0,
-				allowNull: false
-			},
 			xp: {
 				type: DataTypes.INTEGER,
 				defaultValue: 0,

@@ -5,7 +5,9 @@ const express = require("express");
 const app = express();
 app.use(require("body-parser").json());
 app.use(require("./auth"));
-app.use((_err, _req, res, _next) => res.status(500).json({err: "internalError"}));
+app.use((_err, _req, res, _next) =>
+	res.status(500).json({err: "internalError"})
+);
 
 // Database
 const db = require("./db");
