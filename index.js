@@ -187,7 +187,7 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
                 if (!user || (!user.plus && roles.includes(process.env.PLUS_ROLE))) await member.roles.remove(plusRole);
             } catch (err) { }
         });
-    setInterval(memberList, 60000);
+    setInterval(memberList, 300000);
     memberList();
 });
 
