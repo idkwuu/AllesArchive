@@ -68,8 +68,15 @@ export default function Index() {
 				</h4>
 
 				<p className="text-xl text-gray-800">
-					But we've made great progress on <a href="https://micro.alles.cx" className="text-primary">Micro</a>, if you want to check that out.
-					Also, we have a <a href="https://alles.link/discord" className="text-primary">Discord server</a>, so come and say hello!
+					But we've made great progress on{" "}
+					<a href="https://micro.alles.cx" className="text-primary">
+						Micro
+					</a>
+					, if you want to check that out. Also, we have a{" "}
+					<a href="https://alles.link/discord" className="text-primary">
+						Discord server
+					</a>
+					, so come and say hello!
 				</p>
 
 				<div
