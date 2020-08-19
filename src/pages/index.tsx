@@ -64,8 +64,13 @@ export default function Index() {
 				</h4>
 
 				<h4 className="text-3xl text-gray-600">
-					We're still developing this section of our website...
+					We're still working on the account hub!
 				</h4>
+
+				<p className="text-xl text-gray-800">
+					But we've made great progress on <a href="https://micro.alles.cx" className="text-primary">Micro</a>, if you want to check that out.
+					Also, we have a <a href="https://alles.link/discord" className="text-primary">Discord server</a>, so come and say hello!
+				</p>
 
 				<div
 					className="grid grid-cols-1 md:grid-cols-2 gap-3 pointer-events-none select-none"
