@@ -25,9 +25,6 @@ app.get("/nametag", require("./api/nametag"));
 app.get("/users/:id", require("./api/users"));
 app.post("/users/:id", require("./api/users/update"));
 
-// Reputation
-app.post("/users/:id/reputation", require("./api/users/reputation"));
-
 // XP
 app.post("/users/:id/xp", require("./api/users/xp"));
 
