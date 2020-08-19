@@ -6,13 +6,13 @@ const app = express();
 app.use(require("body-parser").json());
 app.use(require("./auth"));
 app.use((_err, _req, res, _next) =>
-	res.status(500).json({err: "internalError"})
+  res.status(500).json({ err: "internalError" })
 );
 
 // Database
 const db = require("./db");
 db.sync().then(() =>
-	app.listen(8080, () => console.log("Server is listening..."))
+  app.listen(8080, () => console.log("Server is listening..."))
 );
 
 // Create User
@@ -41,4 +41,4 @@ app.get("/sessions/:id", require("./api/sessions"));
 app.post("/sessions/token", require("./api/sessions/token"));
 
 // 404
-app.use((req, res) => res.status(404).json({err: "notFound"}));
+app.use((req, res) => res.status(404).json({ err: "notFound" }));
