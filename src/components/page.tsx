@@ -75,7 +75,7 @@ export const Page: React.FC<Props> = ({
 									<Avatar
 										onClick={onClick}
 										className="select-none cursor-pointer hover:opacity-85 transition duration-200 ease"
-										id={user.id}
+										src={`https://avatar.alles.cc/${user.id}`}
 										size={35}
 									/>
 								)}
