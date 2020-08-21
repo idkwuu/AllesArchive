@@ -67,7 +67,7 @@ export default function Index() {
 					We're still working on the account hub!
 				</h4>
 
-				<p className="text-xl text-gray-800">
+				<p className="text-xl text-gray-800 dark:text-gray-400">
 					But we've made great progress on{" "}
 					<a href="https://micro.alles.cx" className="text-primary">
 						Micro
