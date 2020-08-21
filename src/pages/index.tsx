@@ -1,5 +1,12 @@
 import { Box } from "@reactants/ui";
-import { User as UserIcon, Shield, Icon, Grid, EyeOff } from "react-feather";
+import {
+	User as UserIcon,
+	Shield,
+	Icon,
+	Grid,
+	Award,
+	PlusCircle,
+} from "react-feather";
 import Link from "next/link";
 import { Page } from "../components";
 import { useUser } from "../lib";
@@ -7,7 +14,11 @@ import { useUser } from "../lib";
 interface Category {
 	name: string;
 	icon: Icon;
-	links: { text: string; href: string }[];
+	links: {
+		text: string;
+		href: string;
+		external?: boolean;
+	}[];
 }
 
 interface Product {
@@ -22,37 +33,75 @@ const categories: Category[] = [
 		icon: UserIcon,
 		links: [
 			{
-				text: "Personal info",
-				href: "/info",
+				text: "About Me",
+				href: "/me",
 			},
 			{
-				text: "Contact details",
-				href: "/contact",
+				text: "Connected Accounts",
+				href: "/connections",
 			},
 		],
 	},
 	{
-		name: "Security",
+		name: "Privacy and Security",
 		icon: Shield,
 		links: [
-			{ text: "Logging in", href: "/auth" },
-			{ text: "Sessions", href: "/sessions" },
+			{
+				text: "Signing in",
+				href: "/security",
+			},
+			{
+				text: "Active Sessions",
+				href: "/sessions",
+			},
+			{
+				text: "Export your data",
+				href: "/data",
+			},
 		],
 	},
 	{
 		name: "Applications",
 		icon: Grid,
 		links: [
-			{ text: "Authorized apps", href: "/apps" },
-			{ text: "Notifications", href: "/notifications" },
+			{
+				text: "Authorized Applications",
+				href: "/apps",
+			},
+			{
+				text: "Developer Services",
+				href: "https://developer.alles.cx",
+				external: true,
+			},
 		],
 	},
 	{
-		name: "Privacy",
-		icon: EyeOff,
+		name: "Coins and Subscriptions",
+		icon: PlusCircle,
 		links: [
-			{ text: "Telemetry", href: "/telemetry" },
-			{ text: "Export your data", href: "/data" },
+			{
+				text: "Alles+",
+				href: "/plus",
+			},
+			{
+				text: "Manage Coins",
+				href: "/coins",
+			},
+		],
+	},
+	{
+		name: "XP and Rewards",
+		icon: Award,
+		links: [
+			{
+				text: "Earn XP",
+				href: "/xp",
+			},
+			{
+				text: "Deals",
+				href: "https://deals.alles.cx",
+				external: true,
+			},
 		],
 	},
 ];
@@ -125,13 +174,24 @@ export default function Index() {
 							</Box.Header>
 
 							<div className="py-1.5">
-								{category.links.map((link, i) => (
-									<Link href={link.href} key={i}>
-										<a className="block px-4 py-2.5 text-sm leading-5 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark-hover:bg-gray-700 focus:bg-gray-100 dark-focus:bg-gray-700">
+								{category.links.map((link, i) =>
+									link.external ? (
+										<a
+											href={link.href}
+											key={i}
+											target="_blank"
+											className="block px-4 py-2.5 text-sm leading-5 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark-hover:bg-gray-700 focus:bg-gray-100 dark-focus:bg-gray-700"
+										>
 											{link.text}
 										</a>
-									</Link>
-								))}
+									) : (
+										<Link href={link.href} key={i}>
+											<a className="block px-4 py-2.5 text-sm leading-5 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark-hover:bg-gray-700 focus:bg-gray-100 dark-focus:bg-gray-700">
+												{link.text}
+											</a>
+										</Link>
+									)
+								)}
 							</div>
 						</Box>
 					))}
