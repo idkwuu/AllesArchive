@@ -11,6 +11,12 @@ interface Category {
 	links: { text: string; href: string }[];
 }
 
+interface Product {
+	name: string;
+	image: string;
+	url: string;
+}
+
 const categories: Category[] = [
 	{
 		name: "Profile",
@@ -52,6 +58,49 @@ const categories: Category[] = [
 	},
 ];
 
+const products: Product[] = [
+	{
+		name: "Micro",
+		image: "micro",
+		url: "https://micro.alles.cx",
+	},
+	{
+		name: "Micro",
+		image: "micro",
+		url: "https://micro.alles.cx",
+	},
+	{
+		name: "Micro",
+		image: "micro",
+		url: "https://micro.alles.cx",
+	},
+	{
+		name: "Micro",
+		image: "micro",
+		url: "https://micro.alles.cx",
+	},
+	{
+		name: "Micro",
+		image: "micro",
+		url: "https://micro.alles.cx",
+	},
+	{
+		name: "Micro",
+		image: "micro",
+		url: "https://micro.alles.cx",
+	},
+	{
+		name: "Micro",
+		image: "micro",
+		url: "https://micro.alles.cx",
+	},
+	{
+		name: "Micro",
+		image: "micro",
+		url: "https://micro.alles.cx",
+	},
+];
+
 export default function Index() {
 	const user = useUser();
 
@@ -63,6 +112,22 @@ export default function Index() {
 					{user.plus && <sup className="select-none text-primary">+</sup>}
 				</h4>
 
+				<div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+					{products.map((product, i) => (
+						<a href={product.url} key={i}>
+							<Box>
+								<Box.Content className="flex">
+									<img
+										className="w-10 h-10 rounded-lg mr-3"
+										src={`/productIcons/${product.image}.svg`}
+									/>
+									<span className="my-auto">{product.name}</span>
+								</Box.Content>
+							</Box>
+						</a>
+					))}
+				</div>
+
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 					{categories.map((category, i) => (
 						<Box key={i}>
@@ -73,13 +138,11 @@ export default function Index() {
 
 							<div className="py-1.5">
 								{category.links.map((link, i) => (
-									<Fragment key={i}>
-										<Link href={link.href}>
-											<a className="block px-4 py-2.5 text-sm leading-5 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark-hover:bg-gray-700 focus:bg-gray-100 dark-focus:bg-gray-700">
-												{link.text}
-											</a>
-										</Link>
-									</Fragment>
+									<Link href={link.href} key={i}>
+										<a className="block px-4 py-2.5 text-sm leading-5 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark-hover:bg-gray-700 focus:bg-gray-100 dark-focus:bg-gray-700">
+											{link.text}
+										</a>
+									</Link>
 								))}
 							</div>
 						</Box>
