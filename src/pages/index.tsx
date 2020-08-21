@@ -63,26 +63,7 @@ export default function Index() {
 					{user.plus && <sup className="select-none text-primary">+</sup>}
 				</h4>
 
-				<h4 className="text-3xl text-gray-600">
-					We're still working on the account hub!
-				</h4>
-
-				<p className="text-xl text-gray-800 dark:text-gray-400">
-					But we've made great progress on{" "}
-					<a href="https://micro.alles.cx" className="text-primary">
-						Micro
-					</a>
-					, if you want to check that out. Also, we have a{" "}
-					<a href="https://alles.link/discord" className="text-primary">
-						Discord server
-					</a>
-					, so come and say hello!
-				</p>
-
-				<div
-					className="grid grid-cols-1 md:grid-cols-2 gap-3 pointer-events-none select-none"
-					style={{ filter: "blur(5px)" }}
-				>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 					{categories.map((category, i) => (
 						<Box key={i}>
 							<Box.Header className="flex items-center space-x-2">
@@ -93,7 +74,7 @@ export default function Index() {
 							<div className="py-1.5">
 								{category.links.map((link, i) => (
 									<Fragment key={i}>
-										<Link href={link.href} passHref>
+										<Link href={link.href}>
 											<a className="block px-4 py-2.5 text-sm leading-5 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark-hover:bg-gray-700 focus:bg-gray-100 dark-focus:bg-gray-700">
 												{link.text}
 											</a>
