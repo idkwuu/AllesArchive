@@ -1,0 +1,5 @@
+dist
+index.css
+node_modules
+*.log
+.yarn
