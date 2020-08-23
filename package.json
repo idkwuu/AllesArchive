@@ -3,7 +3,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.module.js",
   "license": "MIT",
-  "version": "3.5.1",
+  "version": "1.0.0",
   "files": [
     "dist",
     "scripts",
