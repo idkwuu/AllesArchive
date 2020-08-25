@@ -61,6 +61,28 @@ app.get("/auth", (req, res) => {
         .catch(() => res.status(401).json({ err: "badAuthorization" }));
 });
 
+// Discord -> Alles API
+app.get("/alles/:id", async (req, res, next) => {
+    const user = await User.findOne({
+        where: {
+            alles: req.params.id
+        }
+    });
+    if (user) res.json(user);
+    else next();
+});
+
+// Alles -> Discord API
+app.get("/discord/:id", async (req, res, next) => {
+    const user = await User.findOne({
+        where: {
+            discord: req.params.id
+        }
+    });
+    if (user) res.json(user);
+    else next();
+});
+
 // 404
 app.use((_req, res) => res.status(404).json({ err: "notFound" }));
 
