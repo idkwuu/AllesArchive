@@ -21,7 +21,7 @@ module.exports = {
 							whitelist: ["dark", "html", "body"],
 							content: [
 								"./src/**/*.tsx",
-								"./node_modules/@reactants/ui/dist/index.js",
+								"./node_modules/@alleshq/reactants/dist/index.js",
 							],
 						},
 					],

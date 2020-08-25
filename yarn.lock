@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@alleshq/reactants@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@alleshq/reactants/-/reactants-1.2.0.tgz#f907a9f26fc8e7d5942dbbf98e306977570004dc"
+  integrity sha512-aHW231/LDI9tzJ8jGEMQowzFCDhQn4Kx+2Ehy2HRgkQ1JmUjzDWfnJ4ntaH7TZ0Sb/MqPcsdJ1St8hN45rdY+A==
+
 "@ampproject/toolbox-core@^2.6.0":
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/@ampproject/toolbox-core/-/toolbox-core-2.6.0.tgz#9824d5f133d82106a9bf0774920843c69fa5c869"
@@ -1059,11 +1064,6 @@
   version "9.5.2"
   resolved "https://registry.yarnpkg.com/@next/react-refresh-utils/-/react-refresh-utils-9.5.2.tgz#5d92d8ad0f2bd79de2290614e74e5a12a0cda02b"
   integrity sha512-ch/16u3OVy/aIXJROwqXZjGw/tFMyG7qy2IGDA2RFjvQMtPyJJrklmwX2EcfH4+4spRI2MZKes2soI+0w2/MDQ==
-
-"@reactants/ui@^3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@reactants/ui/-/ui-3.6.0.tgz#988d1e7093825620b77b2a609a93dbec50511ea1"
-  integrity sha512-mZ830NOpEhu1PnEYJn2HXoHxPrrgv6EfUvsKp3snPCPdqTcnrStfl3Hn/luzGp8K3Gfs3eKTDYTWa+ZNuyDCLA==
 
 "@types/color-name@^1.1.1":
   version "1.1.1"

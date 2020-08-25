@@ -6,7 +6,7 @@ import {
 	Toast,
 	Breadcrumb,
 	Transition,
-} from "@reactants/ui";
+} from "@alleshq/reactants";
 import { LogIn, Circle } from "react-feather";
 import { useState, FormEvent } from "react";
 import Router from "next/router";

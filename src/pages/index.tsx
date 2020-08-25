@@ -1,4 +1,4 @@
-import { Box } from "@reactants/ui";
+import { Box } from "@alleshq/reactants";
 import {
 	User as UserIcon,
 	Shield,

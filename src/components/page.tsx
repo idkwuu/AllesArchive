@@ -6,8 +6,8 @@ import {
 	Menu,
 	Header,
 	Button,
-} from "@reactants/ui";
-import { Circle, Bell } from "react-feather";
+} from "@alleshq/reactants";
+import { Circle } from "react-feather";
 import Link from "next/link";
 import Router from "next/router";
 import Head from "next/head";

@@ -1,4 +1,4 @@
-import "@reactants/ui/dist/index.css";
+import "@alleshq/reactants/dist/index.css";
 import axios from "axios";
 import App from "next/app";
 import Router from "next/router";
