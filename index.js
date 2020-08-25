@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const quickauth = require("@alleshq/quickauth");
 const xpDates = {};
 
+require("dotenv").config();
+
 // Express
 const express = require("express");
 const app = express();
