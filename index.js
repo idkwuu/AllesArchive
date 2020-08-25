@@ -1,10 +1,12 @@
+require("dotenv").config();
+
 const axios = require("axios");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const quickauth = require("@alleshq/quickauth");
+const User = require("./db");
+const { Op } = require("sequelize");
 const xpDates = {};
-
-require("dotenv").config();
 
 // Express
 const express = require("express");
@@ -33,45 +35,28 @@ app.get("/auth", (req, res) => {
     quickauth(req.query.token, `${process.env.ORIGIN}/auth`)
         .then(async alles => {
             const { discord } = await jwt.verify(req.cookies.discordToken, process.env.JWT_SECRET);
-            let allesRecord;
 
-            // Check if account already connected
-            try {
-                allesRecord = (await axios.get(`${process.env.PIZZA_BASE}/alles/${alles}`)).data;
-                if (allesRecord.discord) return res.status(400).send("This AllesID is already connected to a discord account!");
-            } catch (err) { }
-            try {
-                await axios.get(`${process.env.PIZZA_BASE}/discord/${discord}`);
-                return res.status(400).send("This discord account is already connected to an AllesID!");
-            } catch (err) { }
-
-            // Create or update record
-            try {
-                if (allesRecord) {
-                    // Update
-                    await axios.patch(`${process.env.PIZZA_BASE}/alles/${alles}`, { discord }, {
-                        headers: {
-                            authorization: process.env.PIZZA_SECRET
-                        }
-                    });
-                } else {
-                    // Create
-                    await axios.put(process.env.PIZZA_BASE, { alles, discord }, {
-                        headers: {
-                            authorization: process.env.PIZZA_SECRET
-                        }
-                    });
+            // Check if account is already connected
+            if (await User.findOne({
+                where: {
+                    [Op.or]: [
+                        { alles },
+                        { discord }
+                    ]
                 }
+            })) return res.status(400).send("This discord account or AllesID is already connected!");
 
-                // Add xp
-                await nexus("POST", `users/${alles}/xp`, { xp: 250 });
+            // Create record
+            await User.create({
+                alles,
+                discord
+            });
 
-                // Response
-                res.send("All done! Your AllesID and Discord account are now connected!");
-            } catch (err) {
-                console.error(`Failed to ${allesRecord ? "update" : "create"} record for AllesID ${alles} => Discord ${discord}`);
-                return res.status(500).send("Uh oh! Something went wrong! Please report this issue!");
-            }
+            // Add XP
+            nexus("POST", `users/${alles}/xp`, { xp: 250 }).catch(() => { });
+
+            // Response
+            res.send("All done! Your AllesID and Discord account are now connected!");
         })
         .catch(() => res.status(401).json({ err: "badAuthorization" }));
 });
@@ -98,7 +83,7 @@ const commands = {
     },
     me: async msg => {
         try {
-            await userStats(await userFromDiscord(msg.author.id), msg);
+            await userStats((await User.findOne({ where: { discord: msg.author.id } })).alles, msg);
         } catch (err) {
             await msg.channel.send(`Your discord account is not currently connected to an AllesID. Run \`${process.env.PREFIX}link\` to link it!`);
         }
@@ -127,7 +112,7 @@ const commands = {
     xp: async msg => {
         let user;
         try {
-            user = await getUserData(await userFromDiscord(msg.author.id));
+            user = await getUserData((await User.findOne({ where: { discord: msg.author.id } })).alles);
         } catch (err) {
             return await msg.channel.send(`Sorry, ${msg.author}, you'll need to connect your AllesID first. Try \`${process.env.PREFIX}link\``);
         }
@@ -171,7 +156,7 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
         .forEach(async member => {
             let user;
             try {
-                user = await getUserData(await userFromDiscord(member.user.id));
+                user = await getUserData((await User.findOne({ where: { discord: member.user.id } })).alles);
             } catch (err) { }
 
             // Set Name
@@ -202,15 +187,6 @@ const getUserData = async id => (
 const nametag = async (name, tag) => (
     await axios.get(`https://horizon.alles.cc/nametag?name=${encodeURIComponent(name)}&tag=${encodeURIComponent(tag)}`)
 ).data.id;
-
-// Get User ID from Discord ID
-const userFromDiscord = async discord => {
-    const { alles } = (await axios.get(
-        `https://pizza.alles.cc/fec36e89-cc5f-4111-9191-9096eb1097d1/discord/${encodeURIComponent(discord)}`
-    )).data;
-    if (alles) return alles;
-    else throw new Error("Alles id not set");
-};
 
 // Escape
 const esc = content => content
