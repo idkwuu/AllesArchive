@@ -8,20 +8,19 @@ import {
 	Transition,
 } from "@alleshq/reactants";
 import { LogIn, Circle } from "react-feather";
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 import Router from "next/router";
-import { ParsedUrlQuery } from "querystring";
 import { set as setCookie } from "es-cookie";
-import { Page } from "../components";
+import { Page } from "../components/page";
 
-export default function Login({ query }: { query: ParsedUrlQuery }) {
-	const [nametag, setNametag] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
-	const [loading, setLoading] = useState<boolean>(false);
-	const [error, setError] = useState<string>("");
-	const [showError, setShowError] = useState<boolean>(false);
+export default function Login({ query }) {
+	const [nametag, setNametag] = useState("");
+	const [password, setPassword] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("");
+	const [showError, setShowError] = useState(false);
 
-	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+	const onSubmit = async (e) => {
 		e.preventDefault();
 		if (!password || nametag.split("#").length < 2) return;
 
@@ -34,7 +33,7 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 		setLoading(true);
 
 		try {
-			const { token }: { token: string } = await axios
+			const { token } = await axios
 				.post("/api/login", {
 					name,
 					tag,
@@ -53,11 +52,11 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 				}),
 			});
 
-			const location = query?.next?.toString() ?? "/";
+			const location = query.next ? query.next : "/";
 			/^https?:\/\/|^\/\//i.test(location)
 				? (window.location.href = location)
 				: Router.push(location);
-		} catch (error) {
+		} catch (err) {
 			setError("The nametag or password entered is incorrect.");
 			setShowError(true);
 			setLoading(false);
@@ -140,6 +139,4 @@ export default function Login({ query }: { query: ParsedUrlQuery }) {
 	);
 }
 
-Login.getInitialProps = ({ query }) => {
-	return { query };
-};
+Login.getInitialProps = ({ query }) => ({ query });

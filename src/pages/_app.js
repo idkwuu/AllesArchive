@@ -2,15 +2,9 @@ import "@alleshq/reactants/dist/index.css";
 import axios from "axios";
 import App from "next/app";
 import Router from "next/router";
-import type { AppProps, AppContext } from "next/app";
-import type { User } from "../types";
-import { UserContext } from "../lib";
+import { UserContext } from "../utils/user";
 
-type Props = {
-	user: User;
-} & AppProps;
-
-export default function Hub({ Component, pageProps, user }: Props) {
+export default function Hub({ Component, pageProps, user }) {
 	return (
 		<UserContext.Provider value={user}>
 			<Component {...pageProps} />
@@ -18,13 +12,12 @@ export default function Hub({ Component, pageProps, user }: Props) {
 	);
 }
 
-Hub.getInitialProps = async (appContext: AppContext) => {
+Hub.getInitialProps = async (appContext) => {
 	const props = await App.getInitialProps(appContext);
-
 	const { ctx } = appContext;
 	const isServer = typeof window === "undefined";
 
-	const redirect = (location: string) =>
+	const redirect = (location) =>
 		isServer
 			? ctx.res.writeHead(302, { location }).end()
 			: /^https?:\/\/|^\/\//i.test(location)
@@ -43,7 +36,7 @@ Hub.getInitialProps = async (appContext: AppContext) => {
 	try {
 		const cookie = ctx.req?.headers.cookie ?? "";
 		const headers = isServer ? { cookie } : {};
-		const user: User = await axios
+		const user = await axios
 			.get(`${process.env.PUBLIC_URI ?? ""}/api/me`, { headers })
 			.then((res) => res.data);
 
@@ -52,9 +45,12 @@ Hub.getInitialProps = async (appContext: AppContext) => {
 			redirect(ctx.query.next?.toString() ?? "/");
 
 		return { ...props, user };
-	} catch (error) {
+	} catch (err) {
 		// At this point we're 100% sure the token is invalid.
-		if (!redirectIfLoggedInPaths.includes(ctx.pathname))
+		if (
+			!redirectIfLoggedInPaths.includes(ctx.pathname) &&
+			!allowGuestPaths.includes(ctx.pathname)
+		)
 			redirect(`/login?next=${ctx.pathname}`);
 
 		return { ...props };

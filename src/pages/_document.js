@@ -1,20 +1,12 @@
-import NextDocument, {
-	Html,
-	Head,
-	Main,
-	NextScript,
-	DocumentContext,
-	DocumentInitialProps,
-} from "next/document";
+import NextDocument, { Html, Head, Main, NextScript } from "next/document";
 import nextCookies from "next-cookies";
 import classnames from "classnames";
-import { Theme } from "../lib";
 
-export default class Document extends NextDocument<{ theme: Theme }> {
+export default class Document extends NextDocument {
 	static async getInitialProps(ctx) {
 		const initialProps = await NextDocument.getInitialProps(ctx);
 		const cookies = nextCookies(ctx);
-		return { ...initialProps, theme: (cookies.theme as Theme) ?? "light" };
+		return { ...initialProps, theme: cookies.theme ?? "light" };
 	}
 
 	render() {

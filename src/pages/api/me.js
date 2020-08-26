@@ -1,8 +1,6 @@
 import axios from "axios";
-import type { NextApiRequest, NextApiResponse } from "next";
-import type { Session, User } from "../../types";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req, res) => {
 	if (!req.cookies.sessionToken) {
 		return res.status(401).send({ err: "badAuthorization" });
 	}
@@ -13,12 +11,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 	try {
 		// Get session from token
-		const session: Omit<Session, "token"> = await axios
+		const session = await axios
 			.post(`${NEXUS_URI}/sessions/token`, { token }, { auth })
 			.then((res) => res.data);
 
 		// Get user by id
-		const user: User = await axios
+		const user = await axios
 			.get(`${NEXUS_URI}/users/${session.user}`, { auth })
 			.then((res) => res.data);
 
@@ -31,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			plus: user.plus,
 			createdAt: user.createdAt,
 		});
-	} catch (error) {
+	} catch (err) {
 		res.status(500).send({ err: "internalError" });
 	}
 };

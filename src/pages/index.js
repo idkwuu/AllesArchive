@@ -2,34 +2,17 @@ import { Box } from "@alleshq/reactants";
 import {
 	User as UserIcon,
 	Shield,
-	Icon,
 	Grid,
 	Award,
 	PlusCircle,
-	PlusSquare,
 } from "react-feather";
 import Link from "next/link";
-import { Page } from "../components";
-import { useUser } from "../lib";
-import { Spectare, Pulsar } from "../logos";
+import { Page } from "../components/page";
+import { useUser } from "../utils/user";
+import { Spectare } from "../logos/spectare";
+import { Pulsar } from "../logos/pulsar";
 
-interface Category {
-	name: string;
-	icon: Icon;
-	links: {
-		text: string;
-		href: string;
-		external?: boolean;
-	}[];
-}
-
-interface Product {
-	name: string;
-	logo: React.ReactNode;
-	url: string;
-}
-
-const categories: Category[] = [
+const categories = [
 	{
 		name: "Profile and Personalisation",
 		icon: UserIcon,
@@ -118,7 +101,7 @@ const TextLogo = ({ children }) => (
 	</div>
 );
 
-const products: Product[] = [
+const products = [
 	{
 		name: "Micro",
 		logo: <TextLogo>μ</TextLogo>,

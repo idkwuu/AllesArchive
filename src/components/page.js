@@ -6,22 +6,16 @@ import {
 	Menu,
 	Header,
 	Button,
+	useTheme,
 } from "@alleshq/reactants";
 import { Circle } from "react-feather";
 import Link from "next/link";
 import Router from "next/router";
 import Head from "next/head";
-import moment from "moment";
 import { remove as removeCookie } from "es-cookie";
-import { useUser, useTheme } from "../lib";
+import { useUser } from "../utils/user";
 
-type Props = {
-	authenticated?: boolean;
-	title?: string;
-	breadcrumbs?: React.ReactNode;
-};
-
-export const Page: React.FC<Props> = ({
+export const Page = ({
 	children,
 	authenticated = true,
 	title,
@@ -29,7 +23,6 @@ export const Page: React.FC<Props> = ({
 }) => {
 	const user = useUser();
 	const { toggleTheme } = useTheme();
-	const d = process.env.buildTimestamp;
 
 	const logOut = () => {
 		const isProduction = process.env.NODE_ENV === "production";
@@ -119,10 +112,6 @@ export const Page: React.FC<Props> = ({
 
 			<footer className="border-gray-400 flex items-center justify-center text-sm absolute bottom-0 w-full h-15 text-gray-500 dark:text-gray-400">
 				<div className="w-full max-w-2xl px-5">
-					<div className="float-left space-x-5">
-						Built on {moment(d).format("LL")} at {moment(d).format("LT")}
-					</div>
-
 					<div className="float-right space-x-7">
 						<a
 							href="https://github.com/alleshq/hub"
