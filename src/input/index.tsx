@@ -26,6 +26,7 @@ export const Input: React.FC<Props> = memo(
     onIconRightClick,
     type,
     placeholder,
+    disabled,
     label,
     note,
     hasNote,
@@ -108,6 +109,7 @@ export const Input: React.FC<Props> = memo(
               "border-danger": focused && errored,
               "dark:border-gray-600": !focused && !errored,
               "dark:border-gray-400": focused && !errored,
+              "opacity-50": disabled,
             }
           )}
         >
@@ -117,6 +119,7 @@ export const Input: React.FC<Props> = memo(
             onFocus={onFocus}
             onBlur={onBlur}
             placeholder={placeholder}
+            disabled={disabled}
             type={type}
             required={required}
             className={classnames(
