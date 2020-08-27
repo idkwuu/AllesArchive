@@ -5,14 +5,16 @@ export default function NotFound() {
 	return (
 		<Page>
 			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
-				<h1 className="text-5xl font-medium">404</h1>
-				<p>
-					We're having trouble finding that page! Maybe go to the{" "}
-					<a className="text-primary" href="/">
-						homepage
-					</a>
-					.
-				</p>
+				<div>
+					<h1 className="text-5xl font-medium">404</h1>
+					<p>
+						We're having trouble finding that page! Maybe go to the{" "}
+						<a className="text-primary" href="/">
+							homepage
+						</a>
+						.
+					</p>
+				</div>
 
 				<ConfusedCat />
 				<p className="text-right text-sm">
