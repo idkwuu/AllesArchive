@@ -1,6 +1,7 @@
 const db = require("../../db");
 const values = {
   name: "string",
+  tag: "string",
   nickname: "string",
   plus: "boolean",
   email: "string",
