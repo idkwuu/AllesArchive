@@ -13,7 +13,7 @@ import Link from "next/link";
 import Router from "next/router";
 import Head from "next/head";
 import { remove as removeCookie } from "es-cookie";
-import { useUser } from "../utils/user";
+import { useUser } from "../utils/userContext";
 
 export const Page = ({
 	children,

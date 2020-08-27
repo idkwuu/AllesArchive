@@ -8,7 +8,7 @@ import {
 } from "react-feather";
 import Link from "next/link";
 import { Page } from "../components/page";
-import { useUser } from "../utils/user";
+import { useUser } from "../utils/userContext";
 import { Spectare } from "../logos/spectare";
 import { Pulsar } from "../logos/pulsar";
 

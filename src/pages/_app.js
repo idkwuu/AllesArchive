@@ -1,10 +1,12 @@
-import "@alleshq/reactants/dist/index.css";
 import axios from "axios";
 import App from "next/app";
 import Router from "next/router";
-import { UserContext } from "../utils/user";
+import { UserContext } from "../utils/userContext";
+import cookies from "next-cookies";
 
-export default function Hub({ Component, pageProps, user }) {
+import "@alleshq/reactants/dist/index.css";
+
+export default function app({ Component, pageProps, user }) {
 	return (
 		<UserContext.Provider value={user}>
 			<Component {...pageProps} />
@@ -12,9 +14,11 @@ export default function Hub({ Component, pageProps, user }) {
 	);
 }
 
-Hub.getInitialProps = async (appContext) => {
+// User data
+app.getInitialProps = async (appContext) => {
 	const props = await App.getInitialProps(appContext);
 	const { ctx } = appContext;
+	const { sessionToken } = cookies(ctx);
 	const isServer = typeof window === "undefined";
 
 	const redirect = (location) =>
@@ -34,19 +38,28 @@ Hub.getInitialProps = async (appContext) => {
 	}
 
 	try {
-		const cookie = ctx.req?.headers.cookie ?? "";
-		const headers = isServer ? { cookie } : {};
-		const user = await axios
-			.get(`${process.env.PUBLIC_URI ?? ""}/api/me`, { headers })
-			.then((res) => res.data);
+		const user = (
+			await axios.get(
+				`${
+					process.env.NEXT_PUBLIC_ORIGIN ? process.env.NEXT_PUBLIC_ORIGIN : ""
+				}/api/me`,
+				{
+					headers: {
+						Authorization: sessionToken,
+					},
+				}
+			)
+		).data;
 
-		// At this point we're 100% sure the token is valid.
-		if (redirectIfLoggedInPaths.includes(ctx.pathname))
-			redirect(ctx.query.next?.toString() ?? "/");
+		if (redirectIfLoggedInPaths.includes(ctx.pathname)) redirect("/");
 
-		return { ...props, user };
+		return { ...props, user: { ...user, sessionToken } };
 	} catch (err) {
-		// At this point we're 100% sure the token is invalid.
+		console.log(
+			`${
+				process.env.NEXT_PUBLIC_ORIGIN ? process.env.NEXT_PUBLIC_ORIGIN : ""
+			}/api/me`
+		);
 		if (
 			!redirectIfLoggedInPaths.includes(ctx.pathname) &&
 			!allowGuestPaths.includes(ctx.pathname)

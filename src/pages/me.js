@@ -1,6 +1,6 @@
 import { Box, Input, Button } from "@alleshq/reactants";
 import { Page } from "../components/page";
-import { useUser } from "../utils/user";
+import { useUser } from "../utils/userContext";
 import { useState } from "react";
 import axios from "axios";
 
