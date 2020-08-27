@@ -6,7 +6,7 @@
 		"format": "prettier --write \"./**/*.+(js)\""
 	},
 	"dependencies": {
-		"@alleshq/reactants": "^1.2.0",
+		"@alleshq/reactants": "^1.3.0",
 		"axios": "^0.20.0",
 		"classnames": "^2.2.6",
 		"es-cookie": "^1.3.2",
