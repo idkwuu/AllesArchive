@@ -55,7 +55,7 @@ const Profile = () => {
 			<Box.Content className="space-y-5">
 				<div>
 					<Input label="Name" value={user.name} disabled />
-					<p className="mx-5 mt-2 text-xs">
+					<p className="mx-5 mt-2 text-xs text-gray-500 dark:text-gray-300">
 						If you need to change your name, please contact support
 					</p>
 				</div>
@@ -71,7 +71,7 @@ const Profile = () => {
 							setError();
 						}}
 					/>
-					<p className="mx-5 mt-2 text-xs">
+					<p className="mx-5 mt-2 text-xs text-gray-500 dark:text-gray-300">
 						{user.plus
 							? "You can set your tag to any available number between 0001 and 9999 since you have Alles+"
 							: "You'll need Alles+ to change your tag"}
@@ -87,7 +87,7 @@ const Profile = () => {
 							setError();
 						}}
 					/>
-					<p className="mx-5 mt-2 text-xs">
+					<p className="mx-5 mt-2 text-xs text-gray-500 dark:text-gray-300">
 						Your nickname will be used to refer to you and other users may see
 						it
 					</p>
