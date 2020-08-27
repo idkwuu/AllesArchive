@@ -130,10 +130,26 @@ export default function Index() {
 	return (
 		<Page>
 			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
-				<h4 className="font-medium text-3xl">
-					Hey, {user.nickname}
-					{user.plus && <sup className="select-none text-primary">+</sup>}
-				</h4>
+				<div>
+					<h4 className="font-medium text-3xl">
+						Hey, {user.nickname}
+						{user.plus && <sup className="select-none text-primary">+</sup>}
+					</h4>
+
+					<p className="text-gray-500 dark:text-gray-300 mt-2">
+						We're still working on this site, and most stuff won't work yet. You
+						can keep up to date on Micro or by following us on{" "}
+						<a href="https://twitter.com/alleshq" className="text-primary">
+							Twitter
+						</a>{" "}
+						or joining our{" "}
+						<a href="https://alles.link/discord" className="text-primary">
+							Discord server
+						</a>
+						. We haven't built the Alles+ section just yet, so if you need to
+						update your subscription, contact archie@abaer.dev :)
+					</p>
+				</div>
 
 				<div className="grid grid-cols-2 md:grid-cols-6 gap-3">
 					{products.map((product, i) => (
