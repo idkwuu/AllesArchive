@@ -1,7 +1,7 @@
-import { Box, Input, Button } from "@alleshq/reactants";
+import { Box, Avatar, Input, Button } from "@alleshq/reactants";
 import { Page } from "../components/page";
 import { useUser } from "../utils/userContext";
-import { useState } from "react";
+import { useState, createRef } from "react";
 import axios from "axios";
 import config from "../config";
 
@@ -62,7 +62,11 @@ const Profile = () => {
 	return (
 		<Box>
 			<Box.Header>Basic Profile</Box.Header>
-			<Box.Content className="space-y-5">
+			<Box.Content className="space-y-10 md:space-y-5">
+				<div className="flex justify-center">
+					<AvatarUpload />
+				</div>
+
 				<Input
 					label="Name"
 					value={user.name}
@@ -106,5 +110,50 @@ const Profile = () => {
 				</Button>
 			</Box.Footer>
 		</Box>
+	);
+};
+
+const AvatarUpload = () => {
+	const user = useUser();
+	const input = createRef();
+	const [r, setR] = useState(0);
+
+	return (
+		<div
+			className="hover:opacity-50 duration-150 cursor-pointer"
+			onClick={() => input.current.click()}
+		>
+			<Avatar
+				src={`https://avatar.alles.cc/${user.id}?size=200&r=${r}`}
+				size={200}
+			/>
+
+			<input
+				ref={input}
+				type="file"
+				accept="image/png, image/jpeg"
+				className="hidden"
+				onChange={(e) => {
+					const f = e.target.files[0];
+					const reader = new FileReader();
+					reader.onload = (e) =>
+						axios
+							.post(
+								"/api/avatar",
+								{
+									image: e.target.result,
+								},
+								{
+									headers: {
+										Authorization: user.sessionToken,
+									},
+								}
+							)
+							.then(() => setR(Math.random()))
+							.catch(() => {});
+					reader.readAsDataURL(f);
+				}}
+			/>
+		</div>
 	);
 };
