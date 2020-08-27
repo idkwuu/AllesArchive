@@ -55,11 +55,6 @@ app.getInitialProps = async (appContext) => {
 
 		return { ...props, user: { ...user, sessionToken } };
 	} catch (err) {
-		console.log(
-			`${
-				process.env.NEXT_PUBLIC_ORIGIN ? process.env.NEXT_PUBLIC_ORIGIN : ""
-			}/api/me`
-		);
 		if (
 			!redirectIfLoggedInPaths.includes(ctx.pathname) &&
 			!allowGuestPaths.includes(ctx.pathname)

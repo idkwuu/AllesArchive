@@ -3,6 +3,7 @@ import { Page } from "../components/page";
 import { useUser } from "../utils/userContext";
 import { useState } from "react";
 import axios from "axios";
+import config from "../config";
 
 export default function AboutMe() {
 	return (
@@ -34,17 +35,26 @@ const Profile = () => {
 
 		setLoading(true);
 		axios
-			.post("/api/profile", {
-				headers: {
-					authorization: user.sessionToken,
+			.post(
+				"/api/profile",
+				{
+					nickname,
+					tag,
 				},
-			})
+				{
+					headers: {
+						Authorization: user.sessionToken,
+					},
+				}
+			)
 			.then(() => {
 				setError();
 				setLoading(false);
 			})
-			.catch(() => {
-				setError("Something went wrong");
+			.catch((err) => {
+				if (err.response && err.response.data.err === "profile.tag.unavailable")
+					setError("This tag is unavailable");
+				else setError("Something went wrong");
 				setLoading(false);
 			});
 	};
@@ -81,6 +91,7 @@ const Profile = () => {
 					label="Nickname"
 					defaultValue={user.nickname}
 					placeholder="Jessica"
+					maxLength={config.maxNicknameLength}
 					onChange={(e) => {
 						setNickname(e.target.value.trim());
 						setError();
