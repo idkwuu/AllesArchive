@@ -27,7 +27,7 @@ export const Page = ({
 	const logOut = () => {
 		const isProduction = process.env.NODE_ENV === "production";
 		const domain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
-		removeCookie("sesionToken", isProduction && { domain });
+		removeCookie("sessionToken", isProduction && { domain });
 		Router.push("/login");
 	};
 
