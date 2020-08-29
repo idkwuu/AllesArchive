@@ -22,7 +22,7 @@ export const Page = ({
 	breadcrumbs,
 }) => {
 	const user = useUser();
-	const { toggleTheme } = useTheme();
+	useTheme();
 
 	const logOut = () => {
 		const isProduction = process.env.NODE_ENV === "production";
@@ -42,10 +42,7 @@ export const Page = ({
 					<Breadcrumb>
 						<Link href="/" passHref>
 							<Breadcrumb.Item className="font-medium text-lg inline-flex items-center">
-								<Circle
-									onClick={toggleTheme}
-									className="text-gray-500 inline w-5 mr-2"
-								/>
+								<Circle className="text-gray-500 inline w-5 mr-2" />
 								Alles
 							</Breadcrumb.Item>
 						</Link>
