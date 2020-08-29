@@ -6,7 +6,6 @@ import {
 	Menu,
 	Header,
 	Button,
-	useTheme,
 } from "@alleshq/reactants";
 import { Circle } from "react-feather";
 import Link from "next/link";
@@ -14,6 +13,7 @@ import Router from "next/router";
 import Head from "next/head";
 import { remove as removeCookie } from "es-cookie";
 import { useUser } from "../utils/userContext";
+import { useTheme } from "../utils/theme";
 
 export const Page = ({
 	children,
