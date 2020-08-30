@@ -26,9 +26,7 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
             let user;
             try {
                 user = await getUserData(await getAllesId(member.user.id));
-            } catch (err) {
-                console.log(err);
-            }
+            } catch (err) { }
 
             // Set Name
             try {
