@@ -10,14 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@alleshq/quickauth": "^1.0.0",
     "axios": "^0.19.2",
-    "cookie-parser": "^1.4.5",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mariadb": "^2.4.2",
-    "sequelize": "^6.3.4"
+    "mariadb": "^2.4.2"
   }
 }
