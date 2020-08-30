@@ -167,7 +167,7 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
             try {
                 if (cmd) await cmd(msg, cmdString);
                 else await msg.channel.send(`Sorry, ${msg.author}, that command doesn't exist! Try ${process.env.PREFIX}help to see all the commands you can use :)`);
-            } catch (err) {}
+            } catch (err) { }
         }
     });
 });
