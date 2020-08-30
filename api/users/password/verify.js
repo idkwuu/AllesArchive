@@ -1,5 +1,6 @@
 const db = require("../../../db");
 const argon2 = require("argon2");
+const log = require("../../../util/log");
 
 module.exports = async (req, res) => {
   if (typeof req.body.password !== "string")
@@ -14,9 +15,19 @@ module.exports = async (req, res) => {
   if (!user) return res.status(404).json({ err: "missingResource" });
 
   // Evaluate Password
-  if (!user.password) return res.json({ matches: false });
-  argon2
-    .verify(user.password, req.body.password)
-    .then((matches) => res.json({ matches }))
-    .catch(() => res.json({ matches: false }));
+  let matches;
+  if (!user.password) matches = false;
+  else {
+    try {
+      matches = await argon2.verify(user.password, req.body.password);
+    } catch (err) {
+      matches = false;
+    }
+  }
+
+  // Response
+  res.json({ matches });
+
+  // Log
+  log("user.password.verify", { matches }, req.client.id, user.id);
 };

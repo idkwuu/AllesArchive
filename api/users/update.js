@@ -1,4 +1,5 @@
 const db = require("../../db");
+const log = require("../../util/log");
 const values = {
   name: "string",
   tag: "string",
@@ -35,4 +36,17 @@ module.exports = async (req, res) => {
 
   // Response
   res.json({});
+
+  // Log params
+  const logParams = {};
+  Object.keys(req.body).forEach(
+    (key) =>
+      (logParams[key] =
+        typeof req.body[key] === "string"
+          ? req.body[key]
+          : JSON.stringify(req.body[key]))
+  );
+
+  // Log
+  log("user.update", logParams, req.client.id, user.id);
 };

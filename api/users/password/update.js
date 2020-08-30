@@ -1,5 +1,6 @@
 const db = require("../../../db");
 const argon2 = require("argon2");
+const log = require("../../../util/log");
 
 module.exports = async (req, res) => {
   if (typeof req.body.password !== "string")
@@ -26,4 +27,7 @@ module.exports = async (req, res) => {
 
   // Response
   res.json({});
+
+  // Log
+  log("user.password.update", null, req.client.id, user.id);
 };

@@ -1,5 +1,6 @@
 const db = require("../../db");
 const { literal } = require("sequelize");
+const log = require("../../util/log");
 
 module.exports = async (req, res) => {
   if (typeof req.body.xp !== "number")
@@ -20,4 +21,12 @@ module.exports = async (req, res) => {
 
   // Response
   res.json({});
+
+  // Log
+  log(
+    "user.xp.update",
+    { count: req.body.xp.toString() },
+    req.client.id,
+    user.id
+  );
 };

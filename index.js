@@ -42,4 +42,4 @@ app.get("/sessions/:id", require("./api/sessions"));
 app.post("/sessions/token", require("./api/sessions/token"));
 
 // 404
-app.use((req, res) => res.status(404).json({ err: "notFound" }));
+app.use((_req, res) => res.status(404).json({ err: "notFound" }));

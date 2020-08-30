@@ -3,6 +3,7 @@ const config = require("../../config");
 const uuid = require("uuid").v4;
 const argon2 = require("argon2");
 const tag = require("../../util/generateTag");
+const log = require("../../util/log");
 
 module.exports = async (req, res) => {
   if (
@@ -48,4 +49,15 @@ module.exports = async (req, res) => {
     name: user.name,
     tag: user.tag,
   });
+
+  // Log
+  log(
+    "user.create",
+    {
+      name: user.name,
+      tag: user.tag,
+    },
+    req.client.id,
+    user.id
+  );
 };

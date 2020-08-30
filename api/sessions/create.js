@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const uuid = require("uuid").v4;
 const db = require("../../db");
+const log = require("../../util/log");
 
 module.exports = async (req, res) => {
   if (typeof req.body.user !== "string" || typeof req.body.address !== "string")
@@ -34,4 +35,7 @@ module.exports = async (req, res) => {
     id: session.id,
     token,
   });
+
+  // Log
+  log("session.create", { id: session.id }, req.client.id, user.id);
 };
