@@ -1,4 +1,5 @@
 require("dotenv").config();
+const axios = require("axios");
 
 // Discord
 const Discord = require("discord.js");
@@ -25,7 +26,9 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
             let user;
             try {
                 user = await getUserData(await getAllesId(member.user.id));
-            } catch (err) { }
+            } catch (err) {
+                console.log(err);
+            }
 
             // Set Name
             try {
