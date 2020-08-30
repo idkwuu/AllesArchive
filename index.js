@@ -140,6 +140,7 @@ const commands = {
 
         if (user.xp.level >= 50) return await msg.channel.send(`bruh, you're on level ${user.xp.level} smh`);
 
+        // Check cooldown
         if (xpDates[user.id] && xpDates[user.id] > new Date().getTime() - 1000 * 60 * 60) {
             const minsLeft = Math.ceil(((xpDates[user.id] + 1000 * 60 * 60) - new Date().getTime()) / (1000 * 60));
             return await msg.channel.send(`Hold up, ${msg.author}! You still have to wait ${minsLeft} minute${minsLeft === 1 ? "" : "s"} before you can do this again.`);
@@ -147,7 +148,23 @@ const commands = {
 
         xpDates[user.id] = new Date().getTime();
         try {
+            // Increase XP
             await nexus("POST", `users/${user.id}/xp`, { xp: 5 });
+
+            // Increase Server Owner XP
+            try {
+                await nexus("POST", `users/${
+                    (
+                        await User.findOne({
+                            where: {
+                                discord: msg.guild.owner.id
+                            }
+                        })
+                    ).alles
+                }/xp`, { xp: 1 });
+            } catch (err) { conso }
+
+            // Message
             await msg.channel.send(`Boop! +5xp!`);
         } catch (err) {
             await msg.channel.send(`Oh no! Something went wrong when trying to add your xp, ${msg.author}!`)
