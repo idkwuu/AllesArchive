@@ -14,6 +14,8 @@ const db = new Sequelize(
 );
 module.exports = db;
 
-require("./nexusClient")(db);
+require("./client")(db);
 require("./user")(db);
 require("./session")(db);
+require("./event")(db);
+require("./eventParam")(db);

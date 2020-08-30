@@ -1,20 +1,20 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (db) => {
-  db.NexusClient = db.define(
-    "nexusClient",
+  db.EventParam = db.define(
+    "eventParam",
     {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
         allowNull: false,
       },
-      secret: {
+      key: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      name: {
-        type: DataTypes.STRING,
+      value: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
     },
@@ -22,4 +22,8 @@ module.exports = (db) => {
       timestamps: false,
     }
   );
+
+  // Event Association
+  db.Event.hasMany(db.EventParam);
+  db.EventParam.belongsTo(db.Event);
 };

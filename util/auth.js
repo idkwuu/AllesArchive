@@ -1,4 +1,4 @@
-const db = require("./db");
+const db = require("../db");
 
 module.exports = async (req, res, next) => {
   // Auth Header
@@ -21,12 +21,12 @@ module.exports = async (req, res, next) => {
     return res.status(401).json({ err: "badAuthorization" });
 
   // Get Client
-  const client = await db.NexusClient.findOne({
+  const client = await db.Client.findOne({
     where: {
       id: credentials[0],
     },
   });
-  if (!client || client.secret !== credentials[1])
+  if (!client || !client.secret || client.secret !== credentials[1])
     return res.status(401).json({ err: "badAuthorization" });
 
   // Continue

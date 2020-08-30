@@ -1,10 +1,11 @@
 require("dotenv").config();
+const log = require("./util/log");
 
 // Express
 const express = require("express");
 const app = express();
 app.use(require("body-parser").json());
-app.use(require("./auth"));
+app.use(require("./util/auth"));
 app.use((_err, _req, res, _next) =>
   res.status(500).json({ err: "internalError" })
 );
@@ -12,7 +13,10 @@ app.use((_err, _req, res, _next) =>
 // Database
 const db = require("./db");
 db.sync().then(() =>
-  app.listen(8080, () => console.log("Server is listening..."))
+  app.listen(8080, () => {
+    console.log("Server is listening...");
+    log("server.start");
+  })
 );
 
 // Create User
