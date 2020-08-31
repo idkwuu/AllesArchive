@@ -17,7 +17,7 @@ module.exports = async (name, params, clientId, userId) => {
   await event.setClient(client);
 
   // User Association
-  const user = await db.Client.findOne({
+  const user = await db.User.findOne({
     where: {
       id: userId,
     },
