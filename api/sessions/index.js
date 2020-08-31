@@ -1,4 +1,5 @@
 const db = require("../../db");
+const log = require("../../util/log");
 
 module.exports = async (req, res) => {
   // Get Session
@@ -16,4 +17,7 @@ module.exports = async (req, res) => {
     address: session.address,
     createdAt: session.createdAt,
   });
+
+  // Log
+  log("session.get", { id: session.id }, req.client.id, session.userId);
 };

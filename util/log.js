@@ -2,13 +2,29 @@ const db = require("../db");
 const uuid = require("uuid").v4;
 
 module.exports = async (name, params, clientId, userId) => {
+  // Create Event
   const event = await db.Event.create({
     id: uuid(),
     name,
-    clientId,
-    userId,
   });
 
+  // Client Association
+  const client = await db.Client.findOne({
+    where: {
+      id: clientId,
+    },
+  });
+  await event.setClient(client);
+
+  // User Association
+  const user = await db.Client.findOne({
+    where: {
+      id: userId,
+    },
+  });
+  await event.setClient(user);
+
+  // Create Parameters
   if (params)
     await Promise.all(
       Object.keys(params).map((key) =>

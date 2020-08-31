@@ -1,4 +1,5 @@
 const db = require("../db");
+const log = require("../util/log");
 
 module.exports = async (req, res) => {
   const { name, tag } = req.query;
@@ -14,11 +15,24 @@ module.exports = async (req, res) => {
       },
     });
     if (!user) return res.status(404).json({ err: "missingResource" });
+
+    // Response
     res.json({
       id: user.id,
       name: user.name,
       tag: user.tag,
     });
+
+    // Log
+    log(
+      "nametag.user",
+      {
+        name: user.name,
+        tag: user.tag,
+      },
+      req.client.id,
+      user.id
+    );
   } else {
     // Get list of users with name
     const users = await db.User.findAll({
@@ -27,6 +41,8 @@ module.exports = async (req, res) => {
       },
       order: ["tag"],
     });
+
+    // Response
     res.json(
       users.map((user) => ({
         id: user.id,
@@ -34,5 +50,8 @@ module.exports = async (req, res) => {
         tag: user.tag,
       }))
     );
+
+    // Log
+    log("nametag.list", { name }, req.client.id);
   }
 };
