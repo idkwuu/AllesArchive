@@ -22,7 +22,7 @@ module.exports = async (name, params, clientId, userId) => {
       id: userId,
     },
   });
-  await event.setClient(user);
+  await event.setUser(user);
 
   // Create Parameters
   if (params)
