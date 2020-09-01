@@ -60,7 +60,7 @@ export const Page = ({
 							*/}
 
 							<Popover
-								className="relative inline-block"
+								className="relative inline-block flex"
 								trigger={(onClick) => (
 									<Avatar
 										onClick={onClick}
@@ -79,7 +79,7 @@ export const Page = ({
 										leaveFrom="opacity-100 scale-100"
 										leaveTo="opacity-0 scale-95"
 									>
-										<Menu className="absolute origin-top-right right-0">
+										<Menu className="absolute origin-top-right right-0 top-10">
 											<Menu.Item
 												onClick={() => logOut()}
 												className="cursor-pointer"
