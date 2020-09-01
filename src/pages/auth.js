@@ -67,12 +67,7 @@ const Password = () => {
 		<Box>
 			<Box.Header>Change Password</Box.Header>
 			<Box.Content>
-				<form
-					method="POST"
-					onSubmit={submit}
-					className="space-y-10 md:space-y-5"
-					ref={form}
-				>
+				<form method="POST" onSubmit={submit} className="space-y-5" ref={form}>
 					<Input
 						label="Old Password"
 						type="password"
