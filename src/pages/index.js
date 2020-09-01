@@ -37,7 +37,7 @@ const categories = [
 		links: [
 			{
 				text: "Signing in",
-				href: "/security",
+				href: "/auth",
 			},
 			{
 				text: "Active Sessions",
