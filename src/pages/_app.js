@@ -59,7 +59,7 @@ app.getInitialProps = async (appContext) => {
 			!redirectIfLoggedInPaths.includes(ctx.pathname) &&
 			!allowGuestPaths.includes(ctx.pathname)
 		)
-			redirect(`/login?next=${ctx.pathname}`);
+			redirect(`/login?next=${ctx.asPath}`);
 
 		return { ...props };
 	}
