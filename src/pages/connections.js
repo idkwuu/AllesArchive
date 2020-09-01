@@ -45,13 +45,17 @@ const Connections = ({ discord }) => {
 };
 
 Connections.getInitialProps = async (ctx) => {
-	return (
-		await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/connections`, {
-			headers: {
-				Authorization: cookies(ctx).sessionToken,
-			},
-		})
-	).data;
+	try {
+		return (
+			await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/connections`, {
+				headers: {
+					Authorization: cookies(ctx).sessionToken,
+				},
+			})
+		).data;
+	} catch (err) {
+		return {};
+	}
 };
 
 export default Connections;
