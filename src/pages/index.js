@@ -9,8 +9,6 @@ import {
 import Link from "next/link";
 import { Page } from "../components/page";
 import { useUser } from "../utils/userContext";
-import { Spectare } from "../logos/spectare";
-import { Pulsar } from "../logos/pulsar";
 
 const categories = [
 	{
@@ -106,21 +104,6 @@ const products = [
 		name: "Micro",
 		logo: <TextLogo>μ</TextLogo>,
 		url: "https://micro.alles.cx",
-	},
-	{
-		name: "Spectare",
-		logo: Spectare,
-		url: "https://spectare.alles.cx",
-	},
-	{
-		name: "Pulsar",
-		logo: Pulsar,
-		url: "https://pulsar.alles.cx",
-	},
-	{
-		name: "Input",
-		logo: <TextLogo>I</TextLogo>,
-		url: "https://input.alles.cx",
 	},
 ];
 
