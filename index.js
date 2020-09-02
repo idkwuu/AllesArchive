@@ -38,8 +38,9 @@ app.post("/users/:id/password/verify", require("./api/users/password/verify"));
 
 // Sessions
 app.post("/sessions", require("./api/sessions/create"));
-app.get("/sessions/:id", require("./api/sessions"));
 app.post("/sessions/token", require("./api/sessions/token"));
+app.get("/sessions/:id", require("./api/sessions"));
+app.delete("/sessions/:id", require("./api/sessions/delete"));
 
 // 404
 app.use((_req, res) => res.status(404).json({ err: "notFound" }));
