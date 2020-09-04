@@ -2,30 +2,30 @@ const game = require("./gameData");
 const config = require("./config");
 const tokenAuth = require("./util/tokenAuth.js");
 
-//HTTP Server
+// HTTP Server
 const express = require("express");
-const app = express(); //Express Server
+const app = express(); // Express Server
 const http = require("http").createServer(app);
-const io = require("socket.io")(http); //Socket.io Server
-app.use(require("cors")()); //CORS Headers
-app.use(require("body-parser").json({extended: false})); //Body Parser
-app.use((err, req, res, next) => res.status(500).json({err: "internalError"})); //Express Error Handling
+const io = require("socket.io")(http); // Socket.io Server
+app.use(require("cors")()); // CORS Headers
+app.use(require("body-parser").json({extended: false})); // Body Parser
+app.use((err, req, res, next) => res.status(500).json({err: "internalError"})); // Express Error Handling
 http.listen(8001);
 
-//Setup Functions
+// Setup Functions
 require("./gameFunctions/generateStars")();
 
-//Database
+// Database
 const {connect} = require("./util/mongo");
 connect((err) => {
     if (err) throw err;
     console.log("Connected to MongoDB");
 });
 
-//Tick
+// Tick
 setInterval(() => {
 
-    //Emit Game Data
+    // Emit Game Data
     io.emit("data", {
         players: (() => {
             const players = {};
@@ -50,35 +50,35 @@ setInterval(() => {
         stars: game.stars
     });
 
-    //Game Functions
+    // Game Functions
     require("./gameFunctions/newStar")();
     require("./gameFunctions/playerUpdate")();
     require("./gameFunctions/bulletUpdate")();
 
 }, 1000 / config.tickSpeed);
 
-//Socket.io Connection
+// Socket.io Connection
 io.on("connection", socket => {
 
-    //Player Action
+    // Player Action
     socket.on("action", data => {
         const player = game.players[data.id];
         if (!player || player.secret !== data.secret) return;
 
         switch (data.action) {
 
-            //Change Direction
+            // Change Direction
             case "changeDirection":
                 player.direction = data.param;
                 break;
             
-            //Activate Speed Boost
+            // Activate Speed Boost
             case "speedBoost":
                 if (player.speedBoost.full < 100) return;
                 player.speedBoost.active = true;
                 break;
             
-            //Shoot Bullet
+            // Shoot Bullet
             case "shoot":
                 if (game.bullets.length > config.maxBullets) return; //Maximum Bullets in Arena
                 player.score--;
@@ -99,11 +99,11 @@ io.on("connection", socket => {
 
 });
 
-//Join
+// Join
 app.post("/join", tokenAuth, require("./api/join"));
 
-//Authenticate
+// Authenticate
 app.post("/auth", require("./api/auth"));
 
-//Stats
+// Stats
 app.get("/stats", require("./api/stats"));

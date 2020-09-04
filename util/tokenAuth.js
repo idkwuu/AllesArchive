@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
 
     const oauthFail = () => res.status(401).json({err: "oauthFailed"});
 
-    //Get Token
+    // Get Token
     oauth("token", token).then(response => {
         const tokenData = response.data;
         if (
@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
             !tokenData.scopes.includes("team-list")
         ) return oauthFail();
         
-        //Get data about user
+        // Get data about user
         oauth("me", token).then(async response => {
             req.user = response.data;
 
