@@ -7,12 +7,12 @@ const removeBullet = i => game.bullets.splice(i, 1);
 module.exports = () => {
     game.bullets.forEach((bullet, i) => {
 
-        //Movement
+        // Movement
         const movement = calculateMovement(bullet.direction, config.bulletSpeed);
         bullet.x += movement.x;
         bullet.y += movement.y;
 
-        //Map Bounds
+        // Map Bounds
         if (
             bullet.x < 0 - config.mapSize / 2 ||
             bullet.x > 0 + config.mapSize / 2 ||
@@ -20,7 +20,7 @@ module.exports = () => {
             bullet.y > 0 + config.mapSize / 2
         ) return removeBullet(i);
 
-        //Player Hit
+        // Player Hit
         Object.keys(game.players).forEach(id => {
             const player = game.players[id];
             if (
@@ -30,14 +30,14 @@ module.exports = () => {
                 player.y + config.playerHitbox > bullet.y &&
                 id !== bullet.owner
             ) {
-                //Get Bullet Owner
+                // Get Bullet Owner
                 const owner = game.players[bullet.owner];
                 if (owner) {
 
-                    //Award Points
+                    // Award Points
                     game.players[bullet.owner].score += config.bulletHitGain;
 
-                    //Medusa Effect
+                    // Medusa Effect
                     if (owner.effects.includes("honey")) {
                         player.speed = 0.5;
                     }
@@ -45,22 +45,22 @@ module.exports = () => {
                 }
 
                 if (owner && owner.effects.includes("healer")) {
-                    //Deduct Player Score
+                    // Deduct Player Score
                     player.score += bullet.bulletPower;
                 } else {
-                    //Healing Effect
+                    // Healing Effect
                     player.score -= bullet.bulletPower;
                 }
 
-                //Spread Plague
+                // Spread Plague
                 if (bullet.plague) player.plague = true;
 
-                //Set Killed By
+                // Set Killed By
                 if (player.score <= 0) {
                     player.killedBy = bullet.owner;
                 }
 
-                //Update victim and remove bullet
+                // Update victim and remove bullet
                 game.players[id] = player;
                 removeBullet(i);
             }

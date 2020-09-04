@@ -1,6 +1,5 @@
 const game = require("../gameData");
 const config = require("../config");
-const db = require("../util/mongo");
 const randomString = require("randomstring").generate;
 
 module.exports = async (req, res) => {
@@ -8,8 +7,6 @@ module.exports = async (req, res) => {
     
     const teams = req.user.teams.map(team => team.slug);
     const secret = randomString(config.secretLength);
-
-    await db("players").updateOne({_id: req.user.id}, {$inc: {plays: 1}});
 
     game.players[req.user.id] = {
         name: req.user.username,

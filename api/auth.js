@@ -5,7 +5,7 @@ module.exports = (req, res) => {
     const {code} = req.body;
     if (typeof code !== "string") return res.status(400).json({err: "noAuthCode"});
 
-    //OAuth Token Request
+    // OAuth Token Request
     axios.post("https://api.alles.cx/v1/token", {
         grant_type: "authorization_code",
         code,
