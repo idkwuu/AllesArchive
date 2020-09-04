@@ -1,0 +1,11 @@
+{
+    "tickSpeed": 20,
+    "mapSize": 1000,
+    "innerMap": 500,
+    "stars": 500,
+    "secretLength": 128,
+    "maxBullets": 500,
+    "bulletSpeed": 5,
+    "playerHitbox": 10,
+    "bulletHitGain": 5
+}
