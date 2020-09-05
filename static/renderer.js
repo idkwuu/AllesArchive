@@ -22,11 +22,11 @@ const render = () => {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
 
-    //Background
+    // Background
     gameScreen.fillStyle = theme.bg;
     gameScreen.fillRect(0, 0, canvas.width, canvas.height);
 
-    //Draw Stars
+    // Draw Stars
     gameScreen.fillStyle = theme.star;
     gameData.stars.forEach(star => {
         const relativeX = centerX - ((me.x - star.x) * distanceMultiplier * zoom) + (me.plague ? Math.floor(Math.random() * 10) - 5 : 0);
@@ -36,15 +36,15 @@ const render = () => {
         gameScreen.fill();
     });
 
-    //Draw self
+    // Draw self
     gameScreen.beginPath();
     gameScreen.fillStyle = me.color;
     gameScreen.arc(centerX - (playerSize * zoom) / 2, centerY - (playerSize * zoom) / 2, playerSize * zoom, 0, Math.PI * 2);
     gameScreen.fill();
 
-    //Draw other players
+    // Draw other players
     Object.keys(gameData.players).forEach(id => {
-        if (id === playerCredentials.id) return; //Don't render self
+        if (id === playerCredentials.id) return; // Don't render self
         const player = gameData.players[id];
         gameScreen.fillStyle = player.color;
         const relativeX = centerX - ((me.x - player.x) * distanceMultiplier * zoom);
@@ -57,7 +57,7 @@ const render = () => {
         gameScreen.fillText(`${player.name} [${player.score}]`, relativeX + (playerSize * zoom), relativeY);
     });
 
-    //Draw Bullets
+    // Draw Bullets
     gameScreen.fillStyle = theme.bullet;
     gameData.bullets.forEach(bullet => {
         const relativeX = centerX - ((me.x - bullet.x) * distanceMultiplier * zoom);
@@ -67,18 +67,18 @@ const render = () => {
         gameScreen.fill();
     });
 
-    //Speed Bar
+    // Speed Bar
     gameScreen.fillStyle = theme.speedBarBg;
     gameScreen.fillRect(centerX - 100, canvas.height - 80, 200, 40);
     gameScreen.fillStyle = me.speedBoost.active ? theme.speedBarActive : theme.speedBar;
     gameScreen.fillRect(centerX - 100, canvas.height - 80, me.speedBoost.full * 2, 40);
 
-    //Score
+    // Score
     gameScreen.fillStyle = theme.text;
     gameScreen.font = `25px ${theme.font}`;
     gameScreen.fillText(me.score, centerX - gameScreen.measureText(me.score).width / 2, canvas.height - 100);
 
-    //Red Health Border
+    // Red Health Border
     if (me.score <= 20) {
         gameScreen.strokeStyle = theme.healthBorder;
         gameScreen.lineWidth = 10;
@@ -87,15 +87,15 @@ const render = () => {
         gameScreen.stroke();
     }
 
-    //Text Overlay Config
+    // Text Overlay Config
     var textOverlays = [
-    `@${me.name}`,
+    me.name,
     `players online: ${Object.keys(gameData.players).length}`,
     `x: ${Math.floor(me.x)}`,
     `y: ${Math.floor(me.y)}`
     ];
 
-    //Text Overlays
+    // Text Overlays
     gameScreen.fillStyle = theme.text;
     gameScreen.font = `20px ${theme.font}`;
     for (var i = 0; i < textOverlays.length; i++) {

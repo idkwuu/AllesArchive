@@ -1,7 +1,7 @@
-//Change direction
+// Change direction
 canvas.onmousemove = e => {
-    var x1 = window.innerWidth / 2; //Center
-    var y1 = window.innerHeight / 2; //Center
+    var x1 = window.innerWidth / 2; // Center
+    var y1 = window.innerHeight / 2; // Center
     var x2 = e.clientX;
     var y2 = e.clientY;
     var dx = x2 - x1;
@@ -12,13 +12,13 @@ canvas.onmousemove = e => {
     playerAction("changeDirection", direction);
 };
 
-//Speed boost
+// Speed boost
 canvas.oncontextmenu = e => {
     e.preventDefault();
     playerAction("speedBoost");
 };
 
-//Shooting
+// Shooting
 var shooting = false;
 canvas.onmousedown = e => {
     if (e.button === 0) shooting = true;
@@ -30,7 +30,7 @@ setInterval(() => {
     if (shooting) playerAction("shoot");
 }, 100);
 
-//Scroll for Zoom
+// Scroll for Zoom
 canvas.onwheel = e => {
     if (e.deltaY < 0) {
         if (zoom < 1.5) zoom = (zoom * 10 + 1) / 10;

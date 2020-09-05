@@ -1,7 +1,9 @@
-const defaultServer = "https://silent-firefox-43.telebit.io";
-if (!localStorage.getItem("server")) localStorage.setItem("server", defaultServer);
-const serverUrl = localStorage.getItem("server");
-const token = localStorage.getItem("token");
+const getCookie = name => {
+    match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) return match[2];
+};
+
+const token = getCookie("token");
 const maxDeathStrikes = 30;
 var deathStrikes;
 var gameData;
@@ -55,8 +57,8 @@ const splashTexts = [
     "to infinity and beyond"
 ];
 
-//Socket.io
-const socket = io(serverUrl);
+// Socket.io
+const socket = io();
 socket.on("data", data => {
     gameData = data;
     if (playerCredentials) {
@@ -65,7 +67,7 @@ socket.on("data", data => {
             if (deathStrikes < maxDeathStrikes) {
                 deathStrikes++;
             } else {
-                //Death
+                // Death
                 playerCredentials = undefined;
                 shooting = false;
                 subtitle.innerText = splashTexts[Math.floor(Math.random() * splashTexts.length)];
@@ -77,7 +79,7 @@ socket.on("data", data => {
     }
 });
 
-//Player Action
+// Player Action
 const playerAction = (action, param) => {
     if (!playerCredentials) return;
     socket.emit("action", {
@@ -88,12 +90,12 @@ const playerAction = (action, param) => {
     });
 };
 
-//Start Game
+// Start Game
 const startGame = () => {
     if (!token) return location.href = "/auth";
 
-    //Create Player
-    fetch(`${serverUrl}/join`, {
+    // Create Player
+    fetch("/join", {
         method: "post",
         headers: {
             authorization: token
@@ -101,7 +103,7 @@ const startGame = () => {
     }).then(res => {
         if (res.status === 200) {
             res.json().then(body => {
-                //Game Starts
+                // Game Starts
                 playerCredentials = body;
                 gameMenu.classList.add("hidden");
                 subtitle.classList.remove("error");
@@ -116,7 +118,7 @@ const startGame = () => {
     }).catch(() => showError("Something went wrong."));
 };
 
-//Error Display
+// Error Display
 const showError = msg => {
     subtitle.innerText = `Error: ${msg}`;
     subtitle.classList.add("error");

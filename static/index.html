@@ -2,20 +2,16 @@
     <head>
         <title>shootydot</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="socket.io.js"></script>
-        <link href="style.css" rel="stylesheet" />
+        <script src="/socket.io/socket.io.js"></script>
+        <link href="/style.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=KoHo|Major+Mono+Display" rel="stylesheet" />
-        <script src="game.js"></script>
-        <script src="renderer.js"></script>
+        <script src="/game.js"></script>
+        <script src="/renderer.js"></script>
     </head>
 <body>
     <div id="gameMenu">
         <p id="title">shootydot</p>
         <p id="subtitle">Version 2</p>
-        <select id="serverSelection">
-            <option value="https://silent-firefox-43.telebit.io">Telebit</option>
-        </select>
-        <script src="serverSelectionList.js"></script>
         <button onclick="startGame();">Play</button>
         <br />
         <br />
