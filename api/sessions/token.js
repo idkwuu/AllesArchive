@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const db = require("../../db");
-const log = require("../../util/log");
 
 module.exports = async (req, res) => {
   if (typeof req.body.token !== "string")
@@ -27,7 +26,4 @@ module.exports = async (req, res) => {
     id: session.id,
     user: session.userId,
   });
-
-  // Log
-  log("session.token", { id: session.id }, req.client.id, session.userId);
 };
