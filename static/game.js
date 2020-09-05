@@ -129,11 +129,9 @@ button.onclick = () => {
                 subtitle.innerText = "";
                 deathStrikes = 0;
             });
-        } else if (res.status === 429) {
-            showError("You seem to be playing already.");
-        } else if (res.status === 401) {
-            location.href = "/auth";
         }
+        else if (res.status === 401) location.href = "/auth";
+        else throw new Error();
     }).catch(() => showError("Something went wrong."));
 };
 
