@@ -57,6 +57,25 @@ const splashTexts = [
     "to infinity and beyond"
 ];
 
+// User data
+fetch("/user", {
+    headers: {
+        authorization: token
+    }
+}).then(res => {
+    if (res.status === 200) {
+        res.json().then(user => {
+            subtitle.innerText = "Signed in as ";
+            const span = document.createElement("span");
+            span.innerText = `${user.name}#${user.tag}`;
+            subtitle.appendChild(span);
+        });
+    } else throw new Error();
+}).catch(() => {
+    subtitle.innerText = "Sign in with Alles to play...";
+    button.innerText = "Sign in";
+});
+
 // Socket.io
 const socket = io();
 socket.on("data", data => {
@@ -91,7 +110,7 @@ const playerAction = (action, param) => {
 };
 
 // Start Game
-const startGame = () => {
+button.onclick = () => {
     if (!token) return location.href = "/auth";
 
     // Create Player

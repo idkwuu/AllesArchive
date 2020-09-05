@@ -5,19 +5,19 @@
         <script src="/socket.io/socket.io.js"></script>
         <link href="/style.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=KoHo|Major+Mono+Display" rel="stylesheet" />
-        <script src="/game.js"></script>
-        <script src="/renderer.js"></script>
     </head>
 <body>
     <div id="gameMenu">
         <p id="title">shootydot</p>
-        <p id="subtitle">Version 3</p>
-        <button onclick="startGame();">Play</button>
+        <p id="subtitle"></p>
+        <button id="button">Play</button>
         <br />
         <br />
         <p>Created by <a href="https://abaer.dev">Archie Baer</a>. Powered by <a href="https://alles.cx">Alles</a>.</p>
     </div>
     <canvas id="canvas"></canvas>
-    <script src="controls.js"></script>
+    <script src="/game.js"></script>
+    <script src="/renderer.js"></script>
+    <script src="/controls.js"></script>
 </body>
 </html>

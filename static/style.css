@@ -42,6 +42,10 @@ a {
     margin-bottom: 30px;
 }
 
+#subtitle span {
+    color: var(--notQuiteWhite);
+}
+
 #subtitle.error {
     color: #e74c3c;
 }
