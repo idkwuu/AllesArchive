@@ -4,16 +4,13 @@ const randomString = require("randomstring").generate;
 
 module.exports = async (req, res) => {
     if (Object.keys(game.players).length > 50) return res.status(503).json({err: "serverFull"});
-    
-    const teams = req.user.teams.map(team => team.slug);
     const secret = randomString(config.secretLength);
 
     game.players[req.user.id] = {
-        name: req.user.username,
+        name: `${req.user.name}#${req.user.tag}`,
         score: 100,
-        effects: req.user.data.effects,
         secret,
-        color: teams.includes("alles") ? "#4287f5" : "#e74c3c",
+        color: req.user.plus ? "#4287f5" : "#e74c3c",
         plague: Math.floor(Math.random() * 5) === 0,
         bulletPower: 2,
         speed: 2,
