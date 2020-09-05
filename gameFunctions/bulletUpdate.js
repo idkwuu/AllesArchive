@@ -11,6 +11,8 @@ module.exports = () => {
         const movement = calculateMovement(bullet.direction, config.bulletSpeed);
         bullet.x += movement.x;
         bullet.y += movement.y;
+        if (Math.floor(Math.random() * 1000) === 0)
+            bullet.direction = Math.floor(Math.random() * 360);
 
         // Map Bounds
         if (
