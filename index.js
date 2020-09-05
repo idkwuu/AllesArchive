@@ -96,6 +96,9 @@ io.on("connection", socket => {
 
 });
 
+// User
+app.get("/user", auth, (req, res) => res.json(req.user));
+
 // Join
 app.post("/join", auth, require("./api/join"));
 
@@ -104,4 +107,7 @@ app.get("/auth", (_req, res) => res.redirect(quickauth.url(process.env.QUICKAUTH
 app.get("/auth/cb", require("./api/auth"));
 
 // Stats
-app.get("/stats", require("./api/stats"));
+app.get("/stats", (_req, res) => res.json({
+    players: Object.keys(game.players).length,
+    serverStart: game.serverStart
+}));
