@@ -1,25 +1,15 @@
-const credentials = require("../credentials");
-const axios = require("axios");
+const quickauth = require("@alleshq/quickauth");
+const jwt = require("jsonwebtoken");
 
 module.exports = (req, res) => {
-    const {code} = req.body;
-    if (typeof code !== "string") return res.status(400).json({err: "noAuthCode"});
+    const {token} = req.query;
+    if (typeof token !== "string") return res.status(400).send("No token provided");
 
-    // OAuth Token Request
-    axios.post("https://api.alles.cx/v1/token", {
-        grant_type: "authorization_code",
-        code,
-        redirect_uri: "https://shootydot.alles.cx/auth/cb"
-    }, {
-        auth: {
-            username: credentials.allesOAuth.id,
-            password: credentials.allesOAuth.secret
-        }
-    }).then(response => {
-        res.json({
-            token: response.data.access_token
-        });
-    }).catch(() => {
-        res.status(401).json({err: "oauthFailed"});
-    });
+    quickauth(token, process.env.QUICKAUTH_CALLBACK)
+        .then(id => {
+            const token = jwt.sign({user: id}, process.env.SESSION_SECRET, {expiresIn: "1 day"});
+            res.cookie("token", token);
+            res.redirect("/");
+        })
+        .catch(() => res.status(401).send("Invalid token"));
 };

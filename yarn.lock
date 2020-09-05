@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@alleshq/quickauth@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@alleshq/quickauth/-/quickauth-1.0.0.tgz#87d9331473dd3ced97e8e7c37338bda83a6c4635"
+  integrity sha512-RrfyTEX6Ht9mXdmFUmtirbkqBkwSVXlgO+IjIns59SE4tItfhPtk3jpX87pptlJ5w8jVBwit0vCIFgMsWN/QtQ==
+  dependencies:
+    axios "^0.19.2"
+
 accepts@~1.3.4, accepts@~1.3.7:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.7.tgz#531bc726517a3b2b41f850021c6cc15eaab507cd"
@@ -140,6 +147,14 @@ content-type@~1.0.4:
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
   integrity sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
 
+cookie-parser@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/cookie-parser/-/cookie-parser-1.4.5.tgz#3e572d4b7c0c80f9c61daf604e4336831b5d1d49"
+  integrity sha512-f13bPUj/gG/5mDr+xLmSxxDsB9DQiTIfhJS/sqjrmfAWiAN+x2O4i/XguTL9yDZ+/IFDanJ+5x7hC4CXT9Tdzw==
+  dependencies:
+    cookie "0.4.0"
+    cookie-signature "1.0.6"
+
 cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
@@ -204,10 +219,10 @@ destroy@~1.0.4:
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
 
-dot-env@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/dot-env/-/dot-env-0.0.1.tgz#e4434cb8c69143e445bc28a729437e4fabd88c80"
-  integrity sha1-5ENMuMaRQ+RFvCinKUN+T6vYjIA=
+dotenv@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
+  integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
 
 ecdsa-sig-formatter@1.0.11:
   version "1.0.11"

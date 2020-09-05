@@ -1,6 +1,9 @@
+require("dotenv").config();
+
 const game = require("./gameData");
 const config = require("./config");
 const auth = require("./util/auth");
+const quickauth = require("@alleshq/quickauth");
 
 // HTTP Server
 const express = require("express");
@@ -9,8 +12,9 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http); // Socket.io Server
 app.use(require("cors")()); // CORS Headers
 app.use(require("body-parser").json()); // Body Parser
+app.use(require("cookie-parser")()); // Cookie Parser
 app.use((_err, _req, res, _next) => res.status(500).json({err: "internalError"})); // Express Error Handling
-http.listen(8001);
+http.listen(8080, () => console.log("Server is listening..."));
 
 // Setup Functions
 require("./gameFunctions/generateStars")();
@@ -96,7 +100,8 @@ io.on("connection", socket => {
 app.post("/join", auth, require("./api/join"));
 
 // Authenticate
-app.post("/auth", require("./api/auth"));
+app.get("/auth", (_req, res) => res.redirect(quickauth.url(process.env.QUICKAUTH_CALLBACK)));
+app.get("/auth/cb", require("./api/auth"));
 
 // Stats
 app.get("/stats", require("./api/stats"));
