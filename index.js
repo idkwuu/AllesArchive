@@ -99,6 +99,9 @@ io.on("connection", socket => {
 // User
 app.get("/user", auth, (req, res) => res.json(req.user));
 
+// Subtitle
+app.get("/subtitle", auth, require("./api/subtitle"));
+
 // Join
 app.post("/join", auth, require("./api/join"));
 

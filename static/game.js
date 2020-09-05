@@ -5,57 +5,10 @@ const getCookie = name => {
 
 const token = getCookie("token");
 const maxDeathStrikes = 30;
-var deathStrikes;
-var gameData;
-var playerCredentials;
-var me;
-
-const splashTexts = [
-    "pew pew pew",
-    "made with \u2764\ufe0f by alles",
-    "now with 100% less sugar!",
-    "remember fortnite? imagine that but without murder",
-    "use a scroll wheel to zoom in and out",
-    "made with *magic*. and also javascript.",
-    "open-source on github",
-    "also try Minecraft",
-    "follow @alleshq on Twitter",
-    "as seen on YouTube",
-    "han shot first",
-    "qonya blez sehr qwa spok",
-    "powered by the interwebz",
-    "it's javascript, not java",
-    "not available on steam",
-    "trigonometry!",
-    "the plague spreads through bullets",
-    "made in \u{1F1EC}\u{1F1E7}",
-    "may contain nuts",
-    "zero sales and counting",
-    "made with circles",
-    "multiplayer!",
-    "words go here",
-    "not touchscreen-friendly!",
-    "nothing to see here",
-    "not to be played on internet explorer",
-    "what you're referring to as linux, is in fact, gnu/linux",
-    "no, richard, it's 'linux', not 'gnu/linux'",
-    "thanks for playing",
-    "html5 canvas",
-    "powered by pixels",
-    "this text changes every time you die",
-    "emoticons (\u2022\u25e1\u2022)",
-    "Version 69",
-    "made by Archie",
-    "cAPS lOCK",
-    "may contain string interpolation",
-    "powered by binary",
-    "may the force be with you",
-    "there's no place like 127.0.0.1",
-    "et phone home",
-    "just keep swimming",
-    "roads? where we're going, we don't need roads.",
-    "to infinity and beyond"
-];
+let deathStrikes = 0;
+let gameData;
+let playerCredentials;
+let me;
 
 // User data
 fetch("/user", {
@@ -87,10 +40,18 @@ socket.on("data", data => {
                 deathStrikes++;
             } else {
                 // Death
-                playerCredentials = undefined;
+                playerCredentials = null;
                 shooting = false;
-                subtitle.innerText = splashTexts[Math.floor(Math.random() * splashTexts.length)];
-                gameMenu.classList.remove("hidden");
+
+                // Get new subtitle
+                fetch("/subtitle", {
+                    headers: {
+                        authorization: token
+                    }
+                }).then(async res => {
+                    if (res.status === 200) subtitle.innerText = await res.text();
+                    gameMenu.classList.remove("hidden");
+                });
             }
             return;
         };
