@@ -1,6 +1,5 @@
 const db = require("../../db");
 const getLevel = require("../../util/level");
-const log = require("../../util/log");
 
 module.exports = async (req, res) => {
   // Get User
@@ -43,7 +42,4 @@ module.exports = async (req, res) => {
           : null,
     },
   });
-
-  // Log
-  log("user.get", null, req.client.id, user.id);
 };
