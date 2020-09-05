@@ -1,0 +1,70 @@
+:root {
+    --spaceBlue: #2c3e50;
+    --nearlyWhite: #95a5a6;
+    --notQuiteWhite: #ddd3d7;
+}
+
+body {
+    font-family: KoHo, sans-serif;
+    color: var(--nearlyWhite);
+    margin: 0;
+}
+
+#gameMenu {
+    z-index: 1;
+    position: absolute;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background: var(--spaceBlue);
+    overflow: hidden auto;
+    transition-duration: 0.5s;
+    text-align: center;
+}
+
+#gameMenu.hidden {
+    display: none;
+}
+
+a {
+    color: var(--notQuiteWhite);
+}
+
+#title {
+    font-family: Major Mono Display, monospace;
+    font-size: 50px;
+    margin-bottom: 0;
+}
+
+#subtitle {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+#subtitle.error {
+    color: #e74c3c;
+}
+
+select, button {
+    border: none;
+    background: var(--nearlyWhite);
+    height: 30px;
+    color: var(--notQuiteWhite);
+    padding: 0 10px;
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+canvas {
+    z-index: 0;
+    position: absolute;
+    border: none;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+    box-sizing: border-box;
+}
