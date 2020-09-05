@@ -44,14 +44,12 @@ socket.on("data", data => {
                 shooting = false;
 
                 // Get new subtitle
-                fetch("/subtitle", {
-                    headers: {
-                        authorization: token
-                    }
-                }).then(async res => {
-                    if (res.status === 200) subtitle.innerText = await res.text();
-                    gameMenu.classList.remove("hidden");
-                });
+                getSubtitle()
+                    .then(async s => {
+                        subtitle.innerText = s;
+                        gameMenu.classList.remove("hidden");
+                    })
+                    .catch(() => gameMenu.classList.remove("hidden"));
             }
             return;
         };
@@ -100,4 +98,15 @@ button.onclick = () => {
 const showError = msg => {
     subtitle.innerText = `Error: ${msg}`;
     subtitle.classList.add("error");
+};
+
+// Get Subtitle
+const getSubtitle = async () => {
+    const res = await fetch("/subtitle", {
+        headers: {
+            authorization: token
+        }
+    });
+    if (res.status !== 200) throw new Error();
+    return await res.text();
 };
