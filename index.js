@@ -10,7 +10,7 @@ const express = require("express");
 const app = express(); // Express Server
 const http = require("http").createServer(app);
 const io = require("socket.io")(http); // Socket.io Server
-app.use("/", express.static(`${__dirname}/static`));
+app.use("/", express.static(`${__dirname}/static`)); // Static
 app.use(require("body-parser").json()); // Body Parser
 app.use(require("cookie-parser")()); // Cookie Parser
 app.use((_err, _req, res, _next) => res.status(500).json({err: "internalError"})); // Express Error Handling
