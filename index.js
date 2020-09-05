@@ -77,7 +77,7 @@ io.on("connection", socket => {
             
             // Shoot Bullet
             case "shoot":
-                if (game.bullets.length > config.maxBullets) return; //Maximum Bullets in Arena
+                if (game.bullets.length > config.maxBullets) return; // Maximum Bullets in Arena
                 player.score--;
                 game.bullets.push({
                     owner: data.id,
