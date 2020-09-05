@@ -30,27 +30,12 @@ module.exports = () => {
                 player.y + config.playerHitbox > bullet.y &&
                 id !== bullet.owner
             ) {
-                // Get Bullet Owner
+                // Award Points
                 const owner = game.players[bullet.owner];
-                if (owner) {
+                if (owner) game.players[bullet.owner].score += config.bulletHitGain;
 
-                    // Award Points
-                    game.players[bullet.owner].score += config.bulletHitGain;
-
-                    // Medusa Effect
-                    if (owner.effects.includes("honey")) {
-                        player.speed = 0.5;
-                    }
-
-                }
-
-                if (owner && owner.effects.includes("healer")) {
-                    // Deduct Player Score
-                    player.score += bullet.bulletPower;
-                } else {
-                    // Healing Effect
-                    player.score -= bullet.bulletPower;
-                }
+                // Deduct Player Score
+                player.score -= bullet.bulletPower;
 
                 // Spread Plague
                 if (bullet.plague) player.plague = true;
