@@ -21,6 +21,7 @@ const Billing = ({ billingData }) => {
 					<>
 						<Email email={billingData.email} />
 						<Balance balance={billingData.balance} />
+						<Portal />
 					</>
 				) : (
 					<Email />
@@ -140,6 +141,40 @@ const Balance = ({ balance }) => {
 					Your account balance is currently ${((0 - balance) / 100).toFixed(2)}
 				</p>
 			</Box.Content>
+		</Box>
+	);
+};
+
+const Portal = () => {
+	const [loading, setLoading] = useState(false);
+	const user = useUser();
+
+	const openPortal = () => {
+		setLoading(true);
+		axios
+			.get("/api/billing/portal", {
+				headers: {
+					Authorization: user.sessionToken,
+				},
+			})
+			.then((res) => (location.href = res.data.url))
+			.catch(() => setLoading(false));
+	};
+
+	return (
+		<Box>
+			<Box.Header>Portal</Box.Header>
+			<Box.Content>
+				<p>
+					You can manage your subscriptions and payment methods in the billing
+					portal, which is hosted by our payments processor, Stripe.
+				</p>
+			</Box.Content>
+			<Box.Footer className="flex items-center justify-end">
+				<Button size="sm" loading={loading} onClick={openPortal}>
+					Open
+				</Button>
+			</Box.Footer>
 		</Box>
 	);
 };
