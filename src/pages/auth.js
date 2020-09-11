@@ -29,8 +29,9 @@ const Password = () => {
 	const [newPass2, setNewPass2] = useState("");
 	const form = createRef();
 
-	const submit = () => {
-		if (!oldPass || !newPass || !newPass2) return;
+	const submit = (e) => {
+		e.preventDefault();
+		if (loading || !oldPass || !newPass || !newPass2) return;
 		if (newPass !== newPass2) return setError("New passwords do not match");
 		if (oldPass === newPass)
 			return setError("You can't set your new password to your old one!");
