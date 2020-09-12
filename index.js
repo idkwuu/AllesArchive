@@ -30,6 +30,10 @@ app.post("/", async (req, res) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  if (events[event.type]) await events[event.type](event);
-  res.status(204).send();
+  try {
+    if (events[event.type]) await events[event.type](event);
+    res.status(204).send();
+  } catch (err) {
+    res.status(500).send("Internal Error");
+  }
 });
