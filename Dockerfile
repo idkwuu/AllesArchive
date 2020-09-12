@@ -1,5 +1,5 @@
-FROM node:10
+FROM node:latest
 WORKDIR /app
 COPY . .
-RUN npm install
+RUN yarn
 CMD node index.js
