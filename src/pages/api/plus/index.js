@@ -33,8 +33,10 @@ export default async (req, res) => {
 		res.json({
 			registered: true,
 			plan: yearly ? "yearly" : monthly ? "monthly" : null,
-			periodEnd: subscription && subscription.current_period_end,
-			renew: subscription && !subscription.cancel_at_period_end,
+			end:
+				subscription &&
+				(subscription.cancel_at || subscription.current_period_end),
+			renew: subscription && !subscription.cancel_at,
 		});
 	} catch (err) {
 		res.status(500).json({ err: "internalError" });

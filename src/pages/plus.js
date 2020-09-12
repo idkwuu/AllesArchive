@@ -5,6 +5,7 @@ import axios from "axios";
 import cookies from "next-cookies";
 import { useState } from "react";
 import Link from "next/link";
+import moment from "moment";
 
 const Plus = ({ subscription }) => {
 	const user = useUser();
@@ -14,7 +15,7 @@ const Plus = ({ subscription }) => {
 			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
 				{user.plus ? (
 					<>
-						<p>You have Alles+</p>
+						<SubscriptionStatus subscription={subscription} />
 					</>
 				) : !subscription.registered ? (
 					<NotRegistered />
@@ -156,3 +157,37 @@ const JoinPlus = () => {
 		</Box>
 	);
 };
+
+const SubscriptionStatus = ({ subscription }) => (
+	<Box>
+		<Box.Header>Subscription Status</Box.Header>
+		<Box.Content className="space-y-3">
+			{subscription.registered && subscription.plan ? (
+				<>
+					<p>
+						You are subscribed to the {subscription.plan} plan. Your
+						subscription will {subscription.renew ? "renew" : "end"} on{" "}
+						{moment(subscription.end * 1000).format("LL")}. If you need to
+						update your subscription or payment methods, see the{" "}
+						<Link href="/billing">
+							<a className="text-primary">billing page</a>
+						</Link>
+						.
+					</p>
+					<p>
+						Thanks for supporting Alles! If you have any feedback, @ me{" "}
+						<a href="https://micro.alles.cx/Archie" className="text-primary">
+							Micro
+						</a>
+						!
+					</p>
+				</>
+			) : (
+				<p>
+					Your Alles+ status isn't connected to a subscription in our payments
+					system.
+				</p>
+			)}
+		</Box.Content>
+	</Box>
+);
