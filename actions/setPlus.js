@@ -6,8 +6,8 @@ module.exports = async (user, plus) =>
     { plus },
     {
       auth: {
-        username: process.env.ALLES_ID,
-        password: process.env.ALLES_SECRET
+        username: process.env.NEXUS_ID,
+        password: process.env.NEXUS_SECRET
       }
     }
   );
