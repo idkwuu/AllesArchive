@@ -9,8 +9,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 // Events
 const eventCodes = [
   "customer.subscription.created",
-  "customer.subscription.deleted",
-  "customer.subscription.updated"
+  "customer.subscription.deleted"
 ];
 const events = {};
 eventCodes.forEach(code => (events[code] = require(`./events/${code}`)));

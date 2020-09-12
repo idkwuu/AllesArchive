@@ -8,12 +8,7 @@ module.exports = async event => {
 
   // Alles+
   if (stripeIds.plus.includes(product)) {
-    await setPlus(customer, false, true);
-    await plusEmail(customer);
-  }
-  // Alles+ Max
-  else if (stripeIds.plusMax.includes(product)) {
-    await setPlus(customer, true, true);
+    await setPlus(customer, true);
     await plusEmail(customer);
   }
 };

@@ -6,8 +6,5 @@ module.exports = async event => {
   const { product } = plan;
 
   // Alles+
-  if (stripeIds.plus.includes(product)) await setPlus(customer, false, false);
-  // Alles+ Max
-  else if (stripeIds.plusMax.includes(product))
-    await setPlus(customer, true, false);
+  if (stripeIds.plus.includes(product)) await setPlus(customer, false);
 };
