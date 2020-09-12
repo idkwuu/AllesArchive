@@ -175,7 +175,7 @@ const SubscriptionStatus = ({ subscription }) => (
 						.
 					</p>
 					<p>
-						Thanks for supporting Alles! If you have any feedback, @ me{" "}
+						Thanks for supporting Alles! If you have any feedback, @ me on{" "}
 						<a href="https://micro.alles.cx/Archie" className="text-primary">
 							Micro
 						</a>
