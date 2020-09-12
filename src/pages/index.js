@@ -48,22 +48,7 @@ const categories = [
 		],
 	},
 	{
-		name: "Applications",
-		icon: Grid,
-		links: [
-			{
-				text: "Authorized Applications",
-				href: "/apps",
-			},
-			{
-				text: "Developer Services",
-				href: "https://developer.alles.cx",
-				external: true,
-			},
-		],
-	},
-	{
-		name: "Coins and Subscriptions",
+		name: "Subscriptions and Billing",
 		icon: PlusCircle,
 		links: [
 			{
@@ -71,8 +56,8 @@ const categories = [
 				href: "/plus",
 			},
 			{
-				text: "Manage Coins",
-				href: "/coins",
+				text: "Billing",
+				href: "/billing",
 			},
 		],
 	},
