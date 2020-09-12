@@ -1,12 +1,12 @@
 {
-	"scripts": {
-		"format": "prettier --write \"**/*.+(js|jsx|json|html)\""
-	},
-	"dependencies": {
-		"axios": "^0.19.2",
-		"body-parser": "^1.19.0",
-		"escape-html": "^1.0.3",
-		"express": "^4.17.1",
-		"stripe": "^8.64.0"
-	}
+  "scripts": {
+    "format": "prettier --write \"**/*.+(js|jsx|json|html)\""
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "escape-html": "^1.0.3",
+    "express": "^4.17.1",
+    "stripe": "^8.64.0"
+  }
 }
