@@ -9,6 +9,8 @@ module.exports = async event => {
   const { userId } = customer.metadata;
 
   // Alles+
+  console.log(plan);
+  console.log(product);
   if (
     process.env.PLUS_MONTHLY === product ||
     process.env.PLUS_YEARLY === product
