@@ -22,7 +22,7 @@ app.post("/", async (req, res) => {
   let event;
   try {
     event = stripe.webhooks.constructEvent(
-      JSON.stringify(req.body),
+      req.body,
       sig,
       process.env.WEBHOOK_SECRET
     );
