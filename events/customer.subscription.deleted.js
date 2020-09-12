@@ -1,4 +1,3 @@
-const stripeIds = require("../stripeIds");
 const setPlus = require("../actions/setPlus");
 
 module.exports = async event => {
