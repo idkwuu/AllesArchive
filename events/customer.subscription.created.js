@@ -4,17 +4,11 @@ const plusEmail = require("../actions/plusEmail");
 
 module.exports = async event => {
   const { customer: customerId, plan } = event.data.object;
-  const { product } = plan;
   const customer = await stripe.customers.retrieve(customerId);
   const { userId } = customer.metadata;
 
   // Alles+
-  console.log(plan);
-  console.log(product);
-  if (
-    process.env.PLUS_MONTHLY === product ||
-    process.env.PLUS_YEARLY === product
-  ) {
+  if (process.env.PLUS === plan.product) {
     await setPlus(userId, true);
     await plusEmail(userId, customer.email);
   }
