@@ -6,5 +6,9 @@ module.exports = async event => {
   const { product } = plan;
 
   // Alles+
-  if (stripeIds.plus.includes(product)) await setPlus(customer, false);
+  if (
+    process.env.PLUS_MONTHLY === product ||
+    process.env.PLUS_YEARLY === product
+  )
+    await setPlus(customer, false);
 };

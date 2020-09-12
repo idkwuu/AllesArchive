@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 // HTTP Server
 const app = require("express")();
 app.use(require("body-parser").raw({ type: "application/json" }));
