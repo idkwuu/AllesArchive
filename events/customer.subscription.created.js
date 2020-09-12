@@ -7,7 +7,6 @@ module.exports = async event => {
   const { product } = plan;
   const customer = await stripe.customers.retrieve(customerId);
   const { userId } = customer.metadata;
-  console.log(userId);
 
   // Alles+
   if (
