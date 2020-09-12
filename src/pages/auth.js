@@ -13,7 +13,6 @@ export default function SigningIn() {
 		>
 			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
 				<h4 className="font-medium text-3xl">Signing in</h4>
-
 				<Password />
 			</main>
 		</Page>

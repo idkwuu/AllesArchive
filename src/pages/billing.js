@@ -6,37 +6,27 @@ import cookies from "next-cookies";
 import { useState } from "react";
 import config from "../config";
 
-const Billing = ({ billingData }) => {
-	const [loading, setLoading] = useState(false);
-	const user = useUser();
-	const [plusActive, setPlusActive] = useState(user.plus);
-
-	return (
-		<Page
-			title="Billing"
-			breadcrumbs={<Breadcrumb.Item>Billing</Breadcrumb.Item>}
-		>
-			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
-				{billingData ? (
-					<>
-						<Email email={billingData.email} />
-						<Balance balance={billingData.balance} />
-						<Portal />
-					</>
-				) : (
+const Billing = ({ billingData }) => (
+	<Page
+		title="Billing"
+		breadcrumbs={<Breadcrumb.Item>Billing</Breadcrumb.Item>}
+	>
+		<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
+			{billingData ? (
+				<>
+					<Email email={billingData.email} />
+					<Balance balance={billingData.balance} />
+					<Portal />
+				</>
+			) : (
+				<>
+					<h4 className="font-medium text-3xl">Register for Billing</h4>
 					<Email />
-				)}
-			</main>
-
-			<style jsx>{`
-				h1 {
-					font-size: 30px;
-					text-align: center;
-				}
-			`}</style>
-		</Page>
-	);
-};
+				</>
+			)}
+		</main>
+	</Page>
+);
 
 Billing.getInitialProps = async (ctx) => {
 	try {
@@ -91,7 +81,7 @@ const Email = ({ email: currentEmail }) => {
 
 	return (
 		<Box>
-			<Box.Header>{currentEmail ? "Email" : "Register for Billing"}</Box.Header>
+			<Box.Header>Email Address</Box.Header>
 			<Box.Content>
 				<form onSubmit={submit}>
 					<Input

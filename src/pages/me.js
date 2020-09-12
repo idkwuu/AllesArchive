@@ -13,7 +13,6 @@ export default function AboutMe() {
 		>
 			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
 				<h4 className="font-medium text-3xl">About Me</h4>
-
 				<Profile />
 			</main>
 		</Page>

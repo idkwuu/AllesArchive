@@ -16,26 +16,11 @@ export default async (req, res) => {
 	try {
 		// Get data from Stripe
 		const customer = await stripe.customers.retrieve(customerId);
-		const plusMonthly =
-			(
-				await stripe.subscriptions.list({
-					customer: customerId,
-					price: process.env.STRIPE_PLUS_MONTHLY,
-				})
-			).data.length > 1;
-		const plusYearly =
-			(
-				await stripe.subscriptions.list({
-					customer: customerId,
-					price: process.env.STRIPE_PLUS_YEARLY,
-				})
-			).data.length > 1;
 
 		// Response
 		res.json({
 			registered: true,
 			email: customer.email,
-			plusSubscription: plusMonthly || plusYearly,
 			balance: customer.balance,
 		});
 	} catch (err) {
