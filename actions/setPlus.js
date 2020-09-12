@@ -1,11 +1,8 @@
 const axios = require("axios");
-const getUser = require("../utils/getUserByCustomerId");
 
-module.exports = async (customer, active) => {
-  const userId = await getUser(customer);
-
+module.exports = async (userId, active) => {
   axios.post(
-    `https://1api.alles.cx/v1/plus?id=${encodeURIComponent(userId)}`,
+    `${process.env.NEXUS_URI}/users/${userId}`,
     { plus: active },
     {
       auth: {

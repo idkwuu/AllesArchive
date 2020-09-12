@@ -1,21 +1,18 @@
-const getUserByCustomerId = require("../utils/getUserByCustomerId");
-const getUserData = require("../utils/getUserData");
-const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const getUser = require("../utils/getUser");
 const axios = require("axios");
 const escapeHtml = require("escape-html");
 const template = require("fs")
   .readFileSync(`${__dirname}/../plusEmail.html`, "utf8")
   .split("[x]");
 
-module.exports = async customerId => {
-  const user = await getUserData(await getUserByCustomerId(customerId));
-  const customer = await stripe.customers.retrieve(customerId);
+module.exports = async (userId, email) => {
+  const user = await getUser(userId);
 
   try {
     await axios.post(
-      "https://pico.alles.cx/api/v1/send/message",
+      `${process.env.POSTAL_URI}/api/v1/send/message`,
       {
-        to: [customer.email],
+        to: [email],
         from: "plus@alles.cx",
         reply_to: "archie@alles.cx",
         subject: "Welcome to Alles+!",
@@ -23,7 +20,7 @@ module.exports = async customerId => {
       },
       {
         headers: {
-          "X-Server-API-Key": process.env.PICO_KEY
+          "X-Server-API-Key": process.env.POSTAL_KEY
         }
       }
     );
