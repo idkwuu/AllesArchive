@@ -1,9 +1,9 @@
 const axios = require("axios");
 
-module.exports = async (userId, active) => {
+module.exports = async (user, plus) =>
   axios.post(
-    `${process.env.NEXUS_URI}/users/${userId}`,
-    { plus: active },
+    `${process.env.NEXUS_URI}/users/${user}`,
+    { plus },
     {
       auth: {
         username: process.env.ALLES_ID,
@@ -11,4 +11,3 @@ module.exports = async (userId, active) => {
       }
     }
   );
-};
