@@ -12,7 +12,7 @@ const Billing = ({ billingData }) => (
 		breadcrumbs={<Breadcrumb.Item>Billing</Breadcrumb.Item>}
 	>
 		<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
-			{billingData ? (
+			{billingData.registered ? (
 				<>
 					<Email email={billingData.email} />
 					<Balance balance={billingData.balance} />
@@ -37,7 +37,7 @@ Billing.getInitialProps = async (ctx) => {
 				},
 			})
 		).data;
-		return billingData.registered ? { billingData } : {};
+		return { billingData };
 	} catch (err) {
 		return {};
 	}
