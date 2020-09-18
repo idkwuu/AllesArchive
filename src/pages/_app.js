@@ -40,9 +40,7 @@ app.getInitialProps = async (appContext) => {
 	try {
 		const user = (
 			await axios.get(
-				`${
-					process.env.NEXT_PUBLIC_ORIGIN ? process.env.NEXT_PUBLIC_ORIGIN : ""
-				}/api/me`,
+				`${process.env.NEXT_PUBLIC_ORIGIN}/api/me`,
 				{
 					headers: {
 						Authorization: sessionToken,
