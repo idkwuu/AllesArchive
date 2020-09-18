@@ -35,9 +35,7 @@ app.getInitialProps = async (appContext) => {
 	const allowGuestPaths = [];
 
 	// Don't do authentication for excluded paths
-	if (excludedPaths.includes(ctx.pathname)) {
-		return { ...props };
-	}
+	if (excludedPaths.includes(ctx.pathname)) return props;
 
 	try {
 		const user = (
