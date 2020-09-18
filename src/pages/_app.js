@@ -63,7 +63,7 @@ app.getInitialProps = async (appContext) => {
 		)
 			redirect(`/login?next=${ctx.asPath}`);
 
-		return { ...props };
+		return props;
 	}
 };
 
