@@ -2,9 +2,11 @@ import axios from "axios";
 import App from "next/app";
 import Router from "next/router";
 import { UserContext } from "../utils/userContext";
+import NProgress from "nprogress";
 import cookies from "next-cookies";
 
 import "@alleshq/reactants/dist/index.css";
+import "../nprogress.css";
 
 export default function app({ Component, pageProps, user }) {
 	return (
@@ -64,3 +66,8 @@ app.getInitialProps = async (appContext) => {
 		return { ...props };
 	}
 };
+
+// Progress Bar
+Router.events.on("routeChangeStart", () => NProgress.start());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
