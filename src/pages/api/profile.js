@@ -26,7 +26,7 @@ export default async (req, res) => {
 		return res.status(400).json({ err: "plusOnly" });
 
 	// Avoid name#tag conflicts
-	if (tag !== user.tag) {
+	if (tagString !== user.tag) {
 		try {
 			await axios.get(
 				`${process.env.NEXUS_URI}/nametag?name=${encodeURIComponent(
