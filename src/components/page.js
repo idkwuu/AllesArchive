@@ -111,7 +111,7 @@ export const Page = ({
 				<div className="w-full max-w-2xl px-5">
 					<div className="float-right space-x-7">
 						<a
-							href="https://github.com/alleshq/hub"
+							href="https://code.alles.cx/alles/hub"
 							className="text-primary hover:opacity-75 transition duration-200 ease"
 						>
 							Source
