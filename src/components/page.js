@@ -65,7 +65,7 @@ export const Page = ({
 									<Avatar
 										onClick={onClick}
 										className="select-none cursor-pointer hover:opacity-85 transition duration-200 ease"
-										src={`https://avatar.alles.cc/${user.id}`}
+										src={`https://avatar.alles.cc/${user.id}?size=35`}
 										size={35}
 									/>
 								)}
