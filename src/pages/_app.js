@@ -39,14 +39,11 @@ app.getInitialProps = async (appContext) => {
 
 	try {
 		const user = (
-			await axios.get(
-				`${process.env.NEXT_PUBLIC_ORIGIN}/api/me`,
-				{
-					headers: {
-						Authorization: sessionToken,
-					},
-				}
-			)
+			await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/me`, {
+				headers: {
+					Authorization: sessionToken,
+				},
+			})
 		).data;
 
 		if (redirectIfLoggedInPaths.includes(ctx.pathname)) redirect("/");
