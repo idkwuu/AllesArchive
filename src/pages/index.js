@@ -2,9 +2,11 @@ import { Box } from "@alleshq/reactants";
 import {
 	User as UserIcon,
 	Shield,
-	Grid,
 	Award,
 	PlusCircle,
+	Home,
+	Hash,
+	Play,
 } from "react-feather";
 import Link from "next/link";
 import { Page } from "../components/page";
@@ -78,17 +80,27 @@ const categories = [
 	},
 ];
 
-const TextLogo = ({ children }) => (
-	<div className="pb-2 font-bold font-serif italic text-4xl text-primary rounded-t-lg">
-		{children}
+const IconLogo = ({ icon: Icon }) => (
+	<div className="p-5 font-bold text-4xl text-primary">
+		<Icon className="m-auto" />
 	</div>
 );
 
 const products = [
 	{
+		name: "Homepage",
+		logo: <IconLogo icon={Home} />,
+		url: "https://homepage.alles.cx",
+	},
+	{
 		name: "Micro",
-		logo: <TextLogo>μ</TextLogo>,
+		logo: <IconLogo icon={Hash} />,
 		url: "https://micro.alles.cx",
+	},
+	{
+		name: "Video",
+		logo: <IconLogo icon={Play} />,
+		url: "https://video.alles.cx",
 	},
 ];
 
