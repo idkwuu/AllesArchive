@@ -4,7 +4,6 @@ import {
 	Shield,
 	Award,
 	PlusCircle,
-	Home,
 	Hash,
 	Play,
 } from "react-feather";
@@ -87,11 +86,6 @@ const IconLogo = ({ icon: Icon }) => (
 );
 
 const products = [
-	{
-		name: "Homepage",
-		logo: <IconLogo icon={Home} />,
-		url: "https://homepage.alles.cx",
-	},
 	{
 		name: "Micro",
 		logo: <IconLogo icon={Hash} />,
