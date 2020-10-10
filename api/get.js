@@ -1,4 +1,4 @@
-const Status = require("./db");
+const Status = require("../utils/db");
 
 module.exports = async (req, res) => {
     const status = (
