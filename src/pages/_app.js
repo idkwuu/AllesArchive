@@ -21,6 +21,8 @@ app.getInitialProps = async (appContext) => {
   const { sessionToken } = cookies(ctx);
   const isServer = typeof window === "undefined";
 
+  const guestPaths = ["/[user]"];
+
   const redirect = (location) =>
     isServer
       ? ctx.res.writeHead(302, { location }).end()
@@ -47,12 +49,15 @@ app.getInitialProps = async (appContext) => {
       },
     };
   } catch (err) {
-    redirect(
-      `https://alles.cx/login?next=${encodeURIComponent(
-        process.env.NEXT_PUBLIC_ORIGIN + ctx.asPath
-      )}`
-    );
-    return {};
+    if (guestPaths.includes(ctx.pathname)) return props;
+    else {
+      redirect(
+        `https://alles.cx/login?next=${encodeURIComponent(
+          process.env.NEXT_PUBLIC_ORIGIN + ctx.asPath
+        )}`
+      );
+      return {};
+    }
   }
 };
 

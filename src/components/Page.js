@@ -28,12 +28,12 @@ export default function Page({ title, breadcrumbs, children }) {
             {breadcrumbs}
           </Breadcrumb>
 
-          <div className="flex items-center space-x-3">
+          {user && (
             <Avatar
               src={`https://avatar.alles.cc/${user.id}?size=40`}
               size={37.5}
             />
-          </div>
+          )}
         </div>
       </Header>
 

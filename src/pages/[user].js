@@ -46,6 +46,7 @@ const UserPage = withRouter(({ user: u }) => {
 
 UserPage.getInitialProps = async (ctx) => {
   const id = ctx.query.user;
+  const { sessionToken } = cookies(ctx);
   try {
     return {
       user: (
@@ -54,9 +55,11 @@ UserPage.getInitialProps = async (ctx) => {
             id
           )}`,
           {
-            headers: {
-              Authorization: cookies(ctx).sessionToken,
-            },
+            headers: sessionToken
+              ? {
+                  Authorization: sessionToken,
+                }
+              : {},
           }
         )
       ).data,
