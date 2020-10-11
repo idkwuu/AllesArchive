@@ -11,6 +11,7 @@ const values = {
   bDay: "number",
   bMonth: "number",
   bYear: "number",
+  username: "string",
 };
 
 module.exports = async (req, res) => {

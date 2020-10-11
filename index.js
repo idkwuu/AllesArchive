@@ -25,6 +25,9 @@ app.post("/users", require("./api/users/create"));
 // Get User from Name#Tag
 app.get("/nametag", require("./api/nametag"));
 
+// Get User from Username
+app.get("/username/:username", require("./api/username"));
+
 // User Info
 app.get("/users/:id", require("./api/users"));
 app.post("/users/:id", require("./api/users/update"));

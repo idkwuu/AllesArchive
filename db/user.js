@@ -21,6 +21,9 @@ module.exports = (db) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      username: {
+        type: DataTypes.STRING,
+      },
       password: {
         type: DataTypes.STRING,
       },
