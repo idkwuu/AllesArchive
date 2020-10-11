@@ -18,7 +18,7 @@ export default function Post({
     <Box>
       <a
         href={url}
-        className="flex w-full min-w-0 hover:opacity-75 transition duration-100 cursor-pointer"
+        className="flex hover:opacity-75 transition duration-100 cursor-pointer"
       >
         <div className="space-y-3 flex bg-white rounded-tl-lg rounded-bl-lg dark:bg-gray-750 border-r p-2.5 border-gray-200 dark:border-gray-700 flex-col items-center justify-center">
           <Button style={{ padding: 0 }} color="transparent">
@@ -29,7 +29,7 @@ export default function Post({
             <Minus size={17.5} />
           </Button>
         </div>
-        <div>
+        <div className="w-full min-w-0">
           <Box.Content>
             <div className="flex items-center mb-3">
               <Avatar
