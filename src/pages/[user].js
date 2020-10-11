@@ -7,7 +7,7 @@ import Post from "../components/Post";
 import cookies from "next-cookies";
 import { useState, useEffect } from "react";
 import moment from "moment";
-import { Award, Map } from "react-feather";
+import { Map, Award, AtSign, Info } from "react-feather";
 import countries from "../data/countries";
 
 const UserPage = withRouter(({ user: u }) => {
@@ -22,7 +22,12 @@ const UserPage = withRouter(({ user: u }) => {
         </Breadcrumb.Item>
       }
     >
-      <div className="flex space-x-5">
+      <div
+        className="flex space-x-5"
+        style={{
+          minHeight: 180,
+        }}
+      >
         <div>
           <Avatar src={`https://avatar.alles.cc/${u.id}?size=150`} size={150} />
         </div>
@@ -38,6 +43,7 @@ const UserPage = withRouter(({ user: u }) => {
             <InfoLabel icon={Award}>
               Level {u.xp.level} ({u.xp.total}xp)
             </InfoLabel>
+            {u.username && <InfoLabel icon={AtSign}>archie</InfoLabel>}
           </div>
 
           <Status id={u.id} />
@@ -75,8 +81,20 @@ const UserPage = withRouter(({ user: u }) => {
 });
 
 UserPage.getInitialProps = async (ctx) => {
-  const id = ctx.query.user;
+  let id = ctx.query.user;
   const { sessionToken } = cookies(ctx);
+
+  try {
+    if (id.length < 36)
+      id = (
+        await axios.get(
+          `${process.env.NEXT_PUBLIC_ORIGIN}/api/username/${encodeURIComponent(
+            id
+          )}`
+        )
+      ).data.id;
+  } catch (err) {}
+
   try {
     return {
       user: (

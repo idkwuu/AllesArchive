@@ -37,6 +37,7 @@ export default async (req, res) => {
     id: u.id,
     name: u.name,
     tag: u.tag,
+    username: u.username,
     plus: u.plus,
     nickname: u.nickname,
     createdAt: u.createdAt,
