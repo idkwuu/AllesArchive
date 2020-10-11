@@ -43,7 +43,7 @@ const UserPage = withRouter(({ user: u }) => {
             <InfoLabel icon={Award}>
               Level {u.xp.level} ({u.xp.total}xp)
             </InfoLabel>
-            {u.username && <InfoLabel icon={AtSign}>archie</InfoLabel>}
+            {u.username && <InfoLabel icon={AtSign}>{u.username}</InfoLabel>}
           </div>
 
           <Status id={u.id} />
