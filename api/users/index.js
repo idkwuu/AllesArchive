@@ -19,6 +19,7 @@ module.exports = async (req, res) => {
     name: user.name,
     tag: user.tag,
     nickname: user.nickname,
+    username: user.username,
     plus: user.plus,
     createdAt: user.createdAt,
     xp: {
