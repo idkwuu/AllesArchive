@@ -21,8 +21,6 @@ app.getInitialProps = async (appContext) => {
   const { sessionToken } = cookies(ctx);
   const isServer = typeof window === "undefined";
 
-  const guestPaths = ["/[user]"];
-
   const redirect = (location) =>
     isServer
       ? ctx.res.writeHead(302, { location }).end()
@@ -49,7 +47,7 @@ app.getInitialProps = async (appContext) => {
       },
     };
   } catch (err) {
-    if (guestPaths.includes(ctx.pathname)) return props;
+    if (ctx.pathname === "/[user]") return props;
     else {
       redirect(
         `https://alles.cx/login?next=${encodeURIComponent(
