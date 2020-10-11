@@ -25,6 +25,13 @@ app.get("/nametag", (req, res) => {
         .catch(() => res.status(404).json({err: "missingResource"}));
 });
 
+// Get User ID from Username
+app.get("/username/:username", (req, res) => {    
+    nexus("GET", `username/${encodeURIComponent(req.params.username)}`)
+        .then(({id}) => res.json({id}))
+        .catch(() => res.status(404).json({err: "missingResource"}));
+});
+
 // Get user data
 app.get("/users/:id", (req, res) => {
     nexus("GET", `users/${encodeURIComponent(req.params.id)}`)
@@ -33,6 +40,7 @@ app.get("/users/:id", (req, res) => {
             name: user.name,
             tag: user.tag,
             nickname: user.nickname,
+            username: user.username,
             xp: user.xp,
             plus: user.plus,
             createdAt: user.createdAt
@@ -41,4 +49,4 @@ app.get("/users/:id", (req, res) => {
 });
 
 // 404
-app.use((req, res) => res.status(404).json({err: "notFound"}));
+app.use((_req, res) => res.status(404).json({err: "notFound"}));
