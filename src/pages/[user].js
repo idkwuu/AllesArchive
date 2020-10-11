@@ -1,8 +1,9 @@
 import Page from "../components/Page";
 import { withRouter } from "next/router";
-import { Box, Breadcrumb, Avatar } from "@alleshq/reactants";
+import { Breadcrumb, Avatar } from "@alleshq/reactants";
 import axios from "axios";
 import NotFound from "./404";
+import Post from "../components/Post";
 import cookies from "next-cookies";
 import { useState, useEffect } from "react";
 import moment from "moment";
@@ -23,7 +24,7 @@ const UserPage = withRouter(({ user: u }) => {
     >
       <div className="flex space-x-5">
         <div>
-            <Avatar src={`https://avatar.alles.cc/${u.id}?size=150`} size={150} />
+          <Avatar src={`https://avatar.alles.cc/${u.id}?size=150`} size={150} />
         </div>
         <div className="space-y-2">
           <div>
@@ -42,6 +43,33 @@ const UserPage = withRouter(({ user: u }) => {
           <Status id={u.id} />
         </div>
       </div>
+
+      {u.micro && u.micro.latest && (
+        <div>
+          <Post
+            url={`https://micro.alles.cx/p/${u.micro.latest.id}`}
+            authorId={u.id}
+            authorName={u.name}
+            authorPlus={u.plus}
+            score={u.micro.latest.vote.score}
+            content={u.micro.latest.content}
+            image={u.micro.latest.image}
+            link={u.micro.latest.url}
+            date={u.micro.latest.createdAt}
+            replies={u.micro.latest.children.count}
+          />
+          <div className="flex justify-between p-5">
+            <p>
+              <strong>{u.micro.followers}</strong> Follower
+              {u.micro.followers === 1 ? "" : "s"}
+            </p>
+            <p>
+              <strong>{u.micro.posts}</strong> Post
+              {u.micro.posts === 1 ? "" : "s"}
+            </p>
+          </div>
+        </div>
+      )}
     </Page>
   );
 });

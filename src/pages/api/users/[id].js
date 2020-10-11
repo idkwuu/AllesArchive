@@ -20,6 +20,15 @@ export default async (req, res) => {
     micro = {
       posts: data.posts.count,
       followers: data.followers.count,
+      latest: data.posts.recent[0]
+        ? (
+            await axios.get(
+              `https://micro.alles.cx/api/posts/${encodeURIComponent(
+                data.posts.recent[0]
+              )}`
+            )
+          ).data
+        : null,
     };
   } catch (err) {}
 
