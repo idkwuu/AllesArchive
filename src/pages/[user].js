@@ -4,6 +4,10 @@ import { Box, Breadcrumb, Avatar } from "@alleshq/reactants";
 import axios from "axios";
 import NotFound from "./404";
 import cookies from "next-cookies";
+import { useState, useEffect } from "react";
+import moment from "moment";
+import { Award, Map } from "react-feather";
+import countries from "../data/countries";
 
 const UserPage = withRouter(({ user: u }) => {
   if (!u) return <NotFound />;
@@ -17,40 +21,25 @@ const UserPage = withRouter(({ user: u }) => {
         </Breadcrumb.Item>
       }
     >
-      <Box>
-        <Box.Content>
-          <div className="flex justify-center">
-            <div className="relative">
-              <Avatar
-                src={`https://avatar.alles.cc/${u.id}?size=150`}
-                size={150}
-              />
-            </div>
+      <div className="flex space-x-5">
+        <Avatar src={`https://avatar.alles.cc/${u.id}?size=150`} size={150} />
+        <div className="space-y-2">
+          <div>
+            <h1 className="text-3xl font-medium mt-2">
+              {u.name}
+              <span className="text-primary text-sm">#{u.tag}</span>
+            </h1>
+            {u.country && countries[u.country] && (
+              <InfoLabel icon={Map}>{countries[u.country]}</InfoLabel>
+            )}
+            <InfoLabel icon={Award}>
+              Level {u.xp.level} ({u.xp.total}xp)
+            </InfoLabel>
           </div>
 
-          <h1 className="text-center text-3xl font-medium mt-2">
-            {u.name}
-            <span className="text-primary text-sm">#{u.tag}</span>
-          </h1>
-        </Box.Content>
-      </Box>
-
-      <Box>
-        <Box.Content>
-          <div className="flex">
-            <p className="flex-grow">Level {u.xp.level}</p>
-            <p className="text-right ml-5">{u.xp.total} xp</p>
-          </div>
-          <div className="w-full h-5 mt-3 rounded-full overflow-hidden border border-gray-200 bg-gray-100 dark:border-gray-600 dark:bg-gray-700">
-            <div
-              className="h-full bg-primary"
-              style={{
-                width: `${u.xp.levelProgress * 100}%`,
-              }}
-            />
-          </div>
-        </Box.Content>
-      </Box>
+          <Status id={u.id} />
+        </div>
+      </div>
     </Page>
   );
 });
@@ -79,3 +68,37 @@ UserPage.getInitialProps = async (ctx) => {
 };
 
 export default UserPage;
+
+const InfoLabel = ({ icon: Icon, children }) => (
+  <p className="flex text-gray-700 dark:text-gray-300">
+    <Icon className="text-primary mr-1 my-auto" height={18} /> {children}
+  </p>
+);
+
+const Status = ({ id }) => {
+  const [status, setStatus] = useState();
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        setStatus(
+          (await axios.get(`https://wassup.alles.cc/${encodeURIComponent(id)}`))
+            .data.status
+        );
+      } catch (err) {}
+    };
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return status ? (
+    <div>
+      <p className="italic">“{status.content}”</p>
+      <p className="text-xs text-gray-600 dark:text-gray-400">
+        {moment(status.date).fromNow()}
+      </p>
+    </div>
+  ) : (
+    <></>
+  );
+};

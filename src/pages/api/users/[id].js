@@ -9,6 +9,20 @@ export default async (req, res) => {
   const u = await getUser(req.query.id);
   if (!u) return res.status(404).json({ err: "missingResource" });
 
+  // Micro
+  let micro;
+  try {
+    const data = (
+      await axios.get(
+        `https://micro.alles.cx/api/users/${encodeURIComponent(u.id)}`
+      )
+    ).data;
+    micro = {
+      posts: data.posts.count,
+      followers: data.followers.count,
+    };
+  } catch (err) {}
+
   // Response
   res.json({
     id: u.id,
@@ -18,5 +32,7 @@ export default async (req, res) => {
     nickname: u.nickname,
     createdAt: u.createdAt,
     xp: u.xp,
+    country: u.country,
+    micro,
   });
 };
