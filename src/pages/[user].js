@@ -22,7 +22,9 @@ const UserPage = withRouter(({ user: u }) => {
       }
     >
       <div className="flex space-x-5">
-        <Avatar src={`https://avatar.alles.cc/${u.id}?size=150`} size={150} />
+        <div>
+            <Avatar src={`https://avatar.alles.cc/${u.id}?size=150`} size={150} />
+        </div>
         <div className="space-y-2">
           <div>
             <h1 className="text-3xl font-medium mt-2">
