@@ -1,0 +1,2 @@
+# missingResource
+The data that was requested does not exist. Not to be confused with `notFound`, which suggests that the API endpoint requested does not exist. Both responses should have an HTTP 404 status code.
