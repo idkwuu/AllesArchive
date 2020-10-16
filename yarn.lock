@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@alleshq/quickauth@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@alleshq/quickauth/-/quickauth-1.0.0.tgz#87d9331473dd3ced97e8e7c37338bda83a6c4635"
-  integrity sha512-RrfyTEX6Ht9mXdmFUmtirbkqBkwSVXlgO+IjIns59SE4tItfhPtk3jpX87pptlJ5w8jVBwit0vCIFgMsWN/QtQ==
+"@alleshq/quickauth@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@alleshq/quickauth/-/quickauth-2.0.0.tgz#5f2d37bf0cb48717785f79bf91c442767647dd24"
+  integrity sha512-0UHK1epCON8wF+I9yBrTPY7pxn/CkXIAJU97LoHeZvMdUM/hBCPg8fhH/Np/+1gLfyKFXRXlbzngBqm0EzDBDw==
   dependencies:
     axios "^0.19.2"
 

@@ -19,7 +19,7 @@ app.get("/", (_req, res) => res.redirect("https://alles.link/discord"));
 // QuickAuth redirect
 app.get("/token/:token", (req, res) => {
     res.cookie("discordToken", req.params.token, { sameSite: "strict" });
-    res.redirect(quickauth.url(`${process.env.ORIGIN}/auth`));
+    res.redirect(quickauth.url(process.env.QUICKAUTH_ID, `${process.env.ORIGIN}/auth`));
 });
 
 // QuickAuth callback
@@ -32,7 +32,7 @@ app.get("/auth", (req, res) => {
             return res.send(`<meta http-equiv="refresh" content="0; /auth?token=${encodeURIComponent(req.query.token)}&retry" />`);
         }
     };
-    quickauth(req.query.token, `${process.env.ORIGIN}/auth`)
+    quickauth(process.env.QUICKAUTH_ID, req.query.token)
         .then(async alles => {
             const { discord } = await jwt.verify(req.cookies.discordToken, process.env.JWT_SECRET);
 
