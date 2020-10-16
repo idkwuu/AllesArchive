@@ -1,0 +1,2 @@
+# notFound
+The page/endpoint does not exist. This should be accompanied by an HTTP 404 status code. If the endpoint/page exists, but the resource or content requested does not, `missingResource` should be used instead. Eg. a request to `https://horizon.alles.cc/users/abc` should return `missingResource`, because the user data endpoint exists, but the user does not.
