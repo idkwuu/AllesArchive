@@ -63,7 +63,7 @@ export default async (req, res) => {
         </text>
 
         <polygon
-          points="1000,600 0,900 0,1000 1000,1000"
+          points="1000,650 0,900 0,1000 1000,1000"
           fill="#23539b"
         />
       </svg>
