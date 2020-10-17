@@ -21,6 +21,27 @@ const UserPage = withRouter(({ user: u }) => {
           <Avatar src={`https://avatar.alles.cc/${u.id}?size=25`} size={25} />
         </Breadcrumb.Item>
       }
+      head={
+        <>
+          <meta property="og:title" content={u.name} />
+          <meta
+            name="og:description"
+            content={`${u.nickname} uses Alles, and you should too!`}
+          />
+          <meta
+            property="og:url"
+            content={`${process.env.NEXT_PUBLIC_ORIGIN}/${u.id}`}
+          />
+          <meta property="og:type" content="profile" />
+          <meta
+            property="og:image"
+            content={`${process.env.NEXT_PUBLIC_ORIGIN}/api/img/${u.id}`}
+          />
+
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:site" content="@alleshq" />
+        </>
+      }
     >
       <div
         className="flex space-x-5"

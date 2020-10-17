@@ -5,7 +5,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useTheme } from "../utils/theme";
 
-export default function Page({ title, breadcrumbs, children }) {
+export default function Page({ title, breadcrumbs, head, children }) {
   const user = useUser();
   useTheme();
 
@@ -13,6 +13,7 @@ export default function Page({ title, breadcrumbs, children }) {
     <>
       <Head>
         <title>{title ? `People • ${title}` : `Alles People`}</title>
+        {head}
       </Head>
 
       <Header>
