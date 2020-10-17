@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier --write \"**/*.js\""
   },
   "keywords": [],
   "author": "",
@@ -14,5 +14,8 @@
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "mariadb": "^2.4.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.1.2"
   }
 }
