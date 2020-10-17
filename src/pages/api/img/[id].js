@@ -29,7 +29,7 @@ export default async (req, res) => {
       >
         <defs>
           <clipPath id="clip">
-            <circle cx="500" cy="400" r="250" fill="#000000" />
+            <circle cx="500" cy="400" r="150" fill="#000000" />
           </clipPath>
         </defs>
 
@@ -42,28 +42,28 @@ export default async (req, res) => {
         />
 
         <image
-          x="250"
-          y="150"
-          width="500"
-          height="500"
+          x="350"
+          y="250"
+          width="300"
+          height="300"
           href="data:image/png;base64,${avatar.toString("base64")}"
           clip-path="url(#clip)"
         />
 
         <text
           x="500"
-          y="750"
+          y="625"
           dominant-baseline="middle"
           text-anchor="middle"
           fill="#000000"
           font-weight="bold"
-          font-size="50"
+          font-size="70"
         >
           ${encodeHTML(user.name)}
         </text>
 
         <polygon
-          points="200,1000 1000,1000 1000,800"
+          points="1000,600 0,900 0,1000 1000,1000"
           fill="#23539b"
         />
       </svg>
