@@ -1,5 +1,6 @@
 import getUser from "../../../utils/getUser";
 import sharp from "sharp";
+import axios from "axios";
 
 export default async (req, res) => {
   if (typeof req.query.id !== "string")
@@ -9,35 +10,74 @@ export default async (req, res) => {
   const user = await getUser(req.query.id);
   if (!user) return res.status(404).json({ err: "missingResource" });
 
-  // Create SVG
-  const svg = `
-    <svg
-      width="500"
-      height="500"
-      viewBox="0 0 500 500"
-      xmlns="http://www.w3.org/2000/svg"
-      font-family="sans serif"
-    >
-      <rect
-        x="0"
-        y="0"
-        width="500"
-        height="500"
-        fill="#ffffff"
-      />
-      <text x="50" y="75" fill="#000000" font-weight="bold" font-size="25">
-        <tspan>${encodeHTML(user.name)}</tspan>
-        <tspan fill="#23539b" font-size="15">#${user.tag}</tspan>
-      </text>
-    </svg>
-  `;
+  try {
+    // Get Avatar
+    const avatar = (
+      await axios.get(`https://avatar.alles.cc/${user.id}?size=500`, {
+        responseType: "arraybuffer",
+      })
+    ).data;
 
-  // Convert to PNG
-  const img = await sharp(Buffer.from(svg)).png();
+    // Create SVG
+    const svg = `
+      <svg
+        width="1000"
+        height="1000"
+        viewBox="0 0 1000 1000"
+        xmlns="http://www.w3.org/2000/svg"
+        font-family="sans serif"
+      >
+        <defs>
+          <clipPath id="clip">
+            <circle cx="500" cy="400" r="250" fill="#000000" />
+          </clipPath>
+        </defs>
 
-  // Response
-  res.setHeader("Content-Type", "image/png");
-  res.send(img);
+        <rect
+          x="0"
+          y="0"
+          width="1000"
+          height="1000"
+          fill="#ffffff"
+        />
+
+        <image
+          x="250"
+          y="150"
+          width="500"
+          height="500"
+          href="data:image/png;base64,${avatar.toString("base64")}"
+          clip-path="url(#clip)"
+        />
+
+        <text
+          x="500"
+          y="750"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          fill="#000000"
+          font-weight="bold"
+          font-size="50"
+        >
+          ${encodeHTML(user.name)}
+        </text>
+
+        <polygon
+          points="200,1000 1000,1000 1000,800"
+          fill="#23539b"
+        />
+      </svg>
+    `;
+
+    // Convert to PNG
+    const img = await sharp(Buffer.from(svg)).png();
+
+    // Response
+    res.setHeader("Content-Type", "image/png");
+    res.send(img);
+  } catch (err) {
+    res.status(500).json({ err: "internalError" });
+  }
 };
 
 const encodeHTML = (str) =>
