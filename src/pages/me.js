@@ -166,7 +166,8 @@ const Username = () => {
 	const [error, setError] = useState();
 	const [loading, setLoading] = useState(false);
 	const [username, setUsername] = useState(user.username);
-	const disabled = user.username || user.xp.level < config.minUsernameLevel || true;
+	const disabled =
+		user.username || user.xp.level < config.minUsernameLevel || true;
 
 	const submit = () => {
 		if (!username) return setError("Username not specified");
