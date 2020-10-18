@@ -6,6 +6,14 @@ export default async (req, res) => {
 	const user = await auth(req);
 	if (!user) return res.status(401).send({ err: "badAuthorization" });
 
+	// Prevent updating username if already set
+	if (user.username) return res.status(400).json({ err: "alreadySet" });
+
+	// Minimum XP level
+	if (user.xp.level < config.minUsernameLevel)
+		return res.status(400).json({ err: "user.xp.notEnough" });
+
+	// Validate Username
 	if (!req.body) return res.status(400).json({ err: "badRequest" });
 	if (typeof req.body.username !== "string")
 		return res.status(400).json({ err: "badRequest" });
