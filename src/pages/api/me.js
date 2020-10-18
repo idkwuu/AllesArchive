@@ -9,6 +9,8 @@ export default async (req, res) => {
 		name: user.name,
 		nickname: user.nickname,
 		tag: user.tag,
+		username: user.username,
 		plus: user.plus,
+		xp: user.xp,
 	});
 };

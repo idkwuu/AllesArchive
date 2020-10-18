@@ -14,6 +14,7 @@ export default function AboutMe() {
 			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
 				<h4 className="font-medium text-3xl">About Me</h4>
 				<Profile />
+				<Username />
 			</main>
 		</Page>
 	);
@@ -157,5 +158,76 @@ const AvatarUpload = () => {
 				}}
 			/>
 		</div>
+	);
+};
+
+const Username = () => {
+	const user = useUser();
+	const [error, setError] = useState();
+	const [loading, setLoading] = useState(false);
+	const [username, setUsername] = useState(user.username);
+	const disabled = user.username || user.xp.level < config.minUsernameLevel || true;
+
+	const submit = () => {
+		if (!username) return setError("Username not specified");
+
+		setLoading(true);
+		axios
+			.post(
+				"/api/username",
+				{ username },
+				{
+					headers: {
+						Authorization: user.sessionToken,
+					},
+				}
+			)
+			.then(() => {
+				setError();
+				setLoading(false);
+			})
+			.catch((err) => {
+				if (
+					err.response &&
+					err.response.data.err === "profile.username.unavailable"
+				)
+					setError("This username is unavailable");
+				else setError("Something went wrong");
+				setLoading(false);
+			});
+	};
+
+	return (
+		<Box>
+			<Box.Content className="space-y-10 md:space-y-5">
+				<Input
+					label="Username"
+					defaultValue={user.username ? user.username : undefined}
+					placeholder="jessica"
+					maxLength={config.maxUsernameLength}
+					onChange={(e) => {
+						setUsername(e.target.value.trim());
+						setError();
+					}}
+					note={
+						user.xp.level < config.minUsernameLevel
+							? `You need to be on level ${config.minUsernameLevel} to claim a username`
+							: `Coming soon!`
+					}
+					disabled={disabled}
+				/>
+			</Box.Content>
+			<Box.Footer className="flex items-center justify-between">
+				<p className="text-danger">{error}</p>
+				<Button
+					size="sm"
+					loading={loading}
+					onClick={submit}
+					disabled={disabled}
+				>
+					Save
+				</Button>
+			</Box.Footer>
+		</Box>
 	);
 };
