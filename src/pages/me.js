@@ -166,11 +166,16 @@ const Username = () => {
 	const [error, setError] = useState();
 	const [loading, setLoading] = useState(false);
 	const [username, setUsername] = useState(user.username);
-	const disabled =
-		user.username || user.xp.level < config.minUsernameLevel || true;
+	const [disabled, setDisabled] = useState(
+		user.username || user.xp.level < config.minUsernameLevel
+	);
 
 	const submit = () => {
 		if (!username) return setError("Username not specified");
+		if (username.length < config.minUsernameLength)
+			return setError(
+				`Usernames must be at least ${config.minUsernameLength} characters`
+			);
 
 		setLoading(true);
 		axios
@@ -184,16 +189,18 @@ const Username = () => {
 				}
 			)
 			.then(() => {
+				setDisabled(true);
 				setError();
 				setLoading(false);
 			})
 			.catch((err) => {
-				if (
-					err.response &&
-					err.response.data.err === "profile.username.unavailable"
-				)
-					setError("This username is unavailable");
-				else setError("Something went wrong");
+				if (err.response) {
+					if (err.response.data.err === "profile.username.unavailable")
+						setError("This username is unavailable");
+					else if (err.response.data.err === "profile.username.invalid")
+						setError("Usernames must be alphanumeric");
+					else setError("Something went wrong");
+				} else setError("Something went wrong");
 				setLoading(false);
 			});
 	};
@@ -213,7 +220,9 @@ const Username = () => {
 					note={
 						user.xp.level < config.minUsernameLevel
 							? `You need to be on level ${config.minUsernameLevel} to claim a username`
-							: `Coming soon!`
+							: user.username
+							? `Your username cannot be changed`
+							: `Choose wisely! Your username cannot be changed.`
 					}
 					disabled={disabled}
 				/>
