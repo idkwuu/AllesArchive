@@ -218,10 +218,10 @@ const Username = () => {
 						setError();
 					}}
 					note={
-						user.xp.level < config.minUsernameLevel
-							? `You need to be on level ${config.minUsernameLevel} to claim a username`
-							: user.username
+						user.username
 							? `Your username cannot be changed`
+							: user.xp.level < config.minUsernameLevel
+							? `You need to be on level ${config.minUsernameLevel} to claim a username`
 							: `Choose wisely! Your username cannot be changed.`
 					}
 					disabled={disabled}
