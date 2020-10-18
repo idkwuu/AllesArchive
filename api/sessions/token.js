@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   try {
     token = await jwt.verify(req.body.token, process.env.SESSION_JWT);
   } catch (err) {
-    return res.status(404).json({ err: "session.token" });
+    return res.status(404).json({ err: "missingResource" });
   }
 
   // Get Session
@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
       id: token.session,
     },
   });
-  if (!session) return res.status(404).json({ err: "session.token" });
+  if (!session) return res.status(404).json({ err: "missingResource" });
 
   // Response
   res.json({
