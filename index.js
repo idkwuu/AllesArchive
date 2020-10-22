@@ -1,6 +1,7 @@
 // Express
 const express = require("express");
 const app = express();
+app.use(require("cors")());
 app.listen(8080, () => console.log("Server is online!"));
 
 // Nexus
