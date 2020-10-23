@@ -40,11 +40,11 @@ const categories = [
 			},
 			{
 				text: "Active Sessions",
-				href: "/sessions",
+				href: "/comingsoon",
 			},
 			{
 				text: "Export your data",
-				href: "/data",
+				href: "/comingsoon",
 			},
 		],
 	},
@@ -68,12 +68,11 @@ const categories = [
 		links: [
 			{
 				text: "Earn XP",
-				href: "/xp",
+				href: "/comingsoon",
 			},
 			{
 				text: "Deals",
-				href: "https://deals.alles.cx",
-				external: true,
+				href: "/comingsoon",
 			},
 		],
 	},
