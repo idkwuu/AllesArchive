@@ -5,7 +5,6 @@ import {
 	Award,
 	PlusCircle,
 	Hash,
-	Play,
 } from "react-feather";
 import Link from "next/link";
 import { Page } from "../components/page";
@@ -89,11 +88,6 @@ const products = [
 		name: "Micro",
 		logo: <IconLogo icon={Hash} />,
 		url: "https://micro.alles.cx",
-	},
-	{
-		name: "Video",
-		logo: <IconLogo icon={Play} />,
-		url: "https://video.alles.cx",
 	},
 ];
 
