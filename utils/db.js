@@ -27,9 +27,6 @@ module.exports = db.define("status", {
     content: {
         type: Sequelize.STRING
     },
-    icon: {
-        type: Sequelize.STRING
-    },
     date: {
         type: Sequelize.DATE,
         allowNull: false

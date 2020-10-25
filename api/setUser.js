@@ -24,7 +24,6 @@ module.exports = async (req, res) => {
         id: uuid(),
         user,
         content: req.body.content,
-        // icon: req.body.icon,
         date: new Date(),
         end: new Date().getTime() + 1000 * req.body.time
     }));
