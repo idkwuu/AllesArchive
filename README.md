@@ -1,0 +1,2 @@
+# Alles Spotify Integration
+This is a service that handles linking a Spotify account to an AllesID via the Spotify OAuth API. It also uses the API to find what song a user is currently listening to, and stores this in a database.
