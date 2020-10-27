@@ -69,7 +69,7 @@ app.get("/alles/:id", async (req, res, next) => {
         }
     });
     if (user) res.json(user);
-    else next();
+    else res.status(404).json({ err: "missingResource" });
 });
 
 // Alles -> Discord API
@@ -80,7 +80,7 @@ app.get("/discord/:id", async (req, res, next) => {
         }
     });
     if (user) res.json(user);
-    else next();
+    else res.status(404).json({ err: "missingResource" });
 });
 
 // 404
