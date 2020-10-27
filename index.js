@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { QUICKAUTH_ID } = process.env;
+const { QUICKAUTH_ID, SPOTIFY_ID, ORIGIN } = process.env;
 
 const db = require("./db");
 const { Op } = require("sequelize");
@@ -16,7 +16,16 @@ db.sync().then(() => {
   app.listen(8080, () => console.log("Express is listening..."));
 });
 
-// Spotify Code => QuickAuth Redirect
+// Spotify OAuth Redirect
+app.get("/", (_req, res) =>
+  res.redirect(
+    `https://accounts.spotify.com/authorize?response_type=code&client_id=${SPOTIFY_ID}&scope=user-read-currently-playing&redirect_uri=${encodeURIComponent(
+      ORIGIN
+    )}%2Fcb`
+  )
+);
+
+// Spotify Callback => QuickAuth Redirect
 app.get("/cb", (req, res) => {
   if (typeof req.query.code === "string")
     res.redirect(
@@ -47,7 +56,7 @@ app.get("/auth", (req, res) => {
 });
 
 // Account API
-app.get("/spotify/:id", async (req, res, next) => {
+app.get("/spotify/:id", async (req, res) => {
   const user = await getAccount("id", req.params.id);
   if (user) res.json(user);
   else res.status(404).json({ err: "missingResource" });
