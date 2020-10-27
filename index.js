@@ -62,7 +62,7 @@ app.get("/auth", (req, res) => {
 });
 
 // Discord -> Alles API
-app.get("/alles/:id", async (req, res, next) => {
+app.get("/alles/:id", async (req, res) => {
     const user = await User.findOne({
         where: {
             alles: req.params.id
@@ -73,7 +73,7 @@ app.get("/alles/:id", async (req, res, next) => {
 });
 
 // Alles -> Discord API
-app.get("/discord/:id", async (req, res, next) => {
+app.get("/discord/:id", async (req, res) => {
     const user = await User.findOne({
         where: {
             discord: req.params.id
