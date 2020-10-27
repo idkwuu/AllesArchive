@@ -49,13 +49,33 @@ setInterval(async () => {
     });
 
     // Create Item
-    if (!item)
+    if (!item) {
       item = await db.Item.create({
         id: data.item.id,
         name: data.item.name,
         explicit: data.item.explicit,
         duration: data.item.duration_ms,
       });
+
+      // Find/Create Artists
+      await Promise.all(
+        data.item.artists.map(async (a) => {
+          let artist = await db.Artist.findOne({
+            where: {
+              id: a.id,
+            },
+          });
+
+          if (!artist)
+            artist = await db.Artist.create({
+              id: a.id,
+              name: a.name,
+            });
+
+          await artist.addItem(item);
+        })
+      );
+    }
 
     // Create Status
     await db.Status.create({
@@ -65,5 +85,7 @@ setInterval(async () => {
       accountId: account.id,
       itemId: item.id,
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 }, 100);

@@ -17,3 +17,5 @@ module.exports = db;
 require("./account")(db);
 require("./item")(db);
 require("./status")(db);
+require("./artist")(db);
+require("./artist_item")(db);
