@@ -15,3 +15,5 @@ const db = new Sequelize(
 module.exports = db;
 
 require("./account")(db);
+require("./item")(db);
+require("./status")(db);

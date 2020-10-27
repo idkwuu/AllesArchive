@@ -1,6 +1,7 @@
 const db = require("./db");
 const { Op } = require("sequelize");
 const axios = require("axios");
+const uuid = require("uuid").v4;
 
 setInterval(async () => {
   // Get account that has not been checked for the largest amount of time
@@ -22,8 +23,9 @@ setInterval(async () => {
   await account.update({ checkedAt: new Date() });
 
   // Get currently playing
+  let data;
   try {
-    const data = (
+    data = (
       await axios.get(
         "https://api.spotify.com/v1/me/player/currently-playing",
         {
@@ -33,9 +35,35 @@ setInterval(async () => {
         }
       )
     ).data;
-    if (!data || !data.item) return;
-    console.log(`${account.alles} is playing "${data.item.name}"`);
   } catch (err) {
-    await account.update({ failed: true });
+    return await account.update({ failed: true });
   }
+
+  if (!data || !data.item) return;
+  try {
+    // Find Item
+    let item = await db.Item.findOne({
+      where: {
+        id: data.item.id,
+      },
+    });
+
+    // Create Item
+    if (!item)
+      item = await db.Item.create({
+        id: data.item.id,
+        name: data.item.name,
+        explicit: data.item.explicit,
+        duration: data.item.duration_ms,
+      });
+
+    // Create Status
+    await db.Status.create({
+      id: uuid(),
+      playing: data.is_playing,
+      progress: data.progress_ms,
+      accountId: account.id,
+      itemId: item.id,
+    });
+  } catch (err) {}
 }, 100);
