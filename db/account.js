@@ -21,8 +21,12 @@ module.exports = (db) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      active: {
+      failed: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      checkedAt: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
     },

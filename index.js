@@ -8,6 +8,7 @@ const app = express();
 app.use((_err, _req, res, _next) =>
   res.status(500).json({ err: "internalError" })
 );
-db.sync().then(() =>
-  app.listen(8080, () => console.log("Express is listening..."))
-);
+db.sync().then(() => {
+  require("./status");
+  app.listen(8080, () => console.log("Express is listening..."));
+});
