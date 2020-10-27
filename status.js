@@ -16,7 +16,6 @@ setInterval(async () => {
       failed: false,
     },
     order: ["checkedAt"],
-    limit: 1,
   });
   if (!account) return;
 
