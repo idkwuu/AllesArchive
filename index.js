@@ -5,8 +5,8 @@ const db = require("./db");
 const { Op } = require("sequelize");
 const quickauth = require("@alleshq/quickauth");
 const axios = require("axios");
-const uuid = require("uuid").v4;
 const qs = require("qs").stringify;
+const cors = require("cors");
 
 // Express
 const express = require("express");
@@ -122,12 +122,14 @@ app.get("/auth", (req, res) => {
 });
 
 // Account API
+app.use("/spotify/:id", cors());
 app.get("/spotify/:id", async (req, res) => {
   const user = await getAccount("id", req.params.id);
   if (user) res.json(user);
   else res.status(404).json({ err: "missingResource" });
 });
 
+app.use("/alles/:id", cors());
 app.get("/alles/:id", async (req, res) => {
   const user = await getAccount("alles", req.params.id);
   if (user) res.json(user);
