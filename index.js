@@ -1,9 +1,12 @@
 require("dotenv").config();
-const { QUICKAUTH_ID, SPOTIFY_ID, ORIGIN } = process.env;
+const { QUICKAUTH_ID, SPOTIFY_ID, SPOTIFY_SECRET, ORIGIN } = process.env;
 
 const db = require("./db");
 const { Op } = require("sequelize");
 const quickauth = require("@alleshq/quickauth");
+const axios = require("axios");
+const uuid = require("uuid").v4;
+const qs = require("qs").stringify;
 
 // Express
 const express = require("express");
@@ -36,9 +39,11 @@ app.get("/cb", (req, res) => {
       )
     );
   else
-    res.send(
-      "Something didn't go quite right there! <a href='/'>Try again</a>."
-    );
+    res
+      .status(400)
+      .send(
+        "Something didn't go quite right there! <a href='/'>Try again</a>."
+      );
 });
 
 // QuickAuth callback
@@ -47,12 +52,73 @@ app.get("/auth", (req, res) => {
     return res.status(400).json({ err: "badRequest" });
   quickauth(QUICKAUTH_ID, req.query.token)
     .then(async (alles) => {
-      console.log(alles);
+      // Get token pair from Spotify
+      const tokens = (
+        await axios.post(
+          "https://accounts.spotify.com/api/token",
+          qs({
+            grant_type: "authorization_code",
+            code: req.query.data,
+            redirect_uri: `${ORIGIN}/cb`,
+          }),
+          {
+            auth: {
+              username: SPOTIFY_ID,
+              password: SPOTIFY_SECRET,
+            },
+            headers: {
+              "content-type": "application/x-www-form-urlencoded",
+            },
+          }
+        )
+      ).data;
+      if (tokens.scope !== "user-read-currently-playing")
+        throw new Error("Unexpected scopes");
 
-      // Response
+      // Get user id
+      const { id } = (
+        await axios.get("https://api.spotify.com/v1/me", {
+          headers: {
+            authorization: `Bearer ${tokens.access_token}`,
+          },
+        })
+      ).data;
+
+      // Delete old account connected to AllesID
+      const allesAccount = await db.Account.findOne({
+        where: { alles },
+      });
+      if (allesAccount && allesAccount.id !== id) await allesAccount.destroy();
+
+      // Get Spotify account
+      let account = await db.Account.findOne({
+        where: { id },
+      });
+
+      // Update existing account
+      if (account)
+        await account.update({
+          alles,
+          access: tokens.access_token,
+          refresh: tokens.refresh_token,
+          failed: false,
+        });
+      // Or create new account
+      else
+        account = await db.Account.create({
+          id,
+          alles,
+          access: tokens.access_token,
+          refresh: tokens.refresh_token,
+          failed: false,
+          checkedAt: 0,
+        });
+
+      // Reponse
       res.send("All done! Your AllesID and Spotify account are now connected!");
     })
-    .catch(() => res.status(401).json({ err: "badAuthorization" }));
+    .catch((err) => console.log(err));
+  //.catch(() => res.status(401).json({ err: "badAuthorization" }));
 });
 
 // Account API
