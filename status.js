@@ -8,18 +8,16 @@ const qs = require("qs").stringify;
 
 setInterval(async () => {
   // Get account that has not been checked for the largest amount of time
-  const account = (
-    await db.Account.findAll({
-      where: {
-        checkedAt: {
-          [Op.lt]: new Date().getTime() - 5000,
-        },
-        failed: false,
+  const account = await db.Account.findOne({
+    where: {
+      checkedAt: {
+        [Op.lt]: new Date().getTime() - 5000,
       },
-      order: ["checkedAt"],
-      limit: 1,
-    })
-  )[0];
+      failed: false,
+    },
+    order: ["checkedAt"],
+    limit: 1,
+  });
   if (!account) return;
 
   // Mark as checked now
