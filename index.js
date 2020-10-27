@@ -117,8 +117,7 @@ app.get("/auth", (req, res) => {
       // Reponse
       res.send("All done! Your AllesID and Spotify account are now connected!");
     })
-    .catch((err) => console.log(err));
-  //.catch(() => res.status(401).json({ err: "badAuthorization" }));
+    .catch(() => res.status(401).json({ err: "badAuthorization" }));
 });
 
 // Account API
