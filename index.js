@@ -1,7 +1,9 @@
 require("dotenv").config();
+const { QUICKAUTH_ID } = process.env;
 
 const db = require("./db");
 const { Op } = require("sequelize");
+const quickauth = require("@alleshq/quickauth");
 
 // Express
 const express = require("express");
@@ -12,6 +14,36 @@ app.use((_err, _req, res, _next) =>
 db.sync().then(() => {
   require("./status");
   app.listen(8080, () => console.log("Express is listening..."));
+});
+
+// Spotify Code => QuickAuth Redirect
+app.get("/cb", (req, res) => {
+  if (typeof req.query.code === "string")
+    res.redirect(
+      quickauth.url(
+        process.env.QUICKAUTH_ID,
+        `${process.env.ORIGIN}/auth`,
+        req.query.code
+      )
+    );
+  else
+    res.send(
+      "Something didn't go quite right there! <a href='/'>Try again</a>."
+    );
+});
+
+// QuickAuth callback
+app.get("/auth", (req, res) => {
+  if (typeof req.query.token !== "string" || typeof req.query.data !== "string")
+    return res.status(400).json({ err: "badRequest" });
+  quickauth(QUICKAUTH_ID, req.query.token)
+    .then(async (alles) => {
+      console.log(alles);
+
+      // Response
+      res.send("All done! Your AllesID and Spotify account are now connected!");
+    })
+    .catch(() => res.status(401).json({ err: "badAuthorization" }));
 });
 
 // Account API
