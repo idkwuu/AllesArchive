@@ -9,7 +9,7 @@ export default function StatusField() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [placeholder, setPlaceholder] = useState(
-    user.status ? user.status.content : "What's Up?"
+    user.status ? user.status.content : "What's up?"
   );
 
   // Form Submit
