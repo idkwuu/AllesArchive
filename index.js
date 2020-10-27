@@ -11,30 +11,21 @@ const xpDates = {};
 // Express
 const express = require("express");
 const app = express();
-app.use(require("cookie-parser")());
-app.use((_err, _req, res, _next) => res.status(500).json({ err: "internalError" }));
 app.listen(8080, () => console.log("Express is listening"));
 app.get("/", (_req, res) => res.redirect("https://alles.link/discord"));
 
 // QuickAuth redirect
-app.get("/token/:token", (req, res) => {
-    res.cookie("discordToken", req.params.token, { sameSite: "strict" });
-    res.redirect(quickauth.url(process.env.QUICKAUTH_ID, `${process.env.ORIGIN}/auth`));
-});
+app.get("/token/:token", (req, res) => res.redirect(quickauth.url(process.env.QUICKAUTH_ID, `${process.env.ORIGIN}/auth`, req.params.token)));
 
 // QuickAuth callback
 app.get("/auth", (req, res) => {
-    if (typeof req.query.token !== "string") return res.status(400).json({ err: "badRequest" });
-    if (typeof req.cookies.discordToken !== "string") {
-        if (typeof req.query.retry === "string") {
-            return res.status(400).json({ err: "badAuthorization" });
-        } else {
-            return res.send(`<meta http-equiv="refresh" content="0; /auth?token=${encodeURIComponent(req.query.token)}&retry" />`);
-        }
-    };
+    if (
+        typeof req.query.token !== "string" ||
+        typeof req.query.data !== "string"
+    ) return res.status(400).json({ err: "badRequest" });
     quickauth(process.env.QUICKAUTH_ID, req.query.token)
         .then(async alles => {
-            const { discord } = await jwt.verify(req.cookies.discordToken, process.env.JWT_SECRET);
+            const { discord } = await jwt.verify(req.query.data, process.env.JWT_SECRET);
 
             // Check if account is already connected
             if (await User.findOne({
