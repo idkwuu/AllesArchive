@@ -3,7 +3,7 @@ import { Page } from "../components/page";
 import axios from "axios";
 import cookies from "next-cookies";
 
-const Connections = ({ discord }) => {
+const Connections = ({ discord, spotify }) => {
 	return (
 		<Page
 			title="Connected Accounts"
@@ -28,12 +28,36 @@ const Connections = ({ discord }) => {
 								</>
 							) : (
 								<>
-									Your AllesID isn't yet connected to a discord account. To link
+									Your AllesID isn't yet connected to a Discord account. To link
 									your discord account, join our{" "}
 									<a href="https://alles.link/discord" className="text-primary">
 										discord server
 									</a>{" "}
 									and follow the instructions there.
+								</>
+							)}
+						</p>
+					</Box.Content>
+				</Box>
+
+				<Box>
+					<Box.Header>Spotify</Box.Header>
+					<Box.Content className="space-y-5">
+						<p>
+							{spotify ? (
+								<>
+									Your AllesID is connected to{" "}
+									<strong>{spotify.spotify}</strong>.
+								</>
+							) : (
+								<>
+									Your AllesID isn't yet connected to a Spotify account. If you
+									want to display what song you're listening to on your profile
+									page and get access to music features,{" "}
+									<a href="https://spotify.alles.cc" className="text-primary">
+										connect it
+									</a>
+									.
 								</>
 							)}
 						</p>
