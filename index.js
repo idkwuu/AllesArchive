@@ -84,14 +84,15 @@ app.get("/auth", (req, res) => {
         })
       ).data;
 
-      // Delete old account connected to AllesID
-      const allesAccount = await db.Account.findOne({
+      // Deactivate old account connected to AllesID
+      let account = await db.Account.findOne({
         where: { alles },
       });
-      if (allesAccount && allesAccount.id !== id) await allesAccount.destroy();
+      if (account && account.id !== id)
+        await account.update({ connected: false });
 
       // Get Spotify account
-      let account = await db.Account.findOne({
+      account = await db.Account.findOne({
         where: { id },
       });
 
@@ -101,7 +102,7 @@ app.get("/auth", (req, res) => {
           alles,
           access: tokens.access_token,
           refresh: tokens.refresh_token,
-          failed: false,
+          connected: true,
         });
       // Or create new account
       else
@@ -110,7 +111,7 @@ app.get("/auth", (req, res) => {
           alles,
           access: tokens.access_token,
           refresh: tokens.refresh_token,
-          failed: false,
+          connected: true,
           checkedAt: 0,
         });
 
@@ -140,6 +141,7 @@ const getAccount = async (key, value) => {
   const account = await db.Account.findOne({
     where: {
       [key]: value,
+      connected: true,
     },
   });
   if (!account) return;
@@ -170,7 +172,6 @@ const getAccount = async (key, value) => {
   return {
     alles: account.alles,
     spotify: account.id,
-    connected: !account.failed,
     checkedAt: account.checkedAt,
     createdAt: account.createdAt,
     item: item

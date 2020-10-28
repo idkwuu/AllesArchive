@@ -21,7 +21,7 @@ module.exports = (db) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      failed: {
+      connected: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
@@ -32,7 +32,6 @@ module.exports = (db) => {
     },
     {
       updatedAt: false,
-      paranoid: true,
     }
   );
 };

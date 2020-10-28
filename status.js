@@ -13,7 +13,7 @@ setInterval(async () => {
       checkedAt: {
         [Op.lt]: new Date().getTime() - 5000,
       },
-      failed: false,
+      connected: true,
     },
     order: ["checkedAt"],
   });
@@ -58,7 +58,7 @@ setInterval(async () => {
         ).data.access_token,
       });
     } catch (err) {
-      await account.update({ failed: true });
+      await account.update({ connected: false });
     }
     return;
   }
