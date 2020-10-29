@@ -19,7 +19,7 @@ export default function Page({ title, breadcrumbs, head, children }) {
       <Header>
         <div className="p-5 max-w-2xl w-full mx-auto flex justify-between">
           <Breadcrumb>
-            <Link href="/">
+            <Link href="/" passHref>
               <Breadcrumb.Item className="font-medium text-lg inline-flex items-center">
                 <Icon className="text-gray-500 inline w-5 mr-2" />
                 People
