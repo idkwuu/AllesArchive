@@ -1,5 +1,4 @@
 const db = require("../../db");
-const log = require("../../util/log");
 const values = {
   name: "string",
   tag: "string",

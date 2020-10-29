@@ -1,5 +1,4 @@
 const db = require("../db");
-const log = require("../util/log");
 
 module.exports = async (req, res) => {
   const { name, tag } = req.query;

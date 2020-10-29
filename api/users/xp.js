@@ -1,6 +1,5 @@
 const db = require("../../db");
 const { literal } = require("sequelize");
-const log = require("../../util/log");
 
 module.exports = async (req, res) => {
   if (typeof req.body.xp !== "number")

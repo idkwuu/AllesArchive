@@ -3,7 +3,6 @@ const config = require("../../config");
 const uuid = require("uuid").v4;
 const argon2 = require("argon2");
 const tag = require("../../util/generateTag");
-const log = require("../../util/log");
 
 module.exports = async (req, res) => {
   if (

@@ -1,5 +1,4 @@
 require("dotenv").config();
-const log = require("./util/log");
 
 // Express
 const express = require("express");

@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const uuid = require("uuid").v4;
 const db = require("../../db");
-const log = require("../../util/log");
 
 module.exports = async (req, res) => {
   if (typeof req.body.user !== "string" || typeof req.body.address !== "string")
