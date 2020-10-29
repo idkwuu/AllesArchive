@@ -4,6 +4,14 @@ import axios from "axios";
 import sharp from "sharp";
 import FormData from "form-data";
 
+const {
+	WALNUTFS_URI,
+	WALNUTFS_ID,
+	WALNUTFS_SECRET,
+	AVATAR_URI,
+	AVATAR_SECRET,
+} = process.env;
+
 const api = async (req, res) => {
 	const user = await auth(req);
 	if (!user) return res.status(401).send({ err: "badAuthorization" });

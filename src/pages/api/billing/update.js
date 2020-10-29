@@ -2,7 +2,16 @@ import config from "../../../config";
 import auth from "../../../utils/auth";
 import axios from "axios";
 import Stripe from "stripe";
-const stripe = Stripe(process.env.STRIPE_SECRET);
+
+const {
+	NODE_ENV,
+	NEXUS_URI,
+	NEXUS_ID,
+	NEXUS_SECRET,
+	STRIPE_SECRET,
+	STRIPE_TEST_CUSTOMER,
+} = process.env;
+const stripe = Stripe(STRIPE_SECRET);
 
 export default async (req, res) => {
 	const user = await auth(req);
@@ -17,8 +26,8 @@ export default async (req, res) => {
 
 	// Customer ID
 	const customerId =
-		process.env.NODE_ENV === "development" && process.env.STRIPE_TEST_CUSTOMER
-			? process.env.STRIPE_TEST_CUSTOMER
+		NODE_ENV === "development" && STRIPE_TEST_CUSTOMER
+			? STRIPE_TEST_CUSTOMER
 			: user.stripeCustomerId;
 
 	try {
@@ -36,14 +45,14 @@ export default async (req, res) => {
 
 			// Update User
 			await axios.post(
-				`${process.env.NEXUS_URI}/users/${user.id}`,
+				`${NEXUS_URI}/users/${user.id}`,
 				{
 					stripeCustomerId: customer.id,
 				},
 				{
 					auth: {
-						username: process.env.NEXUS_ID,
-						password: process.env.NEXUS_SECRET,
+						username: NEXUS_ID,
+						password: NEXUS_SECRET,
 					},
 				}
 			);

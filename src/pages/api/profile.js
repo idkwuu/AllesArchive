@@ -2,6 +2,8 @@ import auth from "../../utils/auth";
 import config from "../../config";
 import axios from "axios";
 
+const { NEXUS_URI, NEXUS_ID, NEXUS_SECRET } = process.env;
+
 export default async (req, res) => {
 	const user = await auth(req);
 	if (!user) return res.status(401).send({ err: "badAuthorization" });
@@ -29,13 +31,13 @@ export default async (req, res) => {
 	if (tagString !== user.tag) {
 		try {
 			await axios.get(
-				`${process.env.NEXUS_URI}/nametag?name=${encodeURIComponent(
+				`${NEXUS_URI}/nametag?name=${encodeURIComponent(
 					user.name
 				)}&tag=${encodeURIComponent(tagString)}`,
 				{
 					auth: {
-						username: process.env.NEXUS_ID,
-						password: process.env.NEXUS_SECRET,
+						username: NEXUS_ID,
+						password: NEXUS_SECRET,
 					},
 				}
 			);
@@ -49,15 +51,15 @@ export default async (req, res) => {
 	// Update user
 	try {
 		await axios.post(
-			`${process.env.NEXUS_URI}/users/${user.id}`,
+			`${NEXUS_URI}/users/${user.id}`,
 			{
 				nickname,
 				tag: tagString,
 			},
 			{
 				auth: {
-					username: process.env.NEXUS_ID,
-					password: process.env.NEXUS_SECRET,
+					username: NEXUS_ID,
+					password: NEXUS_SECRET,
 				},
 			}
 		);

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { getAddress } from "../../utils/getAddress";
 
+const { NEXUS_URI, NEXUS_ID, NEXUS_SECRET } = process.env;
+
 export default async (req, res) => {
 	if (
 		!req.body ||
@@ -19,13 +21,13 @@ export default async (req, res) => {
 		// Get user id from nametag
 		const { id } = await axios
 			.get(
-				`${process.env.NEXUS_URI}/nametag?name=${encodeURIComponent(
+				`${NEXUS_URI}/nametag?name=${encodeURIComponent(
 					req.body.name
 				)}&tag=${encodeURIComponent(req.body.tag)}`,
 				{
 					auth: {
-						username: process.env.NEXUS_ID,
-						password: process.env.NEXUS_SECRET,
+						username: NEXUS_ID,
+						password: NEXUS_SECRET,
 					},
 				}
 			)
@@ -34,12 +36,12 @@ export default async (req, res) => {
 		// Validate password
 		const { matches } = await axios
 			.post(
-				`${process.env.NEXUS_URI}/users/${id}/password/verify`,
+				`${NEXUS_URI}/users/${id}/password/verify`,
 				{ password: req.body.password },
 				{
 					auth: {
-						username: process.env.NEXUS_ID,
-						password: process.env.NEXUS_SECRET,
+						username: NEXUS_ID,
+						password: NEXUS_SECRET,
 					},
 				}
 			)
@@ -50,15 +52,15 @@ export default async (req, res) => {
 		// Create session
 		const { token } = await axios
 			.post(
-				`${process.env.NEXUS_URI}/sessions`,
+				`${NEXUS_URI}/sessions`,
 				{
 					user: id,
 					address: getAddress(req),
 				},
 				{
 					auth: {
-						username: process.env.NEXUS_ID,
-						password: process.env.NEXUS_SECRET,
+						username: NEXUS_ID,
+						password: NEXUS_SECRET,
 					},
 				}
 			)

@@ -1,6 +1,14 @@
 import auth from "../../../utils/auth";
 import Stripe from "stripe";
-const stripe = Stripe(process.env.STRIPE_SECRET);
+
+const {
+	NODE_ENV,
+	STRIPE_SECRET,
+	STRIPE_TEST_CUSTOMER,
+	STRIPE_PLUS_MONTHLY,
+	STRIPE_PLUS_YEARLY,
+} = process.env;
+const stripe = Stripe(STRIPE_SECRET);
 
 export default async (req, res) => {
 	const user = await auth(req);
@@ -8,8 +16,8 @@ export default async (req, res) => {
 
 	// No Customer ID
 	const customerId =
-		process.env.NODE_ENV === "development" && process.env.STRIPE_TEST_CUSTOMER
-			? process.env.STRIPE_TEST_CUSTOMER
+		NODE_ENV === "development" && STRIPE_TEST_CUSTOMER
+			? STRIPE_TEST_CUSTOMER
 			: user.stripeCustomerId;
 	if (!customerId) return res.json({ registered: false });
 
@@ -18,13 +26,13 @@ export default async (req, res) => {
 		const monthly = (
 			await stripe.subscriptions.list({
 				customer: customerId,
-				price: process.env.STRIPE_PLUS_MONTHLY,
+				price: STRIPE_PLUS_MONTHLY,
 			})
 		).data[0];
 		const yearly = (
 			await stripe.subscriptions.list({
 				customer: customerId,
-				price: process.env.STRIPE_PLUS_YEARLY,
+				price: STRIPE_PLUS_YEARLY,
 			})
 		).data[0];
 		const subscription = yearly || monthly;
