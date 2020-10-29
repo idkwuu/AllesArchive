@@ -218,7 +218,7 @@ const userStats = async (id, msg) => {
         (user.username ? `**Username:** ${esc(`@${user.username}`)}\n` : ``) +
         `**XP:** ${user.xp.total} (Level ${user.xp.level}, ${user.xp.levelXp}/${user.xp.levelXpMax})\n` +
         `${"▓".repeat(progress)}${"░".repeat(10 - progress)} ${Math.floor(user.xp.levelProgress * 100)}%` +
-        `\n\nhttps://people.alles.cx/${encodeURIComponent(user.username ? user.username : user.id)}` +
+        `\n\nhttps://alles.cx/${encodeURIComponent(user.username || user.id)}` +
         (user.plus ? "\n\n✨ _This user has **Alles+**_ ✨" : "")
     );
 }
