@@ -1,5 +1,5 @@
 import { Breadcrumb } from "@alleshq/reactants";
-import { Page } from "../components/page";
+import { Page } from "../components/Page";
 import classnames from "classnames";
 import { useTheme } from "../utils/theme";
 
@@ -11,25 +11,23 @@ export default function Preferences() {
 			title="Preferences"
 			breadcrumbs={<Breadcrumb.Item>Preferences</Breadcrumb.Item>}
 		>
-			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
-				<h4 className="font-medium text-3xl">Preferences</h4>
-				<div className="space-y-2">
-					<Option
-						className="bg-white"
-						selected={theme === "light"}
-						onClick={() => setTheme("light")}
-					>
-						Light Mode
-					</Option>
-					<Option
-						className="bg-gray-700"
-						selected={theme === "dark"}
-						onClick={() => setTheme("dark")}
-					>
-						Dark Mode
-					</Option>
-				</div>
-			</main>
+			<h4 className="font-medium text-3xl">Preferences</h4>
+			<div className="space-y-2">
+				<Option
+					className="bg-white"
+					selected={theme === "light"}
+					onClick={() => setTheme("light")}
+				>
+					Light Mode
+				</Option>
+				<Option
+					className="bg-gray-700"
+					selected={theme === "dark"}
+					onClick={() => setTheme("dark")}
+				>
+					Dark Mode
+				</Option>
+			</div>
 		</Page>
 	);
 }

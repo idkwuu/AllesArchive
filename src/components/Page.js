@@ -15,12 +15,7 @@ import { remove as removeCookie } from "es-cookie";
 import { useUser } from "../utils/userContext";
 import { useTheme } from "../utils/theme";
 
-export const Page = ({
-	children,
-	authenticated = true,
-	title,
-	breadcrumbs,
-}) => {
+export const Page = ({ children, title, breadcrumbs, head, width }) => {
 	const user = useUser();
 	useTheme();
 
@@ -35,6 +30,7 @@ export const Page = ({
 		<div style={{ position: "relative", minHeight: "100vh" }}>
 			<Head>
 				<title>Alles{title ? ` • ${title}` : ``}</title>
+				{head}
 			</Head>
 
 			<Header>
@@ -50,15 +46,8 @@ export const Page = ({
 						{breadcrumbs}
 					</Breadcrumb>
 
-					{authenticated ? (
+					{user ? (
 						<div className="flex items-center space-x-3">
-							{/*
-							<div className="select-none cursor-pointer hover:bg-danger-85 transition duration-200 ease bg-danger text-white rounded-full flex items-center justify-center py-0.5 px-2.5 space-x-1">
-								<Bell size={0.35 * 37.5} />
-								<span>2</span>
-							</div>
-							*/}
-
 							<Popover
 								className="relative inline-block flex"
 								trigger={(onClick) => (
@@ -80,6 +69,13 @@ export const Page = ({
 										leaveTo="opacity-0 scale-95"
 									>
 										<Menu className="absolute origin-top-right right-0 top-10">
+											<Link
+												href="/[user]"
+												as={`/${encodeURIComponent(user.username || user.id)}`}
+												passHref
+											>
+												<Menu.Item>Profile Page</Menu.Item>
+											</Link>
 											<Menu.Item
 												onClick={() => logOut()}
 												className="cursor-pointer"
@@ -93,19 +89,25 @@ export const Page = ({
 						</div>
 					) : (
 						<div className="flex items-center space-x-3">
-							<Link href="/login" passHref>
+							{/*<Link href="/login" passHref>
 								<Button color="transparent">Sign In</Button>
 							</Link>
 
 							<Link href="/register" passHref>
-								<Button>Get Started</Button>
+								<Button>Join Alles</Button>
+							</Link>*/}
+
+							<Link href="/login" passHref>
+								<Button>Sign In</Button>
 							</Link>
 						</div>
 					)}
 				</div>
 			</Header>
 
-			<div className="pt-5 pb-15">{children}</div>
+			<div className={`sm:max-w-${width || "2xl"} p-5 pb-15 mx-auto space-y-7`}>
+				{children}
+			</div>
 
 			<footer className="border-gray-400 flex items-center justify-center text-sm absolute bottom-0 w-full h-15 text-gray-500 dark:text-gray-400">
 				<div className="w-full max-w-2xl px-5">

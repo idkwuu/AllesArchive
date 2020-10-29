@@ -1,4 +1,4 @@
-import { Page } from "../components/page";
+import { Page } from "../components/Page";
 import { Box, Breadcrumb, Button } from "@alleshq/reactants";
 import { useUser } from "../utils/userContext";
 import axios from "axios";
@@ -12,19 +12,17 @@ const Plus = ({ subscription }) => {
 
 	return (
 		<Page title="Plus" breadcrumbs={<Breadcrumb.Item>Plus</Breadcrumb.Item>}>
-			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
-				{user.plus ? (
-					<>
-						<SubscriptionStatus subscription={subscription} />
-					</>
-				) : !subscription.registered ? (
-					<NotRegistered />
-				) : subscription.plan ? (
-					<SubscriptionError />
-				) : (
-					<JoinPlus />
-				)}
-			</main>
+			{user.plus ? (
+				<>
+					<SubscriptionStatus subscription={subscription} />
+				</>
+			) : !subscription.registered ? (
+				<NotRegistered />
+			) : subscription.plan ? (
+				<SubscriptionError />
+			) : (
+				<JoinPlus />
+			)}
 		</Page>
 	);
 };

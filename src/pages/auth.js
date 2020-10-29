@@ -1,5 +1,5 @@
 import { Box, Input, Button, Breadcrumb } from "@alleshq/reactants";
-import { Page } from "../components/page";
+import { Page } from "../components/Page";
 import { useUser } from "../utils/userContext";
 import { useState, createRef } from "react";
 import axios from "axios";
@@ -11,10 +11,8 @@ export default function SigningIn() {
 			title="Signing in"
 			breadcrumbs={<Breadcrumb.Item>Signing in</Breadcrumb.Item>}
 		>
-			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
-				<h4 className="font-medium text-3xl">Signing in</h4>
-				<Password />
-			</main>
+			<h4 className="font-medium text-3xl">Signing in</h4>
+			<Password />
 		</Page>
 	);
 }

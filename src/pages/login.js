@@ -11,7 +11,7 @@ import { LogIn, Circle } from "react-feather";
 import { useState } from "react";
 import Router from "next/router";
 import { set as setCookie } from "es-cookie";
-import { Page } from "../components/page";
+import { Page } from "../components/Page";
 
 export default function Login({ query }) {
 	const [nametag, setNametag] = useState("");
@@ -72,69 +72,68 @@ export default function Login({ query }) {
 					Sign In
 				</Breadcrumb.Item>
 			}
+			width="sm"
 		>
-			<main className="sm:max-w-sm p-5 mx-auto space-y-7">
-				<h1 className="font-medium text-center mb-5 text-4xl">Sign In</h1>
+			<h1 className="font-medium text-center mb-5 text-4xl">Sign In</h1>
 
-				<Transition
-					show={showError}
-					enter="transition ease-out duration-100 transform"
-					enterFrom="opacity-0 scale-95"
-					enterTo="opacity-100 scale-100"
-					leave="transition ease-in duration-75 transform"
-					leaveFrom="opacity-100 scale-100"
-					leaveTo="opacity-0 scale-95"
-				>
-					<Toast color="danger" content={error} />
-				</Transition>
+			<Transition
+				show={showError}
+				enter="transition ease-out duration-100 transform"
+				enterFrom="opacity-0 scale-95"
+				enterTo="opacity-100 scale-100"
+				leave="transition ease-in duration-75 transform"
+				leaveFrom="opacity-100 scale-100"
+				leaveTo="opacity-0 scale-95"
+			>
+				<Toast color="danger" content={error} />
+			</Transition>
 
-				<Box>
-					<Box.Header>Enter your credentials</Box.Header>
-					<Box.Content className="px-5 py-6">
-						<form method="POST" onSubmit={onSubmit} className="space-y-5">
-							<Input
-								label="Nametag"
-								value={nametag}
-								onChange={(e) => setNametag(e.target.value)}
-								placeholder="Jessica Adams#0001"
-							/>
+			<Box>
+				<Box.Header>Enter your credentials</Box.Header>
+				<Box.Content className="px-5 py-6">
+					<form method="POST" onSubmit={onSubmit} className="space-y-5">
+						<Input
+							label="Nametag"
+							value={nametag}
+							onChange={(e) => setNametag(e.target.value)}
+							placeholder="Jessica Adams#0001"
+						/>
 
-							<Input
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								label="Password"
-								type="password"
-								placeholder="••••••••••"
-							/>
+						<Input
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							label="Password"
+							type="password"
+							placeholder="••••••••••"
+						/>
 
-							<Button
-								loading={loading}
-								icon={<LogIn />}
-								size="lg"
-								className="w-full"
-								color="primary"
-							>
-								Sign In
-							</Button>
-						</form>
-					</Box.Content>
-				</Box>
-
-				<Box>
-					<Box.Header>Sign in another way</Box.Header>
-					<Box.Content className="space-y-5 px-5 py-6">
 						<Button
-							disabled={true}
-							icon={<Circle />}
+							loading={loading}
+							icon={<LogIn />}
 							size="lg"
 							className="w-full"
-							color="inverted"
+							color="primary"
 						>
-							Sign In With Pulsar
+							Sign In
 						</Button>
-					</Box.Content>
-				</Box>
-			</main>
+					</form>
+				</Box.Content>
+			</Box>
+
+			<Box>
+				<Box.Header>Sign in another way</Box.Header>
+				<Box.Content className="space-y-5 px-5 py-6">
+					<Button
+						disabled={true}
+						icon={<Circle />}
+						size="lg"
+						className="w-full"
+						color="inverted"
+					>
+						Sign In With Pulsar
+					</Button>
+				</Box.Content>
+			</Box>
 		</Page>
 	);
 }

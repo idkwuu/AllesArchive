@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@alleshq/reactants@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@alleshq/reactants/-/reactants-1.3.0.tgz#6de067d94a389ab530da197ee192318f2ff9a6a8"
-  integrity sha512-IvGfgrDvpkytT2hbsaH7hfqck2qWAI9PltMdhRVeDC486RVOqYLHVZEFfqQZYRsOREj0i8/TVTRYXVPZRI0zCA==
+"@alleshq/reactants@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@alleshq/reactants/-/reactants-1.4.0.tgz#79e9c6ba160fb73aa29b7205c3115204f806ddbc"
+  integrity sha512-P1Uo1eSsaV1JUiehaq/zG5yQ757ss8Iy+DLW1HtzOCFMz6sh15pWVehsOdHO0DgZaRVgFqvtbStLhkILn13JqQ==
 
 "@ampproject/toolbox-core@^2.6.0":
   version "2.6.0"
@@ -3716,10 +3716,10 @@ node-abi@^2.7.0:
   dependencies:
     semver "^5.4.1"
 
-node-addon-api@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-3.0.0.tgz#812446a1001a54f71663bed188314bba07e09247"
-  integrity sha512-sSHCgWfJ+Lui/u+0msF3oyCgvdkhxDbkCS6Q8uiJquzOimkJBvX6hl5aSSA7DR1XbMpdM8r7phjcF63sF4rkKg==
+node-addon-api@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-3.0.2.tgz#04bc7b83fd845ba785bb6eae25bc857e1ef75681"
+  integrity sha512-+D4s2HCnxPd5PjjI0STKwncjXTUKKqm74MDMz9OPXavjsGmjkvwgLtA5yoxJUdmpj52+2u+RrXgPipahKczMKg==
 
 node-fetch@2.6.0:
   version "2.6.0"
@@ -4927,14 +4927,14 @@ shallow-clone@^3.0.0:
   dependencies:
     kind-of "^6.0.2"
 
-sharp@^0.26.0:
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.26.0.tgz#ff4c8d3200a7a1f76c69c53fd11879609d2ff062"
-  integrity sha512-MNldekb9ZnliJAD+qP6uBTf3Wd6HaDVhKYbxXG+SQDvit9fa+2X4wECJvMRF8FLdY4saojrz3BHsnt4OmJw7xg==
+sharp@^0.26.2:
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.26.2.tgz#3d5777d246ae32890afe82a783c1cbb98456a88c"
+  integrity sha512-bGBPCxRAvdK9bX5HokqEYma4j/Q5+w8Nrmb2/sfgQCLEUx/HblcpmOfp59obL3+knIKnOhyKmDb4tEOhvFlp6Q==
   dependencies:
     color "^3.1.2"
     detect-libc "^1.0.3"
-    node-addon-api "^3.0.0"
+    node-addon-api "^3.0.2"
     npmlog "^4.1.2"
     prebuild-install "^5.3.5"
     semver "^7.3.2"

@@ -1,6 +1,8 @@
-import auth from "../../utils/auth";
-import config from "../../config";
+import auth from "../../../utils/auth";
+import config from "../../../config";
 import axios from "axios";
+
+const { NEXUS_URI, NEXUS_ID, NEXUS_SECRET } = process.env;
 
 export default async (req, res) => {
 	const user = await auth(req);
@@ -28,15 +30,12 @@ export default async (req, res) => {
 
 	// Avoid conflicts
 	try {
-		await axios.get(
-			`${process.env.NEXUS_URI}/username/${encodeURIComponent(username)}`,
-			{
-				auth: {
-					username: process.env.NEXUS_ID,
-					password: process.env.NEXUS_SECRET,
-				},
-			}
-		);
+		await axios.get(`${NEXUS_URI}/username/${encodeURIComponent(username)}`, {
+			auth: {
+				username: NEXUS_ID,
+				password: NEXUS_SECRET,
+			},
+		});
 		return res.status(400).json({ err: "profile.username.unavailable" });
 	} catch (err) {
 		if (!err.response || err.response.data.err !== "missingResource")
@@ -46,14 +45,14 @@ export default async (req, res) => {
 	// Update user
 	try {
 		await axios.post(
-			`${process.env.NEXUS_URI}/users/${user.id}`,
+			`${NEXUS_URI}/users/${user.id}`,
 			{
 				username,
 			},
 			{
 				auth: {
-					username: process.env.NEXUS_ID,
-					password: process.env.NEXUS_SECRET,
+					username: NEXUS_ID,
+					password: NEXUS_SECRET,
 				},
 			}
 		);

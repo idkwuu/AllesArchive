@@ -32,6 +32,7 @@ app.getInitialProps = async (appContext) => {
 
 	const excludedPaths = ["/_error"];
 	const redirectIfLoggedInPaths = ["/login", "/register"];
+	const guestPaths = ["/[user]"];
 
 	// Don't do authentication for excluded paths
 	if (excludedPaths.includes(ctx.pathname)) return props;
@@ -49,7 +50,10 @@ app.getInitialProps = async (appContext) => {
 
 		return { ...props, user: { ...user, sessionToken } };
 	} catch (err) {
-		if (!redirectIfLoggedInPaths.includes(ctx.pathname))
+		if (
+			!redirectIfLoggedInPaths.includes(ctx.pathname) &&
+			!guestPaths.includes(ctx.pathname)
+		)
 			redirect(`/login?next=${ctx.asPath}`);
 
 		return props;

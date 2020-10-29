@@ -1,5 +1,5 @@
 import { Box, Avatar, Input, Button, Breadcrumb } from "@alleshq/reactants";
-import { Page } from "../components/page";
+import { Page } from "../components/Page";
 import { useUser } from "../utils/userContext";
 import { useState, createRef } from "react";
 import axios from "axios";
@@ -11,11 +11,9 @@ export default function AboutMe() {
 			title="About Me"
 			breadcrumbs={<Breadcrumb.Item>About Me</Breadcrumb.Item>}
 		>
-			<main className="sm:max-w-2xl p-5 mx-auto space-y-7">
-				<h4 className="font-medium text-3xl">About Me</h4>
-				<Profile />
-				<Username />
-			</main>
+			<h4 className="font-medium text-3xl">About Me</h4>
+			<Profile />
+			<Username />
 		</Page>
 	);
 }
