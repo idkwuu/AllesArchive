@@ -15,6 +15,10 @@ import { remove as removeCookie } from "es-cookie";
 import { useUser } from "../utils/userContext";
 import { useTheme } from "../utils/theme";
 
+// sm:max-w-2xl
+// sm:max-w-xl
+// sm:max-w-sm
+
 export const Page = ({ children, title, breadcrumbs, head, width }) => {
 	const user = useUser();
 	useTheme();
