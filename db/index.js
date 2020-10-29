@@ -17,5 +17,3 @@ module.exports = db;
 require("./client")(db);
 require("./user")(db);
 require("./session")(db);
-require("./event")(db);
-require("./eventParam")(db);

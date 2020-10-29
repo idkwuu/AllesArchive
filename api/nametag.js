@@ -22,17 +22,6 @@ module.exports = async (req, res) => {
       name: user.name,
       tag: user.tag,
     });
-
-    // Log
-    log(
-      "nametag.user",
-      {
-        name: user.name,
-        tag: user.tag,
-      },
-      req.client.id,
-      user.id
-    );
   } else {
     // Get list of users with name
     const users = await db.User.findAll({
@@ -50,8 +39,5 @@ module.exports = async (req, res) => {
         tag: user.tag,
       }))
     );
-
-    // Log
-    log("nametag.list", { name }, req.client.id);
   }
 };

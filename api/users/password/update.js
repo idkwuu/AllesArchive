@@ -27,7 +27,4 @@ module.exports = async (req, res) => {
 
   // Response
   res.json({});
-
-  // Log
-  log("user.password.update", null, req.client.id, user.id);
 };

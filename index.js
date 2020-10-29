@@ -13,10 +13,7 @@ app.use((_err, _req, res, _next) =>
 // Database
 const db = require("./db");
 db.sync().then(() =>
-  app.listen(8080, () => {
-    console.log("Server is listening...");
-    log("server.start");
-  })
+  app.listen(8080, () => console.log("Server is listening..."))
 );
 
 // Create User

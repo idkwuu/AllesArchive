@@ -21,12 +21,4 @@ module.exports = async (req, res) => {
 
   // Response
   res.json({});
-
-  // Log
-  log(
-    "user.xp.update",
-    { count: req.body.xp.toString() },
-    req.client.id,
-    user.id
-  );
 };

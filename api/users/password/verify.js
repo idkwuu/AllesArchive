@@ -27,12 +27,4 @@ module.exports = async (req, res) => {
 
   // Response
   res.json({ matches });
-
-  // Log
-  log(
-    "user.password.verify",
-    { matches: matches.toString() },
-    req.client.id,
-    user.id
-  );
 };

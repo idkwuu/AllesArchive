@@ -11,14 +11,4 @@ module.exports = async (req, res) => {
 
   // Response
   res.json({ id: user.id });
-
-  // Log
-  log(
-    "username",
-    {
-      username: user.username,
-    },
-    req.client.id,
-    user.id
-  );
 };

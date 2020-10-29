@@ -47,7 +47,4 @@ module.exports = async (req, res) => {
           ? req.body[key]
           : JSON.stringify(req.body[key]))
   );
-
-  // Log
-  log("user.update", logParams, req.client.id, user.id);
 };

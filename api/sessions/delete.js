@@ -15,7 +15,4 @@ module.exports = async (req, res) => {
 
   // Response
   res.json({});
-
-  // Log
-  log("session.delete", { id: session.id }, req.client.id, session.userId);
 };

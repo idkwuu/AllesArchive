@@ -35,7 +35,4 @@ module.exports = async (req, res) => {
     id: session.id,
     token,
   });
-
-  // Log
-  log("session.create", { id: session.id }, req.client.id, user.id);
 };

@@ -49,15 +49,4 @@ module.exports = async (req, res) => {
     name: user.name,
     tag: user.tag,
   });
-
-  // Log
-  log(
-    "user.create",
-    {
-      name: user.name,
-      tag: user.tag,
-    },
-    req.client.id,
-    user.id
-  );
 };
