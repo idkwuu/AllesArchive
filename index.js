@@ -51,7 +51,10 @@ const getUser = async (query, id, res) => {
 
   try {
     if (!user) user = await User.create(await getUserFromNexus(await id()));
-    else if (user.cachedAt < new Date().getTime() - 10000)
+    else if (
+      user.cachedAt <
+      new Date().getTime() - Number(process.env.CACHE_MS)
+    )
       await user.update(await getUserFromNexus(await id()));
   } catch (err) {}
 
