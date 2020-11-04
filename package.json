@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "format": "prettier --write \"**/*.+(js|json)\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,5 +19,8 @@
     "jsonwebtoken": "^8.5.1",
     "mariadb": "^2.4.2",
     "sequelize": "^6.3.4"
+  },
+  "devDependencies": {
+    "prettier": "^2.1.2"
   }
 }
