@@ -206,7 +206,7 @@ const commands = {
       } catch (err) {}
 
       // Message
-      await msg.channel.send(`Boop! +5xp!`);
+      await msg.channel.send("Boop! +5xp!");
     } catch (err) {
       await msg.channel.send(
         `Oh no! Something went wrong when trying to add your xp, ${msg.author}!`
