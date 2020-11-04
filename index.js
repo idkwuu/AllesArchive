@@ -203,9 +203,7 @@ const commands = {
           }/xp`,
           { xp: 1 }
         );
-      } catch (err) {
-        conso;
-      }
+      } catch (err) {}
 
       // Message
       await msg.channel.send(`Boop! +5xp!`);
