@@ -246,9 +246,9 @@ const getUserData = async (id) =>
 const nametag = async (name, tag) =>
   (
     await axios.get(
-      `https://horizon.alles.cc/nametag?name=${encodeURIComponent(
+      `https://horizon.alles.cc/nametag/${encodeURIComponent(
         name
-      )}&tag=${encodeURIComponent(tag)}`
+      )}/${encodeURIComponent(tag)}`
     )
   ).data.id;
 
