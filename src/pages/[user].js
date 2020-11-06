@@ -49,10 +49,10 @@ const UserPage = withRouter(({ user: u }) => {
 					minHeight: 180,
 				}}
 			>
-				<div>
+				<div className="flex-shrink-0">
 					<Avatar src={`https://avatar.alles.cc/${u.id}?size=150`} size={150} />
 				</div>
-				<div className="space-y-2">
+				<div className="min-w-0 space-y-2">
 					<div>
 						<h1 className="text-3xl font-medium mt-2">
 							{u.name}
@@ -167,7 +167,7 @@ const Status = ({ id }) => {
 
 	return status ? (
 		<div>
-			<p className="italic">“{status.content}”</p>
+			<p className="italic break-words">“{status.content}”</p>
 			<p className="text-xs text-gray-600 dark:text-gray-400">
 				{moment(status.date).fromNow()}
 			</p>
