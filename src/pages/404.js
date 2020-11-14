@@ -20,7 +20,7 @@ export default function NotFound() {
 				Confused Alles Cat by{" "}
 				<a
 					className="text-primary"
-					href="https://micro.alles.cx/93e0b06c-e129-415a-aa0a-476473f4d0d2"
+					href="https://alles.cx/93e0b06c-e129-415a-aa0a-476473f4d0d2"
 				>
 					Will Jones
 				</a>
