@@ -5,17 +5,17 @@ import { useState, createRef } from "react";
 import axios from "axios";
 import config from "../config";
 
-export default function SigningIn() {
-	return (
-		<Page
-			title="Signing in"
-			breadcrumbs={<Breadcrumb.Item>Signing in</Breadcrumb.Item>}
-		>
-			<h4 className="font-medium text-3xl">Signing in</h4>
-			<Password />
-		</Page>
-	);
-}
+const page = () => (
+	<Page
+		title="Signing in"
+		breadcrumbs={<Breadcrumb.Item>Signing in</Breadcrumb.Item>}
+	>
+		<h4 className="font-medium text-3xl">Signing in</h4>
+		<Password />
+	</Page>
+);
+
+export default page;
 
 const Password = () => {
 	const user = useUser();

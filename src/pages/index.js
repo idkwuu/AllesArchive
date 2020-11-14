@@ -91,7 +91,7 @@ const products = [
 	},
 ];
 
-export default function Index() {
+const page = () => {
 	const user = useUser();
 
 	return (
@@ -147,4 +147,6 @@ export default function Index() {
 			</div>
 		</Page>
 	);
-}
+};
+
+export default page;

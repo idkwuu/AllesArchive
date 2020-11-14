@@ -5,18 +5,18 @@ import { useState, createRef } from "react";
 import axios from "axios";
 import config from "../config";
 
-export default function AboutMe() {
-	return (
-		<Page
-			title="About Me"
-			breadcrumbs={<Breadcrumb.Item>About Me</Breadcrumb.Item>}
-		>
-			<h4 className="font-medium text-3xl">About Me</h4>
-			<Profile />
-			<Username />
-		</Page>
-	);
-}
+const page = () => (
+	<Page
+		title="About Me"
+		breadcrumbs={<Breadcrumb.Item>About Me</Breadcrumb.Item>}
+	>
+		<h4 className="font-medium text-3xl">About Me</h4>
+		<Profile />
+		<Username />
+	</Page>
+);
+
+export default page;
 
 const Profile = () => {
 	const user = useUser();

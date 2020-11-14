@@ -10,7 +10,7 @@ import moment from "moment";
 import { Map, Award, AtSign, Play, Pause } from "react-feather";
 import countries from "../data/countries";
 
-const UserPage = withRouter(({ user: u }) => {
+const page = withRouter(({ user: u }) => {
 	if (!u) return <NotFound />;
 
 	return (
@@ -103,7 +103,7 @@ const UserPage = withRouter(({ user: u }) => {
 	);
 });
 
-UserPage.getInitialProps = async (ctx) => {
+page.getInitialProps = async (ctx) => {
 	let id = ctx.query.user;
 	const { sessionToken } = cookies(ctx);
 
@@ -141,7 +141,7 @@ UserPage.getInitialProps = async (ctx) => {
 	}
 };
 
-export default UserPage;
+export default page;
 
 const InfoLabel = ({ icon: Icon, children }) => (
 	<p className="flex text-gray-700 dark:text-gray-300">

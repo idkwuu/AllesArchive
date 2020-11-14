@@ -6,7 +6,7 @@ import cookies from "next-cookies";
 import { useState } from "react";
 import config from "../config";
 
-const Billing = ({ billingData }) => (
+const page = ({ billingData }) => (
 	<Page
 		title="Billing"
 		breadcrumbs={<Breadcrumb.Item>Billing</Breadcrumb.Item>}
@@ -26,7 +26,7 @@ const Billing = ({ billingData }) => (
 	</Page>
 );
 
-Billing.getInitialProps = async (ctx) => {
+page.getInitialProps = async (ctx) => {
 	try {
 		const billingData = (
 			await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/billing`, {
@@ -41,7 +41,7 @@ Billing.getInitialProps = async (ctx) => {
 	}
 };
 
-export default Billing;
+export default page;
 
 const Email = ({ email: currentEmail }) => {
 	const [loading, setLoading] = useState(false);

@@ -7,7 +7,7 @@ import { useState } from "react";
 import Link from "next/link";
 import moment from "moment";
 
-const Plus = ({ subscription }) => {
+const page = ({ subscription }) => {
 	const user = useUser();
 
 	return (
@@ -27,7 +27,7 @@ const Plus = ({ subscription }) => {
 	);
 };
 
-Plus.getInitialProps = async (ctx) => {
+page.getInitialProps = async (ctx) => {
 	try {
 		const subscription = (
 			await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/plus`, {
@@ -42,7 +42,7 @@ Plus.getInitialProps = async (ctx) => {
 	}
 };
 
-export default Plus;
+export default page;
 
 const NotRegistered = () => (
 	<Box>

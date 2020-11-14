@@ -1,7 +1,7 @@
 import { Box, Button, Breadcrumb } from "@alleshq/reactants";
 import { Page } from "../components/Page";
 
-export default function Register() {
+const page = () => {
 	return (
 		<Page
 			authenticated={false}
@@ -41,4 +41,6 @@ export default function Register() {
 			</Box>
 		</Page>
 	);
-}
+};
+
+export default page;

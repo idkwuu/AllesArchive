@@ -13,7 +13,7 @@ import Router from "next/router";
 import { set as setCookie } from "es-cookie";
 import { Page } from "../components/Page";
 
-export default function Login({ query }) {
+const page = ({ query }) => {
 	const [nametag, setNametag] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -136,6 +136,8 @@ export default function Login({ query }) {
 			</Box>
 		</Page>
 	);
-}
+};
 
-Login.getInitialProps = ({ query }) => ({ query });
+page.getInitialProps = ({ query }) => ({ query });
+
+export default page;

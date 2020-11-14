@@ -3,7 +3,7 @@ import { Page } from "../components/Page";
 import classnames from "classnames";
 import { useTheme } from "../utils/theme";
 
-export default function Preferences() {
+const page = () => {
 	const { theme, setTheme } = useTheme();
 
 	return (
@@ -30,7 +30,9 @@ export default function Preferences() {
 			</div>
 		</Page>
 	);
-}
+};
+
+export default page;
 
 const Option = ({ children, selected, className, onClick, ...props }) => (
 	<div className="flex space-x-2 items-center cursor-pointer" onClick={onClick}>
