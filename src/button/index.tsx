@@ -81,8 +81,10 @@ export const Button: React.FC<Props> = forwardRef<any, Props>(
             "active:bg-danger-75",
           ],
           color == "secondary" && [
-            "text-white",
-            "bg-gray-600",
+            "text-black",
+            "bg-gray-200",
+            "dark:bg-gray-600",
+            "dark:text-white",
             "hover:bg-opacity-85",
             "active:bg-opacity-75",
           ],
