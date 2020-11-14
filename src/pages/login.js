@@ -65,7 +65,6 @@ const page = ({ query }) => {
 
 	return (
 		<Page
-			authenticated={false}
 			title="Sign in"
 			breadcrumbs={<Breadcrumb.Item>Sign In</Breadcrumb.Item>}
 			width="sm"

@@ -4,7 +4,6 @@ import { Page } from "../components/Page";
 const page = () => {
 	return (
 		<Page
-			authenticated={false}
 			title="Sign up"
 			breadcrumbs={<Breadcrumb.Item>Sign up</Breadcrumb.Item>}
 			width="sm"
