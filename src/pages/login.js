@@ -67,11 +67,7 @@ const page = ({ query }) => {
 		<Page
 			authenticated={false}
 			title="Sign in"
-			breadcrumbs={
-				<Breadcrumb.Item className="opacity-75 pointer-events-none select-none">
-					Sign In
-				</Breadcrumb.Item>
-			}
+			breadcrumbs={<Breadcrumb.Item>Sign In</Breadcrumb.Item>}
 			width="sm"
 		>
 			<h1 className="font-medium text-center mb-5 text-4xl">Sign In</h1>
