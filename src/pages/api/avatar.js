@@ -45,10 +45,10 @@ const api = async (req, res) => {
 		const formData = new FormData();
 		formData.append("file", img, { filename: "image" });
 		const file = (
-			await axios.post(process.env.WALNUTFS_URI, formData.getBuffer(), {
+			await axios.post(WALNUTFS_URI, formData.getBuffer(), {
 				auth: {
-					username: process.env.WALNUTFS_ID,
-					password: process.env.WALNUTFS_SECRET,
+					username: WALNUTFS_ID,
+					password: WALNUTFS_SECRET,
 				},
 				headers: formData.getHeaders(),
 			})
@@ -56,13 +56,13 @@ const api = async (req, res) => {
 
 		// Set avatar
 		await axios.post(
-			`${process.env.AVATAR_URI}/${user.id}`,
+			`${AVATAR_URI}/${user.id}`,
 			{
 				source: file,
 			},
 			{
 				headers: {
-					Authorization: process.env.AVATAR_SECRET,
+					Authorization: AVATAR_SECRET,
 				},
 			}
 		);
