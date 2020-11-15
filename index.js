@@ -1,4 +1,7 @@
 require("dotenv").config();
+const { PULSAR_SECRET, STATUS_SECRET } = process.env;
+
+const axios = require("axios");
 
 // Express
 const app = require("express")();
@@ -10,7 +13,7 @@ app.listen(8081, () => console.log("Server is online!"));
 
 // Auth
 app.use((req, res, next) => {
-  if (req.headers["x-pulsar-token"] === process.env.PULSAR_SECRET) next();
+  if (req.headers["x-pulsar-token"] === PULSAR_SECRET) next();
   else res.status(401).json({ err: "badAuthorization" });
 });
 
@@ -26,3 +29,28 @@ app.post("/query", (req, res) =>
     })),
   })
 );
+
+// Response
+app.post("/response", (req, res) => {
+  res.json({});
+
+  try {
+    const { user, data } = req.body;
+    const { text, time } = JSON.parse(data);
+
+    axios
+      .post(
+        `https://wassup.alles.cc/${encodeURIComponent(user)}`,
+        {
+          content: text,
+          time,
+        },
+        {
+          headers: {
+            Authorization: STATUS_SECRET,
+          },
+        }
+      )
+      .catch(() => {});
+  } catch (err) {}
+});
