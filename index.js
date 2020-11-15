@@ -77,8 +77,8 @@ app.get("/nametag/:name/:tag", (req, res) =>
       (
         await nexus(
           `nametag?name=${encodeURIComponent(
-            req.query.name
-          )}&tag=${encodeURIComponent(req.query.tag)}`
+            req.params.name
+          )}&tag=${encodeURIComponent(req.params.tag)}`
         )
       ).id,
     res
