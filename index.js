@@ -4,6 +4,7 @@ const {
   SPOTIFY_ID,
   SPOTIFY_SECRET,
   ORIGIN,
+  SECRET,
   DISABLE_STATUS,
 } = process.env;
 
@@ -128,30 +129,35 @@ app.get("/auth", (req, res) => {
     .catch(() => res.status(401).json({ err: "badAuthorization" }));
 });
 
-// Account API
-app.use("/spotify/:id", cors());
-app.get("/spotify/:id", async (req, res) => {
-  const user = await getAccount("id", req.params.id);
-  if (user) res.json(user);
-  else res.status(404).json({ err: "missingResource" });
-});
-
-app.use("/alles/:id", cors());
-app.get("/alles/:id", async (req, res) => {
-  const user = await getAccount("alles", req.params.id);
-  if (user) res.json(user);
-  else res.status(404).json({ err: "missingResource" });
-});
-
-// Get User
-const getAccount = async (key, value) => {
+// Get AllesID from Spotify ID
+app.get("/spotify/:id", cors(), async (req, res) => {
   const account = await db.Account.findOne({
     where: {
-      [key]: value,
+      id: req.params.id,
       connected: true,
     },
   });
-  if (!account) return;
+  if (account)
+    res.json({
+      alles: account.alles,
+      spotify: account.id,
+    });
+  else res.status(404).json({ err: "missingResource" });
+});
+
+// Get Account from AllesID
+app.get("/alles/:id", cors(), async (req, res) => {
+  const auth = req.headers.authorization === SECRET;
+  const getTop = typeof req.query.top === "string";
+
+  // Get Account
+  const account = await db.Account.findOne({
+    where: {
+      alles: req.params.id,
+      connected: true,
+    },
+  });
+  if (!account) return res.status(404).json({ err: "missingResource" });
 
   // Get Status
   const status = await db.Status.findOne({
@@ -164,39 +170,79 @@ const getAccount = async (key, value) => {
     order: [["createdAt", "desc"]],
   });
 
-  // Get Item and Artists
-  let item, artists;
+  // Get current item
+  let current;
   if (status) {
-    item = await db.Item.findOne({
+    current = await db.Item.findOne({
       where: {
         id: status.itemId,
       },
     });
-    if (item) artists = await item.getArtists();
+    if (current) current.artists = await current.getArtists();
   }
 
+  // Top Items
+  let top;
+  if (auth && getTop)
+    top = (
+      await Promise.all(
+        (
+          await db.query(
+            "select itemId, count(*) as time from statuses where playing=1 and accountId=? group by itemId order by time desc limit 20",
+            {
+              replacements: [account.id],
+            }
+          )
+        )[0].map(async (status) => {
+          const item = await db.Item.findOne({
+            where: {
+              id: status.itemId,
+            },
+          });
+          if (item) {
+            item.time = status.time * 5;
+            item.artists = await item.getArtists();
+          }
+          return item;
+        })
+      )
+    ).filter((item) => !!item);
+
   // Response
-  return {
+  res.json({
     alles: account.alles,
     spotify: account.id,
     checkedAt: account.checkedAt,
     createdAt: account.createdAt,
-    item: item
+    item: current
       ? {
-          id: item.id,
-          name: item.name,
+          id: current.id,
+          name: current.name,
           playing: status.playing,
           progress: status.progress,
-          duration: item.duration,
-          explicit: item.explicit,
-          artists: artists.map((a) => ({
+          duration: current.duration,
+          explicit: current.explicit,
+          artists: current.artists.map((a) => ({
             id: a.id,
             name: a.name,
           })),
         }
       : null,
-  };
-};
+    top: top
+      ? top.map((item) => ({
+          id: item.id,
+          name: item.name,
+          time: item.time,
+          duration: item.duration,
+          explicit: item.explicit,
+          artists: item.artists.map((a) => ({
+            id: a.id,
+            name: a.name,
+          })),
+        }))
+      : undefined,
+  });
+});
 
 // 404
 app.use((_req, res) => res.status(404).json({ err: "notFound" }));
