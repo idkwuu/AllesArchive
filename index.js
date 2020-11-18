@@ -204,7 +204,7 @@ app.get("/alles/:id", cors(), async (req, res) => {
             },
           });
           if (item) {
-            item.time = status.time * 5;
+            item.time = status.time * 5000;
             item.artists = await item.getArtists();
           }
           return item;
