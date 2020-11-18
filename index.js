@@ -148,7 +148,11 @@ app.get("/spotify/:id", cors(), async (req, res) => {
 // Get Account from AllesID
 app.get("/alles/:id", cors(), async (req, res) => {
   const auth = req.headers.authorization === SECRET;
-  const getTop = typeof req.query.top === "string";
+  const topSince =
+    typeof req.query.top === "string" &&
+    !isNaN(req.query.top) &&
+    Number.isInteger(Number(req.query.top)) &&
+    Number(req.query.top);
 
   // Get Account
   const account = await db.Account.findOne({
@@ -183,14 +187,14 @@ app.get("/alles/:id", cors(), async (req, res) => {
 
   // Top Items
   let top;
-  if (auth && getTop)
+  if (auth && typeof topSince === "number")
     top = (
       await Promise.all(
         (
           await db.query(
-            "select itemId, count(*) as time from statuses where playing=1 and accountId=? group by itemId order by time desc limit 20",
+            "select itemId, count(*) as time from statuses where playing = 1 and accountId = ? and createdAt >= ? group by itemId order by time desc limit 20",
             {
-              replacements: [account.id],
+              replacements: [account.id, new Date(topSince)],
             }
           )
         )[0].map(async (status) => {
