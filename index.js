@@ -1,5 +1,11 @@
 require("dotenv").config();
-const { QUICKAUTH_ID, SPOTIFY_ID, SPOTIFY_SECRET, ORIGIN } = process.env;
+const {
+  QUICKAUTH_ID,
+  SPOTIFY_ID,
+  SPOTIFY_SECRET,
+  ORIGIN,
+  DISABLE_STATUS,
+} = process.env;
 
 const db = require("./db");
 const { Op } = require("sequelize");
@@ -15,7 +21,8 @@ app.use((_err, _req, res, _next) =>
   res.status(500).json({ err: "internalError" })
 );
 db.sync().then(() => {
-  require("./status");
+  if (DISABLE_STATUS) console.log("Status querying disabled.");
+  else require("./status");
   app.listen(8080, () => console.log("Express is listening..."));
 });
 
