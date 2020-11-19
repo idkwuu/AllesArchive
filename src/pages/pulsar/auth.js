@@ -5,6 +5,7 @@ import cookies from "next-cookies";
 import Router, { withRouter } from "next/router";
 import { useState } from "react";
 import { useUser } from "../../utils/userContext";
+import Link from "next/link";
 
 const page = withRouter(({ token }) => {
 	const user = useUser();
@@ -33,7 +34,9 @@ const page = withRouter(({ token }) => {
 		<Page
 			title="Sign in to Pulsar"
 			breadcrumbs={[
-				<Breadcrumb.Item key="pulsar">Pulsar</Breadcrumb.Item>,
+				<Link key="pulsar" href="/pulsar" passHref>
+					<Breadcrumb.Item>Pulsar</Breadcrumb.Item>
+				</Link>,
 				<Breadcrumb.Item key="connect">Connect</Breadcrumb.Item>,
 			]}
 			width="sm"

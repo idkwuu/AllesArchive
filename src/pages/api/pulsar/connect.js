@@ -28,6 +28,6 @@ export default async (req, res) => {
 			).data
 		);
 	} catch (err) {
-		return res.status(400).json({ err: "pulsar.connectToken" });
+		res.status(400).json({ err: "pulsar.connectToken" });
 	}
 };
