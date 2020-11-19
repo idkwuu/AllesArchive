@@ -5,6 +5,7 @@ import {
 	Award,
 	PlusCircle,
 	Hash,
+	Terminal,
 } from "react-feather";
 import Link from "next/link";
 import { Page } from "../components/Page";
@@ -88,6 +89,12 @@ const products = [
 		name: "Micro",
 		logo: <IconLogo icon={Hash} />,
 		url: "https://micro.alles.cx",
+		external: true,
+	},
+	{
+		name: "Pulsar",
+		logo: <IconLogo icon={Terminal} />,
+		url: "/pulsar",
 	},
 ];
 
@@ -102,16 +109,29 @@ const page = () => {
 			</h4>
 
 			<div className="grid grid-cols-2 md:grid-cols-6 gap-3">
-				{products.map((product, i) => (
-					<a href={product.url} key={i}>
-						<Box className="hover:shadow-lg transition duration-100 ease text-center">
-							{product.logo}
-							<div className="rounded-b-lg py-1.5 w-full border-t text-sm text-gray-500 dark:text-gray-300 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-750">
-								{product.name}
-							</div>
-						</Box>
-					</a>
-				))}
+				{products.map((product, i) =>
+					product.external ? (
+						<a href={product.url} key={i} target="_blank">
+							<Box className="hover:shadow-lg transition duration-100 ease text-center">
+								{product.logo}
+								<div className="rounded-b-lg py-1.5 w-full border-t text-sm text-gray-500 dark:text-gray-300 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-750">
+									{product.name}
+								</div>
+							</Box>
+						</a>
+					) : (
+						<Link href={product.url} key={i}>
+							<a>
+								<Box className="hover:shadow-lg transition duration-100 ease text-center">
+									{product.logo}
+									<div className="rounded-b-lg py-1.5 w-full border-t text-sm text-gray-500 dark:text-gray-300 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-750">
+										{product.name}
+									</div>
+								</Box>
+							</a>
+						</Link>
+					)
+				)}
 			</div>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
