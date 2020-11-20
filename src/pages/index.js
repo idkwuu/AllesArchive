@@ -111,7 +111,7 @@ const page = () => {
 			<div className="grid grid-cols-2 md:grid-cols-6 gap-3">
 				{products.map((product, i) =>
 					product.external ? (
-						<a href={product.url} key={i} target="_blank">
+						<a href={product.url} key={i}>
 							<Box className="hover:shadow-lg transition duration-100 ease text-center">
 								{product.logo}
 								<div className="rounded-b-lg py-1.5 w-full border-t text-sm text-gray-500 dark:text-gray-300 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-750">
