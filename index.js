@@ -1,6 +1,6 @@
 require("dotenv").config();
 const {
-  QUICKAUTH_ID,
+  FAST_ID,
   SPOTIFY_ID,
   SPOTIFY_SECRET,
   ORIGIN,
@@ -10,7 +10,6 @@ const {
 
 const db = require("./db");
 const { Op } = require("sequelize");
-const quickauth = require("@alleshq/quickauth");
 const axios = require("axios");
 const qs = require("qs").stringify;
 const cors = require("cors");
@@ -36,15 +35,13 @@ app.get("/", (_req, res) =>
   )
 );
 
-// Spotify Callback => QuickAuth Redirect
+// Spotify Callback => Fast Auth
 app.get("/cb", (req, res) => {
   if (typeof req.query.code === "string")
     res.redirect(
-      quickauth.url(
-        process.env.QUICKAUTH_ID,
-        `${process.env.ORIGIN}/auth`,
+      `https://fast.alles.cx/${process.env.FAST_ID}?data=${encodeURIComponent(
         req.query.code
-      )
+      )}`
     );
   else
     res
@@ -54,12 +51,17 @@ app.get("/cb", (req, res) => {
       );
 });
 
-// QuickAuth callback
+// Fast callback
 app.get("/auth", (req, res) => {
   if (typeof req.query.token !== "string" || typeof req.query.data !== "string")
     return res.status(400).json({ err: "badRequest" });
-  quickauth(QUICKAUTH_ID, req.query.token)
-    .then(async (alles) => {
+
+  axios
+    .post("https://fast.alles.cx", {
+      application: process.env.FAST_ID,
+      token: req.query.token,
+    })
+    .then(async ({ data: alles }) => {
       // Get token pair from Spotify
       const tokens = (
         await axios.post(
