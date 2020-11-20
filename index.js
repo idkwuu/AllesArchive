@@ -13,7 +13,7 @@ const app = express();
 app.listen(8080, () => console.log("Express is listening"));
 app.get("/", (_req, res) => res.redirect("https://alles.link/discord"));
 
-// QuickAuth redirect
+// Fast redirect
 app.get("/token/:token", (req, res) =>
   res.redirect(
     `https://fast.alles.cx/${process.env.FAST_ID}?data=${encodeURIComponent(
@@ -22,7 +22,7 @@ app.get("/token/:token", (req, res) =>
   )
 );
 
-// QuickAuth callback
+// Fast callback
 app.get("/auth", (req, res) => {
   if (typeof req.query.token !== "string" || typeof req.query.data !== "string")
     return res.status(400).json({ err: "badRequest" });
