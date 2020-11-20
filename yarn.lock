@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@alleshq/quickauth@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@alleshq/quickauth/-/quickauth-2.0.0.tgz#5f2d37bf0cb48717785f79bf91c442767647dd24"
-  integrity sha512-0UHK1epCON8wF+I9yBrTPY7pxn/CkXIAJU97LoHeZvMdUM/hBCPg8fhH/Np/+1gLfyKFXRXlbzngBqm0EzDBDw==
-  dependencies:
-    axios "^0.19.2"
-
 "@discordjs/collection@^0.1.5":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@discordjs/collection/-/collection-0.1.6.tgz#9e9a7637f4e4e0688fd8b2b5c63133c91607682c"

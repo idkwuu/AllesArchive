@@ -3,7 +3,6 @@ require("dotenv").config();
 const axios = require("axios");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
-const quickauth = require("@alleshq/quickauth");
 const User = require("./db");
 const { Op } = require("sequelize");
 const xpDates = {};
@@ -17,11 +16,9 @@ app.get("/", (_req, res) => res.redirect("https://alles.link/discord"));
 // QuickAuth redirect
 app.get("/token/:token", (req, res) =>
   res.redirect(
-    quickauth.url(
-      process.env.QUICKAUTH_ID,
-      `${process.env.ORIGIN}/auth`,
+    `https://fast.alles.cx/${process.env.FAST_ID}?data=${encodeURIComponent(
       req.params.token
-    )
+    )}`
   )
 );
 
@@ -29,8 +26,13 @@ app.get("/token/:token", (req, res) =>
 app.get("/auth", (req, res) => {
   if (typeof req.query.token !== "string" || typeof req.query.data !== "string")
     return res.status(400).json({ err: "badRequest" });
-  quickauth(process.env.QUICKAUTH_ID, req.query.token)
-    .then(async (alles) => {
+
+  axios
+    .post("https://fast.alles.cx", {
+      application: process.env.FAST_ID,
+      token: req.query.token,
+    })
+    .then(async ({ data: alles }) => {
       const { discord } = await jwt.verify(
         req.query.data,
         process.env.JWT_SECRET
