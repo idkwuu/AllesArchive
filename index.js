@@ -39,6 +39,7 @@ app.get("/:id", async (req, res) => {
           user1: req.params.id,
           acceptedAt: null,
         },
+        order: ["requestedAt"],
       })
     ).concat(
       await db.Friendship.findAll({
@@ -46,6 +47,7 @@ app.get("/:id", async (req, res) => {
           user2: req.params.id,
           acceptedAt: null,
         },
+        order: ["requestedAt"],
         limit: friendLimit,
       })
     );
@@ -58,6 +60,7 @@ app.get("/:id", async (req, res) => {
           [Op.ne]: null,
         },
       },
+      order: ["acceptedAt"],
     });
   }
 
