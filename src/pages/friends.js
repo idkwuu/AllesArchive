@@ -5,8 +5,9 @@ import { useUser } from "../utils/userContext";
 import axios from "axios";
 import cookies from "next-cookies";
 import { useState } from "react";
+import { Check, X } from "react-feather";
 
-const page = ({ friends }) => {
+const page = ({ friends, requests }) => {
 	const user = useUser();
 
 	return (
@@ -20,6 +21,14 @@ const page = ({ friends }) => {
 				<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
 					{friends.map((u) => (
 						<Friend key={u.id} sessionToken={user.sessionToken} {...u} />
+					))}
+				</div>
+			)}
+
+			{requests.length > 0 && (
+				<div className="space-y-5">
+					{requests.map((u) => (
+						<Request key={u.id} sessionToken={user.sessionToken} {...u} />
 					))}
 				</div>
 			)}
@@ -153,6 +162,77 @@ const Friend = ({ id, name, plus, username, sessionToken }) => {
 				<Button size="sm" color="secondary" loading={loading} onClick={remove}>
 					Remove
 				</Button>
+			</Box>
+		)
+	);
+};
+
+const Request = ({ id, name, tag, incoming, sessionToken }) => {
+	const [removed, setRemoved] = useState(false);
+
+	const action = (accept) => {
+		setRemoved(true);
+		axios
+			.post(
+				`/api/friends/${accept ? "add" : "remove"}`,
+				{ user: id },
+				{
+					headers: {
+						Authorization: sessionToken,
+					},
+				}
+			)
+			.catch(() => {});
+	};
+
+	return (
+		!removed && (
+			<Box>
+				<Box.Content className="flex justify-between">
+					<div className="flex flex-col justify-center">
+						<div className="flex">
+							<div className="flex flex-col justify-center">
+								<Avatar
+									src={`https://avatar.alles.cc/${id}?size=40`}
+									size={40}
+								/>
+							</div>
+							<div className="ml-3">
+								<p className="text-lg font-semibold">
+									{name}
+									<span className="text-primary text-xs font-normal">
+										#{tag}
+									</span>
+								</p>
+								<p className="text-xs font-light">
+									{incoming ? "Incoming" : "Outgoing"} friend request
+								</p>
+							</div>
+						</div>
+					</div>
+					<div className="flex flex-col justify-center">
+						<div className="flex space-x-2">
+							{incoming && (
+								<Button
+									size="sm"
+									color="primary"
+									className="w-8 h-8"
+									onClick={() => action(true)}
+								>
+									<Check size={20} />
+								</Button>
+							)}
+							<Button
+								size="sm"
+								color="secondary"
+								className="w-8 h-8"
+								onClick={() => action(false)}
+							>
+								<X size={20} />
+							</Button>
+						</div>
+					</div>
+				</Box.Content>
 			</Box>
 		)
 	);
