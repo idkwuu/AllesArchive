@@ -70,33 +70,41 @@ const FriendRequest = ({ sessionToken }) => {
 		setLoading(true);
 		setResponse();
 		axios
-			.post(
-				"/api/friends/add",
-				{ name, tag },
-				{
-					headers: {
-						Authorization: sessionToken,
-					},
-				}
+			.get(
+				`/api/nametag/${encodeURIComponent(name)}/${encodeURIComponent(tag)}`
 			)
 			.then((res) => {
-				setResponse(
-					res.data.requested
-						? "Friend request sent! Ask this user to add you back."
-						: "This user is now your friend!"
-				);
-				setLoading(false);
+				axios
+					.post(
+						"/api/friends/add",
+						{ user: res.data.id },
+						{
+							headers: {
+								Authorization: sessionToken,
+							},
+						}
+					)
+					.then((res) => {
+						setResponse(
+							res.data.requested
+								? "Friend request sent! Ask this user to add you back."
+								: "This user is now your friend!"
+						);
+						setLoading(false);
+					})
+					.catch((err) => {
+						if (err.response) {
+							if (err.response.data.err === "user.friend.self")
+								setResponse("You can't friend yourself!");
+							else if (err.response.data.err === "user.friend.tooMany")
+								setResponse("You've reached your friend limit.");
+							else setResponse("Something went wrong.");
+						} else setResponse("Something went wrong.");
+						setLoading(false);
+					});
 			})
-			.catch((err) => {
-				if (err.response) {
-					if (err.response.data.err === "missingResource")
-						setResponse("This user doesn't exist.");
-					else if (err.response.data.err === "user.friend.self")
-						setResponse("You can't friend yourself!");
-					else if (err.response.data.err === "user.friend.tooMany")
-						setResponse("You've reached your friend limit.");
-					else setResponse("Something went wrong.");
-				} else setResponse("Something went wrong.");
+			.catch(() => {
+				setResponse("This user doesn't exist.");
 				setLoading(false);
 			});
 	};

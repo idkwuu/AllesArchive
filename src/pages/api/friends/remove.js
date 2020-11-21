@@ -7,8 +7,7 @@ export default async (req, res) => {
 	const user = await auth(req);
 	if (!user) return res.status(401).send({ err: "badAuthorization" });
 
-	if (!req.body) return res.status(400).json({ err: "badRequest" });
-	if (typeof req.body.user !== "string")
+	if (!req.body || typeof req.body.user !== "string")
 		return res.status(400).json({ err: "badRequest" });
 
 	// Remove Friendship

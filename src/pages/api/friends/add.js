@@ -7,8 +7,7 @@ export default async (req, res) => {
 	const user = await auth(req);
 	if (!user) return res.status(401).send({ err: "badAuthorization" });
 
-	if (!req.body) return res.status(400).json({ err: "badRequest" });
-	if (typeof req.body.name !== "string" || typeof req.body.tag !== "string")
+	if (!req.body || typeof req.body.user !== "string")
 		return res.status(400).json({ err: "badRequest" });
 
 	// Get User
@@ -16,9 +15,7 @@ export default async (req, res) => {
 	try {
 		u = (
 			await axios.get(
-				`${HORIZON_API}/nametag/${encodeURIComponent(
-					req.body.name
-				)}/${encodeURIComponent(req.body.tag)}`
+				`${HORIZON_API}/users/${encodeURIComponent(req.body.user)}`
 			)
 		).data;
 	} catch (err) {
