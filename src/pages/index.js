@@ -1,4 +1,4 @@
-import { Box } from "@alleshq/reactants";
+import { Avatar, Box } from "@alleshq/reactants";
 import {
 	User as UserIcon,
 	Shield,
@@ -10,6 +10,8 @@ import {
 import Link from "next/link";
 import { Page } from "../components/Page";
 import { useUser } from "../utils/userContext";
+import axios from "axios";
+import cookies from "next-cookies";
 
 const categories = [
 	{
@@ -98,7 +100,7 @@ const products = [
 	},
 ];
 
-const page = () => {
+const page = ({ friends }) => {
 	const user = useUser();
 
 	return (
@@ -107,6 +109,23 @@ const page = () => {
 				Hey, {user.nickname}
 				{user.plus && <sup className="select-none text-primary">+</sup>}
 			</h4>
+
+			{friends.length > 0 && (
+				<div className="grid grid-cols-6 gap-3">
+					{friends.map((u) => (
+						<div className="flex justify-center" key={u.id}>
+							<Link
+								href="/[user]"
+								as={`/${encodeURIComponent(u.username || u.id)}`}
+							>
+								<a className="flex">
+									<Avatar src={`https://avatar.alles.cc/${u.id}`} size={50} />
+								</a>
+							</Link>
+						</div>
+					))}
+				</div>
+			)}
 
 			<div className="grid grid-cols-2 md:grid-cols-6 gap-3">
 				{products.map((product, i) =>
@@ -167,6 +186,20 @@ const page = () => {
 			</div>
 		</Page>
 	);
+};
+
+page.getInitialProps = async (ctx) => {
+	try {
+		return (
+			await axios.get(`${process.env.NEXT_PUBLIC_ORIGIN}/api/friends`, {
+				headers: {
+					Authorization: cookies(ctx).sessionToken,
+				},
+			})
+		).data;
+	} catch (err) {
+		return {};
+	}
 };
 
 export default page;

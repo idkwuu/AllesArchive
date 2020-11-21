@@ -10,7 +10,7 @@ export default async (req, res) => {
 	try {
 		res.json(
 			(
-				await axios.get(`${PULSAR_API}/user/${encodeURIComponent(user.id)}`, {
+				await axios.get(`${PULSAR_API}/user/${user.id}`, {
 					headers: {
 						Authorization: PULSAR_SECRET,
 					},
