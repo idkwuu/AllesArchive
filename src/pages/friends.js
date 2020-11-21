@@ -26,7 +26,7 @@ const page = ({ friends, requests }) => {
 			)}
 
 			{requests.length > 0 && (
-				<div className="space-y-5">
+				<div className="space-y-3">
 					{requests.map((u) => (
 						<Request key={u.id} sessionToken={user.sessionToken} {...u} />
 					))}
