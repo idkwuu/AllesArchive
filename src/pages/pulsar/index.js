@@ -5,10 +5,7 @@ import cookies from "next-cookies";
 import moment from "moment";
 
 const page = ({ clients }) => (
-	<Page
-		title="Pulsar"
-		breadcrumbs={<Breadcrumb.Item key="pulsar">Pulsar</Breadcrumb.Item>}
-	>
+	<Page title="Pulsar" breadcrumbs={<Breadcrumb.Item>Pulsar</Breadcrumb.Item>}>
 		<Box>
 			<Box.Content className="px-5 py-6">
 				<p>

@@ -36,7 +36,6 @@ export default async (req, res) => {
 			).filter((u) => !!u),
 		});
 	} catch (err) {
-		console.log(err);
 		res.status(500).json({ err: "internalError" });
 	}
 };

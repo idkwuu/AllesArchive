@@ -119,7 +119,10 @@ const page = ({ friends }) => {
 								as={`/${encodeURIComponent(u.username || u.id)}`}
 							>
 								<a className="flex">
-									<Avatar src={`https://avatar.alles.cc/${u.id}`} size={50} />
+									<Avatar
+										src={`https://avatar.alles.cc/${u.id}?size=50`}
+										size={50}
+									/>
 								</a>
 							</Link>
 						</div>

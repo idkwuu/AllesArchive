@@ -1,0 +1,45 @@
+import auth from "../../../utils/auth";
+import axios from "axios";
+
+const { FRIENDS_API, FRIENDS_SECRET, HORIZON_API } = process.env;
+
+export default async (req, res) => {
+	const user = await auth(req);
+	if (!user) return res.status(401).send({ err: "badAuthorization" });
+
+	if (!req.body) return res.status(400).json({ err: "badRequest" });
+	if (typeof req.body.name !== "string" || typeof req.body.tag !== "string")
+		return res.status(400).json({ err: "badRequest" });
+
+	// Get User
+	let u;
+	try {
+		u = (
+			await axios.get(
+				`${HORIZON_API}/nametag/${encodeURIComponent(
+					req.body.name
+				)}/${encodeURIComponent(req.body.tag)}`
+			)
+		).data;
+	} catch (err) {
+		return res.status(404).json({ err: "missingResource" });
+	}
+
+	try {
+		const request = (
+			await axios.post(
+				`${FRIENDS_API}/${user.id}`,
+				{ user: u.id },
+				{
+					headers: {
+						Authorization: FRIENDS_SECRET,
+					},
+				}
+			)
+		).data;
+		res.json({ requested: !request.acceptedAt });
+	} catch (err) {
+		if (err.response) res.status(400).json({ err: err.response.data.err });
+		else res.status(500).json({ err: "internalError" });
+	}
+};
