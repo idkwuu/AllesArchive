@@ -12,7 +12,7 @@ const page = ({ friends, requests }) => {
 
 	return (
 		<Page
-			title="Pulsar"
+			title="Friends"
 			breadcrumbs={<Breadcrumb.Item>Friends</Breadcrumb.Item>}
 		>
 			<FriendRequest sessionToken={user.sessionToken} />
