@@ -25,11 +25,12 @@ export default async (req, res) => {
 		return res.status(404).json({ err: "missingResource" });
 	}
 
+	// Create Friendship
 	try {
-		const request = (
+		const friendship = (
 			await axios.post(
-				`${FRIENDS_API}/${user.id}`,
-				{ user: u.id },
+				`${FRIENDS_API}/${user.id}/${u.id}`,
+				{},
 				{
 					headers: {
 						Authorization: FRIENDS_SECRET,
@@ -37,7 +38,9 @@ export default async (req, res) => {
 				}
 			)
 		).data;
-		res.json({ requested: !request.acceptedAt });
+
+		// Response
+		res.json({ requested: !friendship.acceptedAt });
 	} catch (err) {
 		if (err.response) res.status(400).json({ err: err.response.data.err });
 		else res.status(500).json({ err: "internalError" });
