@@ -132,12 +132,12 @@ app.delete("/:id/:friend", async (req, res) => {
     where: {
       [Op.or]: [
         {
-          user1: req.params.friend,
-          user2: req.params.id,
+          user1: req.params.id,
+          user2: req.params.friend,
         },
         {
           user1: req.params.friend,
-          user2: req.params.friend,
+          user2: req.params.id,
         },
       ],
     },
