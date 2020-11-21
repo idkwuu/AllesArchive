@@ -21,7 +21,7 @@ import { useTheme } from "../utils/theme";
 
 export const Page = ({ children, title, breadcrumbs, head, width }) => {
 	const user = useUser();
-	useTheme();
+	const { theme, setTheme } = useTheme();
 
 	const logOut = () => {
 		const isProduction = process.env.NODE_ENV === "production";
@@ -80,6 +80,14 @@ export const Page = ({ children, title, breadcrumbs, head, width }) => {
 											>
 												<Menu.Item>Profile Page</Menu.Item>
 											</Link>
+											<Menu.Item
+												onClick={() =>
+													setTheme(theme === "light" ? "dark" : "light")
+												}
+												className="cursor-pointer"
+											>
+												{theme === "light" ? "Dark" : "Light"} Mode
+											</Menu.Item>
 											<Menu.Item
 												onClick={() => logOut()}
 												className="cursor-pointer"
