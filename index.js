@@ -30,18 +30,38 @@ const fData = (f, u) => ({
 
 // Get Friendships
 app.get("/:id", async (req, res) => {
-  const friendships = await db.Friendship.findAll({
-    where: {
-      [Op.or]: [{ user1: req.params.id }, { user2: req.params.id }],
-      acceptedAt:
-        typeof req.query.requests === "string"
-          ? null
-          : {
-              [Op.ne]: null,
-            },
-    },
-  });
+  let friendships;
+  if (typeof req.query.requests === "string") {
+    // Friend Requests
+    friendships = (
+      await db.Friendship.findAll({
+        where: {
+          user1: req.params.id,
+          acceptedAt: null,
+        },
+      })
+    ).concat(
+      await db.Friendship.findAll({
+        where: {
+          user2: req.params.id,
+          acceptedAt: null,
+        },
+        limit: friendLimit,
+      })
+    );
+  } else {
+    // Friendships
+    friendships = await db.Friendship.findAll({
+      where: {
+        [Op.or]: [{ user1: req.params.id }, { user2: req.params.id }],
+        acceptedAt: {
+          [Op.ne]: null,
+        },
+      },
+    });
+  }
 
+  // Response
   res.json({
     friends: friendships.map((f) => fData(f, req.params.id)),
   });
