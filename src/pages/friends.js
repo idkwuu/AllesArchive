@@ -19,33 +19,7 @@ const page = ({ friends }) => {
 			{friends.length > 0 && (
 				<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
 					{friends.map((u) => (
-						<Link
-							href="/[user]"
-							as={`/${encodeURIComponent(u.username || u.id)}`}
-							key={u.id}
-						>
-							<a>
-								<Box className="py-5 space-y-5">
-									<div className="flex justify-center">
-										<Avatar
-											src={`https://avatar.alles.cc/${u.id}?size=100`}
-											size={100}
-										/>
-									</div>
-									<div className="text-center">
-										<h1 className="font-semibold">
-											{u.name}
-											{u.plus && (
-												<sup className="select-none text-primary">+</sup>
-											)}
-										</h1>
-										{u.username && (
-											<h2 className="text-primary">@{u.username}</h2>
-										)}
-									</div>
-								</Box>
-							</a>
-						</Link>
+						<Friend key={u.id} sessionToken={user.sessionToken} {...u} />
 					))}
 				</div>
 			)}
@@ -133,5 +107,53 @@ const FriendRequest = ({ sessionToken }) => {
 				</Button>
 			</Box.Footer>
 		</Box>
+	);
+};
+
+const Friend = ({ id, name, plus, username, sessionToken }) => {
+	const [loading, setLoading] = useState(false);
+	const [removed, setRemoved] = useState(false);
+
+	const remove = () => {
+		setLoading(true);
+		axios
+			.post(
+				"/api/friends/remove",
+				{ user: id },
+				{
+					headers: {
+						Authorization: sessionToken,
+					},
+				}
+			)
+			.then(() => setRemoved(true))
+			.catch(() => {});
+	};
+
+	return (
+		!removed && (
+			<Box className="py-5 space-y-5 text-center" key={id}>
+				<Link href="/[user]" as={`/${encodeURIComponent(username || id)}`}>
+					<a className="space-y-5">
+						<div className="flex justify-center">
+							<Avatar
+								src={`https://avatar.alles.cc/${id}?size=100`}
+								size={100}
+							/>
+						</div>
+						<div>
+							<h1 className="font-semibold">
+								{name}
+								{plus && <sup className="select-none text-primary">+</sup>}
+							</h1>
+							{username && <h2 className="text-primary">@{username}</h2>}
+						</div>
+					</a>
+				</Link>
+				<Button size="sm" color="secondary" loading={loading} onClick={remove}>
+					Remove
+				</Button>
+			</Box>
+		)
 	);
 };
