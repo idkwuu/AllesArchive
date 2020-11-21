@@ -14,6 +14,12 @@ app.use((_err, _req, res, _next) =>
 );
 app.listen(8080, () => db.sync().then(() => console.log("Server is ready")));
 
+// Auth
+app.use((req, res, next) => {
+  if (req.headers.authorization === process.env.SECRET) next();
+  else res.status(401).json({ err: "badAuthorization" });
+});
+
 // Friendship Data
 const fData = (f, u) => ({
   user: f.user1 === u ? f.user2 : f.user1,
