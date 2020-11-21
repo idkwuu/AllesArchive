@@ -3,7 +3,7 @@ const db = require("./db");
 const uuid = require("uuid").v4;
 const { Op } = require("sequelize");
 
-const friendLimit = 25;
+const friendLimit = 24;
 
 // Express
 const express = require("express");
