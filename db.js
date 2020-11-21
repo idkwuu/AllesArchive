@@ -31,7 +31,7 @@ db.Friendship = db.define(
       allowNull: false,
     },
     requestedAt: {
-      type: Sequelize.STRING,
+      type: Sequelize.DATE,
       allowNull: false,
     },
     acceptedAt: {
