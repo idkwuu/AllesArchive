@@ -132,20 +132,17 @@ app.post("/:id", async (req, res) => {
 });
 
 // Remove Friendship
-app.delete("/:id", async (req, res) => {
-  if (typeof req.body.user !== "string")
-    return res.status(400).json({ err: "badRequest" });
-
+app.delete("/:id/:friend", async (req, res) => {
   // Get friendship
   const friendship = await db.Friendship.findOne({
     where: {
       [Op.or]: [
         {
-          user1: req.body.user,
+          user1: req.params.friend,
           user2: req.params.id,
         },
         {
-          user1: req.params.id,
+          user1: req.params.friend,
           user2: req.body.user,
         },
       ],
