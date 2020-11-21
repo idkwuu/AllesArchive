@@ -17,15 +17,21 @@ export default async (req, res) => {
 								Authorization: FRIENDS_SECRET,
 							},
 						})
-					).data.friends.sort((a, b) => a.acceptedAt > b.acceptedAt).map(async ({ user }) => {
-						try {
-							return (
-								await axios.get(
-									`${HORIZON_API}/users/${encodeURIComponent(user)}`
-								)
-							).data;
-						} catch (err) {}
-					})
+					).data.friends
+						.sort(
+							(a, b) =>
+								new Date(a.acceptedAt).getTime() -
+								new Date(b.acceptedAt).getTime()
+						)
+						.map(async ({ user }) => {
+							try {
+								return (
+									await axios.get(
+										`${HORIZON_API}/users/${encodeURIComponent(user)}`
+									)
+								).data;
+							} catch (err) {}
+						})
 				)
 			).filter((u) => !!u),
 		});
