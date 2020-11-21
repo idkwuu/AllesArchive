@@ -15,7 +15,7 @@ import cookies from "next-cookies";
 
 const categories = [
 	{
-		name: "Profile and Personalisation",
+		name: "Profile",
 		icon: UserIcon,
 		links: [
 			{
@@ -27,8 +27,8 @@ const categories = [
 				href: "/connections",
 			},
 			{
-				text: "Preferences",
-				href: "/preferences",
+				text: "Friends",
+				href: "/friends",
 			},
 		],
 	},
@@ -51,7 +51,7 @@ const categories = [
 		],
 	},
 	{
-		name: "Subscriptions and Billing",
+		name: "Payments and Subscriptions",
 		icon: PlusCircle,
 		links: [
 			{
@@ -65,7 +65,7 @@ const categories = [
 		],
 	},
 	{
-		name: "XP and Rewards",
+		name: "Rewards",
 		icon: Award,
 		links: [
 			{
