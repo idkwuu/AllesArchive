@@ -11,7 +11,7 @@ app.post("/", (req, res) => {
         req.on("data", chunk => data += chunk);
 
         req.on("end", () => {
-            fs.writeFileSync(`${process.env.DATA}/${new Date().getTime()}`, Buffer.from(data, "base64").toString("binary"));
+            fs.writeFileSync(`${process.env.DATA}/${new Date().getTime()}`, Buffer.from(data, "base64").toString());
             res.status(200).send("Success");
         });
     } catch (e) {
