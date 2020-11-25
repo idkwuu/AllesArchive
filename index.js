@@ -48,16 +48,42 @@ const getUserFromNexus = async (id) => {
 // Get User
 const getUser = async (query, id, res) => {
   let user = await User.findOne({ where: query });
+  let userData;
 
+  // No user found from query
   try {
-    if (!user) user = await User.create(await getUserFromNexus(await id()));
-    else if (
-      user.cachedAt <
-      new Date().getTime() - Number(process.env.CACHE_MS)
+    if (!user) {
+      // Get user data
+      userData = await getUserFromNexus(await id());
+
+      // Create user
+      user = await User.create(userData);
+    }
+  } catch (err) {}
+
+  // No user found from query, successfully queried Nexus, but couldn't create a new user
+  // Eg. User has a different username, so a record already exists for the id, and we can't create a new one,
+  // but there'll be no results in for the original query which is a username we haven't cached.
+  try {
+    if (!user && userData) {
+      // Find existing record with that id
+      user = await User.findOne({ where: { id: userData.id } });
+
+      // Update it
+      if (user) await user.update(userData);
+    }
+  } catch (err) {}
+
+  // User exists but the cache needs to be updated
+  try {
+    if (
+      user &&
+      user.cachedAt < new Date().getTime() - Number(process.env.CACHE_MS)
     )
       await user.update(await getUserFromNexus(await id()));
   } catch (err) {}
 
+  // Response
   if (user)
     res.json({
       ...JSON.parse(user.data),
