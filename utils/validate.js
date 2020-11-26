@@ -8,7 +8,7 @@ module.exports = ({time, content}) => {
         if (typeof content !== "undefined") {
             if (typeof content !== "string") return;
             if (content.trim() !== content) return;
-            if (content.length < 3) return;
+            if (!content.length) return;
             if (content.length > 100) return;
         }
     } else if (typeof content !== "undefined") return;
