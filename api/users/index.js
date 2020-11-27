@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
       levelXpMax: level.levelMaxXp,
       levelProgress: level.remainingXp / level.levelMaxXp,
     },
-    email: user.email,
+    coins: user.coins,
     hasPassword: !!user.password,
     stripeCustomerId: user.stripeCustomerId,
     country: user.country,
