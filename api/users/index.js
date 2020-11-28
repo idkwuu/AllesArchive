@@ -31,7 +31,6 @@ module.exports = async (req, res) => {
     },
     coins: user.coins,
     hasPassword: !!user.password,
-    stripeCustomerId: user.stripeCustomerId,
     country: user.country,
     birth: {
       day: user.bDay,

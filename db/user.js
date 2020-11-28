@@ -54,9 +54,6 @@ module.exports = (db) => {
         defaultValue: false,
         allowNull: false,
       },
-      stripeCustomerId: {
-        type: DataTypes.STRING,
-      },
     },
     {
       updatedAt: false,

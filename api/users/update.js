@@ -5,7 +5,6 @@ const values = {
   nickname: "string",
   plus: "boolean",
   email: "string",
-  stripeCustomerId: "string",
   country: "string",
   bDay: "number",
   bMonth: "number",
