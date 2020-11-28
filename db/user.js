@@ -49,10 +49,8 @@ module.exports = (db) => {
       bYear: {
         type: DataTypes.SMALLINT,
       },
-      plus: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-        allowNull: false,
+      plusEnd: {
+        type: DataTypes.DATE,
       },
     },
     {

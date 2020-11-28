@@ -20,7 +20,10 @@ module.exports = async (req, res) => {
     tag: user.tag,
     nickname: user.nickname,
     username: user.username,
-    plus: user.plus,
+    plus: {
+      active: !!user.plusEnd && new Date().getTime() < user.plusEnd.getTime(),
+      end: user.plusEnd,
+    },
     createdAt: user.createdAt,
     xp: {
       total: user.xp,

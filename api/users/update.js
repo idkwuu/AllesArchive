@@ -3,7 +3,7 @@ const values = {
   name: "string",
   tag: "string",
   nickname: "string",
-  plus: "boolean",
+  plusEnd: "string",
   email: "string",
   country: "string",
   bDay: "number",
