@@ -32,7 +32,7 @@ const getUserFromNexus = async (id) => {
     nickname: user.nickname,
     username: user.username,
     xp: user.xp,
-    plus: user.plus,
+    plus: user.plus.active,
     createdAt: user.createdAt,
   };
   return {
