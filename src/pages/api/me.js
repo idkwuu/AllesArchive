@@ -12,5 +12,6 @@ export default async (req, res) => {
 		username: user.username,
 		plus: user.plus,
 		xp: user.xp,
+		coins: user.coins,
 	});
 };

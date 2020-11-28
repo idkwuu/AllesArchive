@@ -60,7 +60,7 @@ const categories = [
 			},
 			{
 				text: "Coins",
-				href: "/comingsoon",
+				href: "/coins",
 			},
 		],
 	},
