@@ -10,21 +10,6 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
   const linkedRole = await server.roles.fetch(process.env.LINKED_ROLE);
   const plusRole = await server.roles.fetch(process.env.PLUS_ROLE);
 
-  // On Message
-  bot.on("message", async (msg) => {
-    if (msg.content.startsWith(process.env.PREFIX) && msg.guild) {
-      const cmdString = msg.content
-        .substr(process.env.PREFIX.length)
-        .toLowerCase();
-      const cmd = commands[cmdString.split(" ")[0]];
-      if (cmd) await cmd(msg, cmdString);
-      else
-        await msg.channel.send(
-          `Sorry, ${msg.author}, that command doesn't exist! Try ${process.env.PREFIX}help to see all the commands you can use :)`
-        );
-    }
-  });
-
   // Members
   const memberList = async () =>
     (await server.members.fetch()).forEach(async (member) => {
