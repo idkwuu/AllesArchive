@@ -79,14 +79,14 @@ const Profile = () => {
 					label="Tag"
 					defaultValue={user.tag}
 					placeholder="0000"
-					disabled={!user.plus}
+					disabled={!user.plus.active}
 					maxLength={4}
 					onChange={(e) => {
 						setTag(e.target.value);
 						setError();
 					}}
 					note={
-						user.plus
+						user.plus.active
 							? "You can set your tag to any available number between 0001 and 9999 since you have Alles+"
 							: "You'll need Alles+ to change your tag"
 					}

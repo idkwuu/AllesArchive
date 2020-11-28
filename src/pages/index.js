@@ -107,7 +107,7 @@ const page = ({ friends }) => {
 		<Page>
 			<h4 className="font-medium text-3xl">
 				Hey, {user.nickname}
-				{user.plus && <sup className="select-none text-primary">+</sup>}
+				{user.plus.active && <sup className="select-none text-primary">+</sup>}
 			</h4>
 
 			{friends.length > 0 && (

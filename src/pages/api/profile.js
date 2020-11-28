@@ -24,7 +24,7 @@ export default async (req, res) => {
 		return res.status(400).json({ err: "profile.nickname.tooShort" });
 	if (nickname.length > config.maxNicknameLength)
 		return res.status(400).json({ err: "profile.nickname.tooLong" });
-	if (tagString !== user.tag && !user.plus)
+	if (tagString !== user.tag && !user.plus.active)
 		return res.status(400).json({ err: "plusOnly" });
 
 	// Avoid name#tag conflicts
