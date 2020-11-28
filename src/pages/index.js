@@ -55,12 +55,12 @@ const categories = [
 		icon: PlusCircle,
 		links: [
 			{
-				text: "Alles+",
-				href: "/plus",
+				text: "Alles+ and Billing",
+				href: "/billing",
 			},
 			{
-				text: "Billing",
-				href: "/billing",
+				text: "Coins",
+				href: "/comingsoon",
 			},
 		],
 	},
