@@ -4,8 +4,10 @@ import { useUser } from "../utils/userContext";
 import config from "../config";
 import { useState } from "react";
 import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
 
 const { NEXT_PUBLIC_STRIPE_PK: STRIPE_PK } = process.env;
+const stripePromise = loadStripe(STRIPE_PK);
 
 const page = () => {
 	const user = useUser();
@@ -74,15 +76,14 @@ const PurchaseCoins = ({ sessionToken }) => {
 					},
 				}
 			)
-			.then(({ data }) =>
-				Stripe(STRIPE_PK).redirectToCheckout({ sessionId: data.session })
+			.then(async ({ data }) =>
+				(await stripePromise).redirectToCheckout({ sessionId: data.session })
 			)
 			.catch(() => {});
 	};
 
 	return (
 		<Box>
-			<script src="https://js.stripe.com/v3"></script>
 			<Box.Header>Purchase Coins</Box.Header>
 			<Box.Content className="space-y-6">
 				<p>
