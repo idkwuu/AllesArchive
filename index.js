@@ -31,6 +31,9 @@ app.post("/users/:id", require("./api/users/update"));
 // XP
 app.post("/users/:id/xp", require("./api/users/xp"));
 
+// Coins
+app.post("/users/:id/coins", require("./api/users/coins"));
+
 // Password
 app.post("/users/:id/password", require("./api/users/password/update"));
 app.post("/users/:id/password/verify", require("./api/users/password/verify"));
