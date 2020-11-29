@@ -2,7 +2,7 @@ import auth from "../../../utils/auth";
 import config from "../../../config";
 import Stripe from "stripe";
 
-const { STRIPE_SK } = process.env;
+const { STRIPE_SK, NEXT_PUBLIC_ORIGIN } = process.env;
 const stripe = Stripe(STRIPE_SK);
 
 export default async (req, res) => {
@@ -33,8 +33,14 @@ export default async (req, res) => {
 			},
 		],
 		mode: "payment",
-		success_url: "https://alles.cx",
-		cancel_url: "https://alles.cx",
+		success_url: NEXT_PUBLIC_ORIGIN,
+		cancel_url: NEXT_PUBLIC_ORIGIN,
+		payment_intent_data: {
+			metadata: {
+				user: user.id,
+				coins: option.coins,
+			},
+		},
 	});
 
 	// Response
