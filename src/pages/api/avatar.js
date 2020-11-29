@@ -70,7 +70,6 @@ const api = async (req, res) => {
 		// Response
 		res.json({});
 	} catch (err) {
-		console.log(err);
 		return res.status(500).json({ err: "internalError" });
 	}
 };
