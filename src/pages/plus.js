@@ -118,7 +118,7 @@ const PurchaseMembership = ({ user }) => {
 									loading={loading}
 									disabled={user.coins < option.coins}
 								>
-									{option.name} ({option.coins} coins
+									{option.name} ({option.coins} coins)
 								</Button>
 							);
 						})}
