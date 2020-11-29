@@ -102,7 +102,7 @@ const PurchaseMembership = ({ user }) => {
 						</Link>
 						. You have{" "}
 						<strong className="border-b border-primary">
-							{user.coins} coin{user.coins === 1 ? "" : "s"}
+							{user.coins} coins
 						</strong>{" "}
 						right now.
 					</p>
@@ -118,8 +118,7 @@ const PurchaseMembership = ({ user }) => {
 									loading={loading}
 									disabled={user.coins < option.coins}
 								>
-									{option.name} ({option.coins} coin
-									{option.coins === 1 ? "" : "s"})
+									{option.name} ({option.coins} coins
 								</Button>
 							);
 						})}

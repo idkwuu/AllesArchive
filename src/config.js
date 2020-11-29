@@ -18,4 +18,14 @@ export default {
 			days: 365,
 		},
 	},
+	coinsOptions: {
+		a: {
+			coins: 150,
+			price: 500,
+		},
+		b: {
+			coins: 450,
+			price: 1200,
+		},
+	},
 };
