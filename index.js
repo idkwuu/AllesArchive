@@ -119,12 +119,9 @@ const commands = {
       );
     }
   },
-  me: async (msg) => {
+  me: async (msg, _cmd, user) => {
     try {
-      await userStats(
-        (await User.findOne({ where: { discord: msg.author.id } })).alles,
-        msg
-      );
+      await userStats(user.id, msg);
     } catch (err) {
       await msg.channel.send(
         `Your discord account is not currently connected to an AllesID. Run \`${process.env.PREFIX}link\` to link it!`
@@ -153,17 +150,11 @@ const commands = {
       }
     } else await msg.channel.send("You must specify the user id");
   },
-  xp: async (msg) => {
-    let user;
-    try {
-      user = await getUserData(
-        (await User.findOne({ where: { discord: msg.author.id } })).alles
-      );
-    } catch (err) {
+  xp: async (msg, _cmd, user) => {
+    if (!user)
       return await msg.channel.send(
         `Sorry, ${msg.author}, you'll need to connect your AllesID first. Try \`${process.env.PREFIX}link\``
       );
-    }
 
     if (user.xp.level >= 50)
       return await msg.channel.send(
@@ -223,13 +214,20 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
 
   // On Message
   bot.on("message", async (msg) => {
+    // Get User
+    let user = null;
+    try {
+      user = await getUserData(await getAlles(msg.author.id));
+    } catch (err) {}
+
+    // Handle Message
     if (msg.content.startsWith(process.env.PREFIX) && msg.guild) {
       const cmdString = msg.content
         .substr(process.env.PREFIX.length)
         .toLowerCase();
       const cmd = commands[cmdString.split(" ")[0]];
       try {
-        if (cmd) await cmd(msg, cmdString);
+        if (cmd) await cmd(msg, cmdString, user);
         else
           await msg.channel.send(
             `Sorry, ${msg.author}, that command doesn't exist! Try ${process.env.PREFIX}help to see all the commands you can use :)`
@@ -290,3 +288,7 @@ const userStats = async (id, msg) => {
       (user.plus ? "\n\n✨ _This user has **Alles+**_ ✨" : "")
   );
 };
+
+// Get Alles account ID from Discord ID
+const getAlles = async (discord) =>
+  (await User.findOne({ where: { discord } })).alles;
