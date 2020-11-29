@@ -49,6 +49,12 @@ const page = () => {
 			</Box>
 
 			<PurchaseCoins sessionToken={user.sessionToken} />
+
+			<p>
+				<strong>Note:</strong> It could take a couple of minutes for your coins
+				to update after you purchase more. If something doesn't seem right,
+				contact us!
+			</p>
 		</Page>
 	);
 };
