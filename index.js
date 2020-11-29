@@ -3,7 +3,7 @@ require("dotenv").config();
 // HTTP Server
 const app = require("express")();
 app.use(require("body-parser").raw({ type: "application/json" }));
-app.listen(8080);
+app.listen(process.env.PORT || 8080);
 
 // Stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
