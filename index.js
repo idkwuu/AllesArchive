@@ -34,23 +34,21 @@ app.post("/query", (req, res) =>
 app.post("/response", (req, res) => {
   res.json({});
 
-  try {
-    const { user, data } = req.body;
-    const { text, time } = JSON.parse(data);
+  const { user, data } = req.body;
+  const { text, time } = JSON.parse(data);
 
-    axios
-      .post(
-        `https://wassup.alles.cc/${encodeURIComponent(user)}`,
-        {
-          content: text,
-          time,
+  axios
+    .post(
+      `https://wassup.alles.cc/${encodeURIComponent(user)}`,
+      {
+        content: text,
+        time,
+      },
+      {
+        headers: {
+          Authorization: STATUS_SECRET,
         },
-        {
-          headers: {
-            Authorization: STATUS_SECRET,
-          },
-        }
-      )
-      .catch(() => {});
-  } catch (err) {}
+      }
+    )
+    .catch(() => {});
 });
