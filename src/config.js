@@ -20,12 +20,12 @@ export default {
 	},
 	coinsOptions: {
 		a: {
-			coins: 150,
+			coins: 120,
 			price: 500,
 		},
 		b: {
 			coins: 450,
-			price: 1200,
+			price: 1500,
 		},
 	},
 };
