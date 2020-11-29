@@ -9,5 +9,8 @@
     "escape-html": "^1.0.3",
     "express": "^4.17.1",
     "stripe": "^8.95.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.2.1"
   }
 }
