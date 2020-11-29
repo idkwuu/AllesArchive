@@ -128,33 +128,59 @@ const commands = {
       );
     }
   },
-  user: async (msg, cmd) => {
-    if (cmd.split(" ").length > 1) {
-      try {
-        let id = cmd.split(" ");
-        id.shift();
-        id = id.join(" ");
-        if (id.split("#").length > 1) {
-          let name = id.split("#");
-          const tag = name.pop();
-          name = name.join("#");
-          id = await nametag(name, tag);
-        } else if (id.length !== 36)
-          return await msg.channel.send(
-            "You need to specify the user using an id or name#tag"
-          );
+  status: async (msg, cmd, user) => {
+    if (!user) return await msg.channel.send(requiresAuthMsg(msg.author));
+    if (cmd.split(" ").length <= 1)
+      return await msg.channel.send("You must specify a status to set");
 
-        await userStats(id, msg);
-      } catch (err) {
-        await msg.channel.send("That user doesn't seem to exist");
-      }
-    } else await msg.channel.send("You must specify the user id");
+    let content = cmd.split(" ");
+    content.shift();
+    content = content.join(" ");
+
+    try {
+      await axios.post(
+        `https://wassup.alles.cc/${encodeURIComponent(user.id)}`,
+        {
+          content,
+          time: 60 * 60 * 6,
+        },
+        {
+          headers: {
+            Authorization: process.env.STATUS_SECRET,
+          },
+        }
+      );
+
+      await msg.channel.send("Set status for 6 hours!");
+    } catch (err) {
+      await msg.channel.send("Something didn't go quite right there. Sorry.");
+    }
+  },
+  user: async (msg, cmd) => {
+    if (cmd.split(" ").length <= 1)
+      return await msg.channel.send("You must specify the user id");
+
+    try {
+      let id = cmd.split(" ");
+      id.shift();
+      id = id.join(" ");
+      if (id.split("#").length > 1) {
+        let name = id.split("#");
+        const tag = name.pop();
+        name = name.join("#");
+        id = await nametag(name, tag);
+      } else if (id.length !== 36)
+        return await msg.channel.send(
+          "You need to specify the user using an id or name#tag"
+        );
+
+      await userStats(id, msg);
+    } catch (err) {
+      await msg.channel.send("That user doesn't seem to exist");
+    }
   },
   xp: async (msg, _cmd, user) => {
-    if (!user)
-      return await msg.channel.send(
-        `Sorry, ${msg.author}, you'll need to connect your AllesID first. Try \`${process.env.PREFIX}link\``
-      );
+    if (!user) return await msg.channel.send(requiresAuthMsg(msg.author));
 
     if (user.xp.level >= 50)
       return await msg.channel.send(
@@ -292,3 +318,7 @@ const userStats = async (id, msg) => {
 // Get Alles account ID from Discord ID
 const getAlles = async (discord) =>
   (await User.findOne({ where: { discord } })).alles;
+
+// Authorization Requires Message
+const requiresAuthMsg = (user) =>
+  `Sorry, ${user}, you'll need to connect your AllesID first. Try \`${process.env.PREFIX}link\``;
