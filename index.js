@@ -9,12 +9,9 @@ app.listen(8080);
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 // Events
-const eventCodes = [
-  "customer.subscription.created",
-  "customer.subscription.deleted"
-];
+const eventCodes = ["charge.succeeded"];
 const events = {};
-eventCodes.forEach(code => (events[code] = require(`./events/${code}`)));
+eventCodes.forEach((code) => (events[code] = require(`./events/${code}`)));
 
 // Webhook
 app.post("/", async (req, res) => {
