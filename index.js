@@ -226,6 +226,10 @@ const commands = {
 
       // Message
       await msg.channel.send("Boop! +5xp!");
+      if (Math.floor(Math.random() * 0) === 0)
+        await msg.channel.send(
+          "||pssst, server owners get 1xp every time this runs, so add me to your own server to get more: https://alles.link/discordbot 👀||"
+        );
     } catch (err) {
       await msg.channel.send(
         `Oh no! Something went wrong when trying to add your xp, ${msg.author}!`
