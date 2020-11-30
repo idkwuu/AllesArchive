@@ -101,7 +101,7 @@ const PurchaseCoins = ({ sessionToken }) => {
 								onClick={() => checkout(id)}
 								loading={loading}
 							>
-								{option.coins} coins (${option.price / 100})
+								{option.coins} coins (${(option.price / 100).toFixed(2)})
 							</Button>
 						);
 					})}
