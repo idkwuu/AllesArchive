@@ -27,6 +27,9 @@ module.exports = (db) => {
       password: {
         type: DataTypes.STRING,
       },
+      email: {
+        type: DataTypes.STRING,
+      },
       xp: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
