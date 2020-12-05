@@ -20,6 +20,7 @@ module.exports = async (req, res) => {
     tag: user.tag,
     nickname: user.nickname,
     username: user.username,
+    email: user.email,
     plus: {
       active: !!user.plusEnd && new Date().getTime() < user.plusEnd.getTime(),
       end: user.plusEnd,
