@@ -78,14 +78,7 @@ class MapViewController: UIViewController {
 		}
 		for point in locationWithPoints {
 			let newPin = MapPointLocationAnnotation(point: point)
-			newPin.setValues()
 			mapView.addAnnotations([newPin])
-			/*print(point)
-			let newPin = MKPointAnnotation()
-			newPin.title = point.name
-			newPin.subtitle = "XP available: \(point.xp)"
-			newPin.coordinate = .init(latitude: point.latitude, longitude: point.longitude)
-			mapView.addAnnotations([newPin])*/
 		}
 		mapView.setRegion(.init(center: .init(latitude: locationWithPoints[0].latitude, longitude: locationWithPoints[0].longitude), latitudinalMeters: 1000, longitudinalMeters: 1000), animated: true)
 	}
@@ -160,26 +153,6 @@ extension MapViewController: MKMapViewDelegate {
 			imagePicker.delegate = self
 			present(imagePicker, animated: true, completion: nil)
 		}
-	}
-	
-	private func setupUserAnnotationView(for annotation: MapUserAnnotation, on mapView: MKMapView) -> MKAnnotationView {
-		let reuseIdentifier = "mapUserAnnotation"
-		let flagAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier, for: annotation)
-		
-		flagAnnotationView.canShowCallout = true
-		
-		// Provide the annotation view's image.
-		let image = #imageLiteral(resourceName: "flag")
-		flagAnnotationView.image = image
-		
-		// Provide the left image icon for the annotation.
-		flagAnnotationView.leftCalloutAccessoryView = UIImageView(image: #imageLiteral(resourceName: "sf_icon"))
-		
-		// Offset the flag annotation so that the flag pole rests on the map coordinate.
-		let offset = CGPoint(x: image.size.width / 2, y: -(image.size.height / 2) )
-		flagAnnotationView.centerOffset = offset
-		
-		return flagAnnotationView
 	}
 }
 
