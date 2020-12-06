@@ -1,6 +1,7 @@
 const db = require("../../db");
 const { literal } = require("sequelize");
 const getLevel = require("../../util/level");
+const config = require("../../config");
 
 module.exports = async (req, res) => {
   if (typeof req.body.xp !== "number")
@@ -21,7 +22,10 @@ module.exports = async (req, res) => {
   // Update
   await user.update({
     xp: literal(`xp + ${req.body.xp}`),
-    coins: levels > 0 ? literal(`coins + ${levels * 10}`) : undefined,
+    coins:
+      levels > 0
+        ? literal(`coins + ${levels * config.levelUpCoins}`)
+        : undefined,
   });
 
   // Response
