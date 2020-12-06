@@ -119,7 +119,7 @@ const commands = {
       );
     }
   },
-  me: async (msg, _cmd, user) => {
+  me: async (msg, _content, user) => {
     try {
       await userStats(user.id, msg);
     } catch (err) {
@@ -128,14 +128,10 @@ const commands = {
       );
     }
   },
-  status: async (msg, cmd, user) => {
+  status: async (msg, content, user) => {
     if (!user) return await msg.channel.send(requiresAuthMsg(msg.author));
-    if (cmd.split(" ").length <= 1)
+    if (!content)
       return await msg.channel.send("You must specify a status to set");
-
-    let content = cmd.split(" ");
-    content.shift();
-    content = content.join(" ");
 
     try {
       await axios.post(
@@ -156,14 +152,11 @@ const commands = {
       await msg.channel.send("Something didn't go quite right there. Sorry.");
     }
   },
-  user: async (msg, cmd) => {
-    if (cmd.split(" ").length <= 1)
-      return await msg.channel.send("You must specify the user id");
+  user: async (msg, content) => {
+    if (!content) return await msg.channel.send("You must specify the user id");
 
     try {
-      let id = cmd.split(" ");
-      id.shift();
-      id = id.join(" ");
+      let id = content;
       if (id.split("#").length > 1) {
         let name = id.split("#");
         const tag = name.pop();
@@ -179,7 +172,7 @@ const commands = {
       await msg.channel.send("That user doesn't seem to exist");
     }
   },
-  xp: async (msg, _cmd, user) => {
+  xp: async (msg, _content, user) => {
     if (!user) return await msg.channel.send(requiresAuthMsg(msg.author));
 
     if (user.xp.level >= 50)
@@ -252,10 +245,11 @@ bot.login(process.env.BOT_TOKEN).then(async () => {
 
     // Handle Message
     if (msg.content.startsWith(process.env.PREFIX) && msg.guild) {
-      const cmdString = msg.content.substr(process.env.PREFIX.length);
-      const cmd = commands[cmdString.split(" ")[0].toLowerCase()];
+      let content = msg.content.substr(process.env.PREFIX.length).split(" ");
+      const cmd = commands[content.shift().toLowerCase()];
+      content = content.join(" ").trim();
       try {
-        if (cmd) await cmd(msg, cmdString, user);
+        if (cmd) await cmd(msg, content, user);
         else
           await msg.channel.send(
             `Sorry, ${msg.author}, that command doesn't exist! Try ${process.env.PREFIX}help to see all the commands you can use :)`
