@@ -114,21 +114,6 @@ const page = ({ query }) => {
 					</form>
 				</Box.Content>
 			</Box>
-
-			<Box>
-				<Box.Header>Sign in another way</Box.Header>
-				<Box.Content className="space-y-5 px-5 py-6">
-					<Button
-						disabled={true}
-						icon={<Circle />}
-						size="lg"
-						className="w-full"
-						color="inverted"
-					>
-						Sign In With Pulsar
-					</Button>
-				</Box.Content>
-			</Box>
 		</Page>
 	);
 };
