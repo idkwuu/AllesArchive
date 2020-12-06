@@ -11,8 +11,7 @@ module.exports = async (req, res) => {
   )
     return res.status(400).json({ err: "badRequest" });
 
-  const name = req.body.name.trim();
-  const nickname = req.body.nickname.trim();
+  const { name, nickname, email } = req.body;
 
   // Password
   let password = null;
@@ -40,6 +39,7 @@ module.exports = async (req, res) => {
     nickname,
     tag: await tag(name),
     password,
+    email: typeof email === "string" ? email : null,
   });
 
   // Response
