@@ -47,7 +47,7 @@ const page = () => {
 						/>
 					</div>
 				</Box.Content>
-				<Box.Footer>You earn 10 coins every time you level up</Box.Footer>
+				<Box.Footer>You earn 25 coins every time you level up</Box.Footer>
 			</Box>
 
 			<PurchaseCoins sessionToken={user.sessionToken} />
