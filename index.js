@@ -39,7 +39,7 @@ app.get("/", (_req, res) =>
 app.get("/cb", (req, res) => {
   if (typeof req.query.code === "string")
     res.redirect(
-      `https://fast.alles.cx/${process.env.FAST_ID}?data=${encodeURIComponent(
+      `https://fast.alles.cx/${FAST_ID}?data=${encodeURIComponent(
         req.query.code
       )}`
     );
