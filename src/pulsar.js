@@ -28,7 +28,7 @@ export const Pulsar = ({
         <Spectrum />
         <div className="banner">
           <p>
-            Get Pulsar{platform && ` for ${platform[1]}`} to start searching
+            Get Pulsar v{latest}{platform && ` for ${platform[1]}`} to start searching
           </p>
           <a
             className="button"
