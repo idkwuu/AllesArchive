@@ -3,7 +3,7 @@ import { Page } from "../components/Page";
 import axios from "axios";
 import cookies from "next-cookies";
 
-const page = ({ discord, spotify }) => (
+const page = ({ discord }) => (
 	<Page
 		title="Connected Accounts"
 		breadcrumbs={<Breadcrumb.Item>Connected Accounts</Breadcrumb.Item>}
@@ -32,29 +32,6 @@ const page = ({ discord, spotify }) => (
 								discord server
 							</a>{" "}
 							and follow the instructions there.
-						</>
-					)}
-				</p>
-			</Box.Content>
-		</Box>
-
-		<Box>
-			<Box.Header>Spotify</Box.Header>
-			<Box.Content className="space-y-5">
-				<p>
-					{spotify ? (
-						<>
-							Your AllesID is connected to <strong>{spotify.spotify}</strong>.
-						</>
-					) : (
-						<>
-							Your AllesID isn't yet connected to a Spotify account. If you want
-							to display what song you're listening to on your profile page and
-							get access to music features,{" "}
-							<a href="https://spotify.alles.cc" className="text-primary">
-								connect it
-							</a>
-							.
 						</>
 					)}
 				</p>

@@ -16,12 +16,6 @@ export default async (req, res) => {
 		);
 	} catch (err) {}
 
-	// Get Spotify
-	let spotify = null;
-	try {
-		spotify = (await axios.get(`${SPOTIFY_API}/alles/${user.id}`)).data;
-	} catch (err) {}
-
 	// Response
-	res.json({ discord, spotify });
+	res.json({ discord });
 };

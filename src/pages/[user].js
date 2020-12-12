@@ -1,13 +1,13 @@
 import { Page } from "../components/Page";
 import { withRouter } from "next/router";
-import { Breadcrumb, Avatar, Box } from "@alleshq/reactants";
+import { Breadcrumb, Avatar } from "@alleshq/reactants";
 import axios from "axios";
 import NotFound from "./404";
 import { MicroPost } from "../components/MicroPost";
 import cookies from "next-cookies";
 import { useState, useEffect } from "react";
 import moment from "moment";
-import { Map, Award, AtSign, Play, Pause } from "react-feather";
+import { Map, Award, AtSign } from "react-feather";
 import countries from "../data/countries";
 
 const page = withRouter(({ user: u }) => {
@@ -70,8 +70,6 @@ const page = withRouter(({ user: u }) => {
 					<Status id={u.id} />
 				</div>
 			</div>
-
-			<Music id={u.id} />
 
 			{u.micro && u.micro.latest && (
 				<div>
@@ -174,50 +172,5 @@ const Status = ({ id }) => {
 		</div>
 	) : (
 		<></>
-	);
-};
-
-const Music = ({ id }) => {
-	const [music, setMusic] = useState();
-	useEffect(() => {
-		const fetchMusic = async () => {
-			try {
-				setMusic(
-					(
-						await axios.get(
-							`https://spotify.alles.cc/alles/${encodeURIComponent(id)}`
-						)
-					).data
-				);
-			} catch (err) {}
-		};
-		fetchMusic();
-		const interval = setInterval(fetchMusic, 5000);
-		return () => clearInterval(interval);
-	}, []);
-	if (!music || !music.item) return <></>;
-
-	const Icon = music.item.playing ? Pause : Play;
-
-	return (
-		<Box>
-			<Box.Content className="flex space-x-3">
-				<Icon className="text-primary my-auto flex-shrink-0" height={25} />
-				<div className="flex-grow">
-					<h1 className="text-xl">{music.item.name}</h1>
-					{music.item.artists.length > 0 && (
-						<h2 className="text-gray-700 dark:text-gray-300 text-xs">
-							{music.item.artists.map((a) => a.name).join(", ")}
-						</h2>
-					)}
-					<div
-						className="h-1 bg-primary rounded-full mt-2"
-						style={{
-							width: `${(music.item.progress / music.item.duration) * 100}%`,
-						}}
-					></div>
-				</div>
-			</Box.Content>
-		</Box>
 	);
 };
