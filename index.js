@@ -168,7 +168,7 @@ app.get("/alles/:id", cors(), async (req, res) => {
     spotify: account.id,
     checkedAt: account.checkedAt,
     createdAt: account.createdAt,
-    item: account.current,
+    item: account.current && JSON.parse(account.current),
   });
 });
 
