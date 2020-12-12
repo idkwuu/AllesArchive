@@ -12,6 +12,7 @@ const db = require("./db");
 const { Op } = require("sequelize");
 const axios = require("axios");
 const qs = require("qs").stringify;
+const cors = require("cors");
 
 // Express
 const express = require("express");
@@ -137,7 +138,7 @@ const auth = (req, res, next) => {
 };
 
 // Get AllesID from Spotify ID
-app.get("/spotify/:id", auth, async (req, res) => {
+app.get("/spotify/:id", cors(), async (req, res) => {
   const account = await db.Account.findOne({
     where: {
       id: req.params.id,
@@ -153,13 +154,7 @@ app.get("/spotify/:id", auth, async (req, res) => {
 });
 
 // Get Account from AllesID
-app.get("/alles/:id", auth, async (req, res) => {
-  const topSince =
-    typeof req.query.top === "string" &&
-    !isNaN(req.query.top) &&
-    Number.isInteger(Number(req.query.top)) &&
-    Number(req.query.top);
-
+app.get("/alles/:id", cors(), async (req, res) => {
   // Get Account
   const account = await db.Account.findOne({
     where: {
@@ -191,33 +186,6 @@ app.get("/alles/:id", auth, async (req, res) => {
     if (current) current.artists = await current.getArtists();
   }
 
-  // Top Items
-  let top;
-  if (auth && typeof topSince === "number")
-    top = (
-      await Promise.all(
-        (
-          await db.query(
-            "select itemId, count(*) as time from statuses where playing = 1 and accountId = ? and createdAt >= ? group by itemId order by time desc limit 20",
-            {
-              replacements: [account.id, new Date(topSince)],
-            }
-          )
-        )[0].map(async (status) => {
-          const item = await db.Item.findOne({
-            where: {
-              id: status.itemId,
-            },
-          });
-          if (item) {
-            item.time = status.time * 5000;
-            item.artists = await item.getArtists();
-          }
-          return item;
-        })
-      )
-    ).filter((item) => !!item);
-
   res.json({
     alles: account.alles,
     spotify: account.id,
@@ -237,19 +205,65 @@ app.get("/alles/:id", auth, async (req, res) => {
           })),
         }
       : null,
-    top: top
-      ? top.map((item) => ({
-          id: item.id,
-          name: item.name,
-          time: item.time,
-          duration: item.duration,
-          explicit: item.explicit,
-          artists: item.artists.map((a) => ({
-            id: a.id,
-            name: a.name,
-          })),
-        }))
-      : undefined,
+  });
+});
+
+// Number Query Parameter
+const nq = (s) => {
+  const n =
+    typeof s === "string" &&
+    !isNaN(s) &&
+    Number.isInteger(Number(s)) &&
+    Number(s);
+  return typeof n === "number" ? n : null;
+};
+
+// Get Top Songs
+app.get("/alles/:id/top", auth, async (req, res) => {
+  const since = nq(req.query.since) || 0;
+  const until = nq(req.query.until) || new Date().getTime();
+
+  // Get Account
+  const account = await db.Account.findOne({
+    where: {
+      alles: req.params.id,
+      connected: true,
+    },
+  });
+  if (!account) return res.status(404).json({ err: "missingResource" });
+
+  // Get Top Songs
+  const top = (
+    await Promise.all(
+      (
+        await db.query(
+          "select itemId, count(*) as time from statuses where playing = 1 and accountId = ? and createdAt >= ? and createdAt <= ? group by itemId order by time desc limit 20",
+          {
+            replacements: [account.id, new Date(since), new Date(until)],
+          }
+        )
+      )[0].map(async (status) => {
+        const item = await db.Item.findOne({
+          where: {
+            id: status.itemId,
+          },
+        });
+        if (item) {
+          item.time = status.time * 5000;
+          item.artists = await item.getArtists();
+        }
+        return item;
+      })
+    )
+  ).filter((item) => !!item);
+
+  // Response
+  res.json({
+    alles: account.alles,
+    spotify: account.id,
+    since,
+    until,
+    top,
   });
 });
 
