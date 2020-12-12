@@ -1,10 +1,16 @@
 import React from "react";
 import { Spectrum } from "./spectrum";
 
-export const Pulsar = ({ query, answer, items = [], selection = 0 }) => (
+export const Pulsar = ({
+  query,
+  placeholder,
+  answer,
+  items = [],
+  selection = 0,
+}) => (
   <div className="pulsar-app">
     <form>
-      <input placeholder="What's up?" value={query} disabled />
+      <input placeholder={placeholder} value={query} disabled />
     </form>
 
     {!query && <Spectrum />}
