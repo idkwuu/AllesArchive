@@ -12,7 +12,6 @@ const db = require("./db");
 const { Op } = require("sequelize");
 const axios = require("axios");
 const qs = require("qs").stringify;
-const cors = require("cors");
 
 // Express
 const express = require("express");
@@ -131,8 +130,14 @@ app.get("/auth", (req, res) => {
     .catch(() => res.status(401).json({ err: "badAuthorization" }));
 });
 
+// Auth Middleware
+const auth = (req, res, next) => {
+  if (req.headers.authorization === SECRET) next();
+  else res.status(401).json({ err: "badAuthorization" });
+};
+
 // Get AllesID from Spotify ID
-app.get("/spotify/:id", cors(), async (req, res) => {
+app.get("/spotify/:id", auth, async (req, res) => {
   const account = await db.Account.findOne({
     where: {
       id: req.params.id,
@@ -148,8 +153,7 @@ app.get("/spotify/:id", cors(), async (req, res) => {
 });
 
 // Get Account from AllesID
-app.get("/alles/:id", cors(), async (req, res) => {
-  const auth = req.headers.authorization === SECRET;
+app.get("/alles/:id", auth, async (req, res) => {
   const topSince =
     typeof req.query.top === "string" &&
     !isNaN(req.query.top) &&
@@ -214,7 +218,6 @@ app.get("/alles/:id", cors(), async (req, res) => {
       )
     ).filter((item) => !!item);
 
-  // Response
   res.json({
     alles: account.alles,
     spotify: account.id,
