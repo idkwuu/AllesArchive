@@ -1,7 +1,7 @@
 import React from "react";
 import { Spectrum } from "./spectrum";
 
-const latest = "0.0.2";
+const latest = "0.0.3";
 const ua = navigator.userAgent;
 const platform = ua.includes("Windows NT")
   ? ["win32", "Windows"]
