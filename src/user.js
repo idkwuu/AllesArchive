@@ -8,11 +8,5 @@ export const getUser = async () => {
     })
   ).data.user;
   const user = (await axios.get(`https://horizon.alles.cc/users/${id}`)).data;
-
-  let music;
-  try {
-    music = (await axios.get(`https://spotify.alles.cc/alles/${id}`)).data.item;
-  } catch (err) {}
-
-  return { ...user, music };
+  return user;
 };

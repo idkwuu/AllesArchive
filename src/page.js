@@ -38,18 +38,6 @@ export const Page = () => {
       <p className="caption">Find the volume of a cylinder</p>
 
       <Pulsar
-        query="What song is this?"
-        answer={
-          user && user.music ? user.music.name : "The Cut That Always Bleeds"
-        }
-        items={[
-          "What song is the most popular in 2020?",
-          "What song was released by Taylor Swift?",
-        ]}
-      />
-      <p className="caption">You can link your AllesID to Spotify</p>
-
-      <Pulsar
         query="What time is it?"
         answer={`It's ${moment().format("H:mm A")}`}
         items={[
