@@ -1,0 +1,86 @@
+:root {
+  --one: #23539b;
+  --two: #d0d0d0;
+  --three: #1e1e1e;
+  --four: #2e2e2e;
+  --five: #111111;
+  --six: #3b3b3b;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  font-family: Inter;
+  background: var(--five);
+  color: var(--two);
+  text-align: center;
+}
+
+main {
+  padding: 50px 10px;
+}
+
+h1 {
+  font-size: 60px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.pulsar-app {
+  background: var(--three);
+  -webkit-user-select: none;
+  width: min(80%, 800px);
+  overflow: hidden;
+  margin: 50px auto 0;
+  box-shadow: 8px 5px 10px 5px #080808;
+  text-align: left;
+}
+
+.caption {
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+input {
+  font-family: Inter;
+  border: none;
+  width: 100%;
+  height: 75px;
+  padding: 12px 20px;
+  font-size: 40px;
+  outline: none;
+  background: none;
+  color: var(--two);
+}
+
+.spectrum {
+  width: 100%;
+  height: 75px;
+}
+
+.item,
+.answer {
+  border-top: solid 1px var(--six);
+  color: var(--two);
+  padding: 10px 20px;
+  white-space: nowrap;
+}
+
+.answer {
+  font-size: 30px;
+  padding-left: 15px;
+  border-left: solid 5px var(--two);
+}
+
+.item.selected {
+  background: var(--four);
+}
