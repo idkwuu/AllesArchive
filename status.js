@@ -5,6 +5,7 @@ const { Op } = require("sequelize");
 const axios = require("axios");
 const uuid = require("uuid").v4;
 const qs = require("qs").stringify;
+const getCurrent = require("./current");
 
 setInterval(async () => {
   // Get account that has not been checked for the largest amount of time
@@ -60,10 +61,10 @@ setInterval(async () => {
     } catch (err) {
       await account.update({ connected: false });
     }
-    return;
+    return await account.update({ current: null });
   }
 
-  if (!data || !data.item) return;
+  if (!data || !data.item) return await account.update({ current: null });
   try {
     // Find Item
     let item = await db.Item.findOne({
@@ -109,7 +110,8 @@ setInterval(async () => {
       accountId: account.id,
       itemId: item.id,
     });
-  } catch (err) {
-    console.log(err);
-  }
+
+    // Store Current Playback Status
+    await account.update({ current: await getCurrent() });
+  } catch (err) {}
 }, 100);

@@ -25,6 +25,9 @@ module.exports = (db) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
+      current: {
+        type: DataTypes.TEXT,
+      },
       checkedAt: {
         type: DataTypes.DATE,
         allowNull: false,

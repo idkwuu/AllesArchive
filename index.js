@@ -9,10 +9,10 @@ const {
 } = process.env;
 
 const db = require("./db");
-const { Op } = require("sequelize");
 const axios = require("axios");
 const qs = require("qs").stringify;
 const cors = require("cors");
+const getCurrent = require("./current");
 
 // Express
 const express = require("express");
@@ -155,7 +155,6 @@ app.get("/spotify/:id", cors(), async (req, res) => {
 
 // Get Account from AllesID
 app.get("/alles/:id", cors(), async (req, res) => {
-  // Get Account
   const account = await db.Account.findOne({
     where: {
       alles: req.params.id,
@@ -164,47 +163,12 @@ app.get("/alles/:id", cors(), async (req, res) => {
   });
   if (!account) return res.status(404).json({ err: "missingResource" });
 
-  // Get Status
-  const status = await db.Status.findOne({
-    where: {
-      accountId: account.id,
-      createdAt: {
-        [Op.gte]: new Date().getTime() - 20000,
-      },
-    },
-    order: [["createdAt", "desc"]],
-  });
-
-  // Get current item
-  let current;
-  if (status) {
-    current = await db.Item.findOne({
-      where: {
-        id: status.itemId,
-      },
-    });
-    if (current) current.artists = await current.getArtists();
-  }
-
   res.json({
     alles: account.alles,
     spotify: account.id,
     checkedAt: account.checkedAt,
     createdAt: account.createdAt,
-    item: current
-      ? {
-          id: current.id,
-          name: current.name,
-          playing: status.playing,
-          progress: status.progress,
-          duration: current.duration,
-          explicit: current.explicit,
-          artists: current.artists.map((a) => ({
-            id: a.id,
-            name: a.name,
-          })),
-        }
-      : null,
+    item: account.current,
   });
 });
 
