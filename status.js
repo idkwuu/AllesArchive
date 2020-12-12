@@ -112,6 +112,6 @@ setInterval(async () => {
     });
 
     // Store Current Playback Status
-    await account.update({ current: JSON.stringify(await getCurrent()) });
+    await account.update({ current: JSON.stringify(await getCurrent(account.id)) });
   } catch (err) {}
 }, 100);
