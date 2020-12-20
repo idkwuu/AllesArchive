@@ -61,53 +61,13 @@ const page = () => {
 	);
 };
 
-const PurchaseCoins = ({ sessionToken }) => {
-	const [loading, setLoading] = useState(false);
-
-	const checkout = (option) => {
-		setLoading(true);
-		axios
-			.post(
-				"/api/coins/stripe",
-				{ option },
-				{
-					headers: {
-						Authorization: sessionToken,
-					},
-				}
-			)
-			.then(async ({ data }) =>
-				(await stripePromise).redirectToCheckout({ sessionId: data.session })
-			)
-			.catch(() => {});
-	};
-
+const PurchaseCoins = () => {
 	return (
 		<Box>
 			<Box.Header>Purchase Coins</Box.Header>
 			<Box.Content className="space-y-6">
-				<p>
-					If you want, you can purchase some more coins here. This really helps
-					to support Alles, so if you do, thanks a lot!
-				</p>
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-					{Object.keys(config.coinsOptions).map((id) => {
-						const option = config.coinsOptions[id];
-						return (
-							<Button
-								key={id}
-								size="md"
-								className="w-full"
-								onClick={() => checkout(id)}
-								loading={loading}
-							>
-								{option.coins} coins (${(option.price / 100).toFixed(2)})
-							</Button>
-						);
-					})}
-				</div>
+				<p>Alles Coins are not currently available.</p>
 			</Box.Content>
-			<Box.Footer>We use Stripe to process payments</Box.Footer>
 		</Box>
 	);
 };
